@@ -240,5 +240,225 @@
     "reasons": [
       "No matched keyword signal"
     ]
+  },
+  {
+    "id": "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6",
+    "ticker": [
+      "ILETI",
+      "METNI",
+      "MIDAS"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): ILETI, METNI, MIDAS"
+    ]
+  },
+  {
+    "id": "f7663e6752fab4c6932f682759176041a233d3c2a41d93b9ffd7b33290830597",
+    "ticker": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ]
+  },
+  {
+    "id": "1d206a412f9e00320e000cb6af7289afaf09321d93407c2c56c06326687b00e5",
+    "ticker": [
+      "VEREN"
+    ],
+    "sentiment": "Positive",
+    "score": 65,
+    "confidence": 77,
+    "importance": "Low",
+    "importance_score": 43,
+    "matched_keywords": [
+      "temettü"
+    ],
+    "reasons": [
+      "Positive keyword: temettü",
+      "Detected ticker(s): VEREN"
+    ]
+  },
+  {
+    "id": "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0",
+    "ticker": [
+      "FAIZ",
+      "ZAMAN"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FAIZ, ZAMAN"
+    ]
+  },
+  {
+    "id": "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6",
+    "ticker": [
+      "FAIZ",
+      "OLUR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FAIZ, OLUR"
+    ]
+  },
+  {
+    "id": "e3f36c10ec9919f21cf130f7b7a9fba93d3ba55117bff7a2071d96287180457e",
+    "ticker": [
+      "EMIR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): EMIR"
+    ]
+  },
+  {
+    "id": "f73d47295a85b9dcc0d532381d12926d0d892eaeffb854b5f72f14250476dca9",
+    "ticker": [],
+    "sentiment": "Positive",
+    "score": 85,
+    "confidence": 94,
+    "importance": "Low",
+    "importance_score": 35,
+    "matched_keywords": [
+      "bedelsiz"
+    ],
+    "reasons": [
+      "Positive keyword: bedelsiz"
+    ]
+  },
+  {
+    "id": "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17",
+    "ticker": [
+      "DEMEK",
+      "IPTAL"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): DEMEK, IPTAL"
+    ]
+  },
+  {
+    "id": "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e",
+    "ticker": [
+      "ALIM",
+      "GERI",
+      "HISSE",
+      "NEDIR"
+    ],
+    "sentiment": "Positive",
+    "score": 75,
+    "confidence": 96,
+    "importance": "Medium",
+    "importance_score": 67,
+    "matched_keywords": [
+      "geri alım"
+    ],
+    "reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
+    ]
+  },
+  {
+    "id": "64d49e352e4beab8bb4af945f5bc83743dcb975afaac1dfe76e8199e59a3f8b3",
+    "ticker": [
+      "NEDIR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): NEDIR"
+    ]
+  },
+  {
+    "id": "1b947b6430e7d2f617dc9271fdace3f3cb86184b249b2e06b2749d98e631f31e",
+    "ticker": [
+      "ISLEM"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): ISLEM"
+    ]
+  },
+  {
+    "id": "efd6e785bc11066666f361a63b075f03893d42cc21c11b670a1ab3cee9a606a7",
+    "ticker": [
+      "PARA"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): PARA"
+    ]
+  },
+  {
+    "id": "01be699ad5a86328e77adea57a4ac1bd403d6858751caf8f228dce5f390a0139",
+    "ticker": [
+      "NASIL"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): NASIL"
+    ]
+  },
+  {
+    "id": "bf53d4da2d74fd908206ef9dc57f914a70b3a67f453b04d899ced630d35ab8c8",
+    "ticker": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ]
   }
 ]

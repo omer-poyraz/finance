@@ -5,6 +5,7 @@ from __future__ import annotations
 
 from collections.abc import Mapping
 from collections.abc import Sequence
+import unicodedata
 import re
 from typing import Any
 
@@ -18,6 +19,53 @@ from shared.normalization import normalize_text
 TICKER_PATTERN = re.compile(r"\b[A-ZÇĞİÖŞÜ]{4,5}\b")
 
 
+DEFAULT_TICKER_ALIASES: dict[str, list[str]] = {
+	"THYAO": ["türk hava yolları", "thy", "thyao", "turkish airlines"],
+	"SISE": ["şişecam", "sisecam", "trakya cam", "anadolu cam", "paşabahçe"],
+	"ASELS": ["aselsan", "asels", "aseisan"],
+	"KCHOL": ["koç holding", "koc holding", "koç"],
+	"FROTO": ["ford otosan", "ford otomotiv"],
+	"EREGL": ["ereğli", "eregli", "erdemir"],
+	"AKBNK": ["akbank", "ak bank"],
+	"GARAN": ["garanti", "garanti bbva"],
+	"TUPRS": ["tüpraş", "tupras"],
+	"SAHOL": ["sabancı", "sabanci", "sabancı holding", "hacı ömer sabancı"],
+	"BIMAS": ["bim", "bimas", "birleşik mağazalar"],
+	"YKBNK": ["yapı kredi", "yapi kredi", "yapikredi"],
+	"ISCTR": ["iş bankası", "is bankasi", "isbank"],
+	"HALKB": ["halkbank", "halk bankası", "halk bankasi"],
+	"VAKBN": ["vakıfbank", "vakifbank"],
+	"PGSUS": ["pegasus", "pegasus hava"],
+	"TCELL": ["turkcell", "türkcell"],
+	"TTKOM": ["türk telekom", "turk telekom", "ttkom"],
+	"ENKAI": ["enka", "enka inşaat", "enka insaat"],
+	"ALARK": ["alarko"],
+	"DOAS": ["doğuş otomotiv", "dogus otomotiv"],
+	"TOASO": ["tofaş", "tofas"],
+	"ARCLK": ["arçelik", "arcelik"],
+	"KOZAL": ["koza altın", "koza altin"],
+	"KOZAA": ["koza anadolu"],
+	"PETKM": ["petkim"],
+	"SASA": ["sasa polyester", "sasa"],
+	"HEKTS": ["hektaş", "hektas"],
+	"ODAS": ["odaş", "odas enerji"],
+	"KRDMD": ["kardemir", "krdmd"],
+	"MAVI": ["mavi giyim", "mavi"],
+	"MGROS": ["migros", "mgros"],
+	"ULKER": ["ülker", "ulker"],
+	"CCOLA": ["coca cola içecek", "coca cola icecek", "ccola"],
+	"EKGYO": ["emlak konut", "ekgyo"],
+	"GUBRF": ["gübretaş", "gubretas"],
+	"ISGYO": ["iş gyo", "is gyo"],
+	"KONTR": ["kontrolmatik", "kontr"],
+	"ASTOR": ["astor enerji", "astor"],
+	"CIMSA": ["çimsa", "cimsa"],
+	"OYAKC": ["oyak çimento", "oyak cimento"],
+	"VESTL": ["vestel"],
+	"ZOREN": ["zorlu enerji", "zoren"],
+}
+
+
 class NewsAnalyzer(BaseAnalyzer):
 	"""Analyze news sentiment and impact using configurable keyword scores."""
 
@@ -26,11 +74,38 @@ class NewsAnalyzer(BaseAnalyzer):
 	def __init__(self, keyword_config: Mapping[str, Mapping[str, int]] | None = None) -> None:
 		super().__init__()
 		self._keyword_config = keyword_config or {"positive": {}, "negative": {}}
+		self._ticker_aliases = {
+			ticker: sorted(set([ticker.lower(), *[alias.lower() for alias in aliases]]), key=len, reverse=True)
+			for ticker, aliases in DEFAULT_TICKER_ALIASES.items()
+		}
 
 	def set_keyword_config(self, keyword_config: Mapping[str, Mapping[str, int]]) -> None:
 		"""Update keyword scoring configuration at runtime."""
 
 		self._keyword_config = keyword_config
+
+	def set_ticker_alias_map(self, ticker_alias_map: Mapping[str, Sequence[str]]) -> None:
+		"""Update ticker-alias mapping used for company name based ticker detection."""
+
+		merged: dict[str, list[str]] = {
+			ticker: list(aliases)
+			for ticker, aliases in DEFAULT_TICKER_ALIASES.items()
+		}
+
+		for ticker, aliases in ticker_alias_map.items():
+			normalized_ticker = str(ticker).strip().upper()
+			if not normalized_ticker:
+				continue
+			merged.setdefault(normalized_ticker, [])
+			for alias in aliases:
+				alias_text = normalize_text(str(alias)).lower()
+				if alias_text and alias_text not in merged[normalized_ticker]:
+					merged[normalized_ticker].append(alias_text)
+
+		self._ticker_aliases = {
+			ticker: sorted(set([ticker.lower(), *aliases]), key=len, reverse=True)
+			for ticker, aliases in merged.items()
+		}
 
 	def analyze(
 		self,
@@ -57,8 +132,9 @@ class NewsAnalyzer(BaseAnalyzer):
 			if item_id in seen_ids:
 				continue
 
-			text = normalize_text(f"{title} {summary}").lower()
-			tickers = sorted(set(TICKER_PATTERN.findall(f"{title} {summary}")))
+			text_full = normalize_text(f"{title} {summary}")
+			text = text_full.lower()
+			tickers = self._detect_tickers(text_full)
 
 			positive_scores, positive_reasons = self._match_keywords(
 				text,
@@ -166,4 +242,30 @@ class NewsAnalyzer(BaseAnalyzer):
 		if score >= 45:
 			return "Medium"
 		return "Low"
+
+	def _detect_tickers(self, text: str) -> list[str]:
+		detected: set[str] = set()
+		upper_text = text.upper()
+		for token in TICKER_PATTERN.findall(upper_text):
+			normalized = self._normalize_ascii(token)
+			if normalized in {"KVKK", "BIST", "KAP", "SPK", "MKK", "VIOP"}:
+				continue
+			detected.add(normalized)
+
+		ascii_text = self._normalize_ascii(text)
+		for ticker, aliases in self._ticker_aliases.items():
+			for alias in aliases:
+				alias_ascii = self._normalize_ascii(alias)
+				if not alias_ascii:
+					continue
+				if f" {alias_ascii} " in f" {ascii_text} ":
+					detected.add(ticker)
+					break
+
+		return sorted(detected)
+
+	def _normalize_ascii(self, value: str) -> str:
+		decomposed = unicodedata.normalize("NFKD", value)
+		ascii_only = decomposed.encode("ascii", "ignore").decode("ascii")
+		return normalize_text(ascii_only).upper()
 

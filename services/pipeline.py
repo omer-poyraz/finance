@@ -54,14 +54,24 @@ REQUIRED_STORAGE_FILES = [
 
 DEFAULT_NEWS_KEYWORDS: dict[str, dict[str, int]] = {
     "positive": {
-        "ihale": 40,
-        "yatırım": 20,
-        "kapasite artışı": 30,
+        "ihale": 35,
+        "yatırım": 25,
+        "kapasite artışı": 28,
         "geri alım": 25,
-        "temettü": 15,
+        "temettü": 24,
         "bedelsiz": 35,
         "yeni sözleşme": 30,
-        "teşvik": 20,
+        "teşvik": 18,
+        "kontrat": 26,
+        "record kar": 28,
+        "rekor kar": 28,
+        "yeni fabrika": 24,
+        "yabancı yatırım": 26,
+        "new order": 22,
+        "hükümet projesi": 24,
+        "hukumet projesi": 24,
+        "sipariş": 18,
+        "siparis": 18,
     },
     "negative": {
         "sermaye azaltımı": -40,
@@ -71,6 +81,16 @@ DEFAULT_NEWS_KEYWORDS: dict[str, dict[str, int]] = {
         "zarar": -30,
         "dava": -25,
         "kredi notu düşürüldü": -35,
+        "soruşturma": -45,
+        "sorusturma": -45,
+        "deprem hasarı": -55,
+        "deprem hasari": -55,
+        "üretim duruşu": -60,
+        "uretim durusu": -60,
+        "yangın": -55,
+        "yangin": -55,
+        "zarar açıkladı": -38,
+        "zarar acikladi": -38,
     },
 }
 
@@ -92,6 +112,7 @@ class FinancePipelineService:
         self.storage = JsonStorage(settings.storage_data_dir)
         self.storage.ensure_default_files(REQUIRED_STORAGE_FILES)
         self.config_storage = JsonStorage("storage/config")
+        self._runtime_cache: dict[str, Any] = {}
         self._ensure_news_keyword_config()
         self._ensure_technical_scoring_config()
 
@@ -116,12 +137,12 @@ class FinancePipelineService:
             result = self.collector_manager.collect_one("news")
             payload = [asdict(item) for item in result.items]
             normalized = normalize_records(payload, required_keys=["title", "url"], source="news")
-            self.storage.save("news.json", normalized)
+            self._save_if_changed("news.json", normalized)
             return normalized
         except Exception as exc:
             logger.exception("News collection failed: %s", exc)
-            existing = self.storage.load("news.json", default=[])
-            self.storage.save("news.json", existing)
+            existing = self._load_cached("news.json", default=[])
+            self._save_if_changed("news.json", existing)
             return existing
 
     def collect_kap(self) -> list[dict[str, Any]]:
@@ -131,12 +152,12 @@ class FinancePipelineService:
             result = self.collector_manager.collect_one("kap")
             payload = [asdict(item) for item in result.items]
             normalized = normalize_records(payload, required_keys=["title", "url"], source="kap")
-            self.storage.save("kap.json", normalized)
+            self._save_if_changed("kap.json", normalized)
             return normalized
         except Exception as exc:
             logger.exception("KAP collection failed: %s", exc)
-            existing = self.storage.load("kap.json", default=[])
-            self.storage.save("kap.json", existing)
+            existing = self._load_cached("kap.json", default=[])
+            self._save_if_changed("kap.json", existing)
             return existing
 
     def collect_market(self) -> list[dict[str, Any]]:
@@ -146,12 +167,12 @@ class FinancePipelineService:
             result = self.collector_manager.collect_one("market")
             payload = [asdict(item) for item in result.items]
             normalized = normalize_records(payload, required_keys=["symbol", "name"], source="market")
-            self.storage.save("market.json", normalized)
+            self._save_if_changed("market.json", normalized)
             return normalized
         except Exception as exc:
             logger.exception("Market collection failed: %s", exc)
-            existing = self.storage.load("market.json", default=[])
-            self.storage.save("market.json", existing)
+            existing = self._load_cached("market.json", default=[])
+            self._save_if_changed("market.json", existing)
             return existing
 
     def collect_all(self) -> dict[str, int]:
@@ -224,7 +245,7 @@ class FinancePipelineService:
             frame = self._market_history_frame(rows)
             analysis_items.append(self._build_market_profile(ticker, frame, scoring))
 
-        self.storage.save("market_analysis.json", analysis_items)
+        self._save_if_changed("market_analysis.json", analysis_items)
 
         bullish = sum(1 for item in analysis_items if item.get("trend") == "Bullish")
         bearish = sum(1 for item in analysis_items if item.get("trend") == "Bearish")
@@ -242,8 +263,11 @@ class FinancePipelineService:
         keyword_config = self._load_news_keyword_config()
         self.news_analyzer.set_keyword_config(keyword_config)
 
-        news_payload = self.storage.load("news.json", default=[])
-        existing_analysis = self.storage.load("news_analysis.json", default=[])
+        news_payload = self._load_cached("news.json", default=[])
+        market_payload = self._load_cached("market.json", default=[])
+        self.news_analyzer.set_ticker_alias_map(self._build_ticker_alias_map(market_payload))
+
+        existing_analysis = self._load_cached("news_analysis.json", default=[])
         analyzed_ids = {
             str(item.get("id"))
             for item in existing_analysis
@@ -253,7 +277,7 @@ class FinancePipelineService:
         new_items = self.news_analyzer.analyze(news_payload, already_analyzed_ids=analyzed_ids)
         if new_items:
             combined = [*existing_analysis, *new_items]
-            self.storage.save("news_analysis.json", combined)
+            self._save_if_changed("news_analysis.json", combined)
         else:
             combined = existing_analysis
 
@@ -414,7 +438,7 @@ class FinancePipelineService:
                 }
             )
 
-        self.storage.save("ticker_news_summary.json", summaries)
+        self._save_if_changed("ticker_news_summary.json", summaries)
 
         positive = sum(1 for item in summaries if item.get("overall_news_sentiment") == "Positive")
         negative = sum(1 for item in summaries if item.get("overall_news_sentiment") == "Negative")
@@ -434,8 +458,8 @@ class FinancePipelineService:
         self.analyze_market()
         self.analyze_tickers()
 
-        market_analysis = self.storage.load("market_analysis.json", default=[])
-        ticker_news_summary = self.storage.load("ticker_news_summary.json", default=[])
+        market_analysis = self._load_cached("market_analysis.json", default=[])
+        ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
         news_by_ticker, default_news_score, news_reasons_by_ticker = self._news_lookup(ticker_news_summary)
 
         recommendations: list[dict[str, Any]] = []
@@ -494,6 +518,9 @@ class FinancePipelineService:
             if float(payload["overall_score"]) >= 70.0:
                 recommendations.append(payload)
 
+            if len(recommendations) >= 30:
+                continue
+
         recommendations.sort(
             key=lambda item: (
                 float(item.get("confidence", 0.0)),
@@ -502,8 +529,9 @@ class FinancePipelineService:
             ),
             reverse=True,
         )
-        self.storage.save("recommendations.json", recommendations)
-        return recommendations
+        top_recommendations = recommendations[:10]
+        self._save_if_changed("recommendations.json", top_recommendations)
+        return top_recommendations
 
     def notify_recommendations(self) -> dict[str, Any]:
         """Send latest recommendations via configured notifiers."""
@@ -543,18 +571,55 @@ class FinancePipelineService:
     def archive_today(self) -> list[dict[str, Any]]:
         """Archive current recommendations into history storage."""
 
-        recommendations = self.storage.load("recommendations.json", default=[])
+        recommendations = self._load_cached("recommendations.json", default=[])
         if not recommendations:
-            return self.storage.load("history.json", default=[])
+            return self._load_cached("history.json", default=[])
 
-        history = self.storage.load("history.json", default=[])
+        latest_market = self._market_close_lookup()
+
+        history = list(self._load_cached("history.json", default=[]))
+        date_text = datetime.now(UTC).date().isoformat()
+        enriched: list[dict[str, Any]] = []
+
+        for item in recommendations:
+            ticker = str(item.get("ticker") or "").strip().upper()
+            entry = float(item.get("entry_price") or 0.0)
+            stop = float(item.get("stop_loss") or 0.0)
+            tp1 = float(item.get("take_profit_1") or 0.0)
+            tp2 = float(item.get("take_profit_2") or 0.0)
+            close_price = float(latest_market.get(ticker) or 0.0)
+
+            result = "open"
+            if close_price > 0 and entry > 0:
+                if close_price <= stop:
+                    result = "stop_hit"
+                elif close_price >= tp2:
+                    result = "tp2_hit"
+                elif close_price >= tp1:
+                    result = "tp1_hit"
+                else:
+                    result = "open"
+
+            pnl_pct = ((close_price - entry) / entry * 100.0) if close_price > 0 and entry > 0 else 0.0
+            enriched_item = dict(item)
+            enriched_item.update(
+                {
+                    "close_price": round(close_price, 4) if close_price > 0 else None,
+                    "result": result,
+                    "profit_pct": round(max(pnl_pct, 0.0), 4),
+                    "loss_pct": round(abs(min(pnl_pct, 0.0)), 4),
+                    "holding_days": 1,
+                }
+            )
+            enriched.append(enriched_item)
+
         history.append(
             {
-                "date": datetime.now(UTC).date().isoformat(),
-                "recommendations": recommendations,
+                "date": date_text,
+                "recommendations": enriched,
             }
         )
-        self.storage.save("history.json", history)
+        self._save_if_changed("history.json", history)
         return history
 
     def get_history(self) -> list[dict[str, Any]]:
@@ -646,6 +711,38 @@ class FinancePipelineService:
                 }
             )
 
+        if 1 <= len(prepared) < 60:
+            latest = prepared[-1]
+            close_now = float(latest["close"])
+            change_pct = float(latest.get("daily_change_pct") or 0.0) / 100.0
+            previous_close = close_now / (1.0 + change_pct) if abs(1.0 + change_pct) > 1e-9 else close_now
+
+            points_needed = 60 - len(prepared)
+            seed_close = max(0.01, previous_close)
+            drift = (close_now - seed_close) / max(1, points_needed)
+            base_volume = max(1.0, float(latest.get("volume") or 1.0))
+
+            synthetic: list[dict[str, float]] = []
+            for step in range(points_needed, 0, -1):
+                synthetic_close = max(0.01, close_now - (drift * step))
+                synthetic_open = synthetic_close * (1.0 - (change_pct * 0.25))
+                synthetic_high = max(synthetic_open, synthetic_close) * 1.005
+                synthetic_low = min(synthetic_open, synthetic_close) * 0.995
+                synthetic_volume = max(1.0, base_volume * (0.9 + min(step / 120.0, 0.1)))
+
+                synthetic.append(
+                    {
+                        "open": float(synthetic_open),
+                        "high": float(synthetic_high),
+                        "low": float(synthetic_low),
+                        "close": float(synthetic_close),
+                        "volume": float(synthetic_volume),
+                        "daily_change_pct": float(change_pct * 100.0),
+                    }
+                )
+
+            prepared = [*synthetic, *prepared]
+
         if not prepared:
             prepared.append(
                 {
@@ -671,6 +768,7 @@ class FinancePipelineService:
 
         ema20_series = ema(close, 20)
         ema50_series = ema(close, 50)
+        ema200_series = ema(close, 200)
         sma20_series = sma(close, 20)
         rsi14_series = rsi(close, 14)
         macd_frame = macd(close)
@@ -688,6 +786,7 @@ class FinancePipelineService:
         gap_down = bool(gap_frame["gap_down"].iloc[-1])
         ema20_value = float(ema20_series.iloc[-1])
         ema50_value = float(ema50_series.iloc[-1])
+        ema200_value = float(ema200_series.iloc[-1])
         sma20_value = float(sma20_series.iloc[-1])
         rsi14_value = float(rsi14_series.iloc[-1])
         macd_value = float(macd_frame["macd"].iloc[-1])
@@ -695,13 +794,13 @@ class FinancePipelineService:
         atr_value = float(atr_series.iloc[-1])
         boll_upper = float(boll["upper"].iloc[-1])
         boll_lower = float(boll["lower"].iloc[-1])
-        support = float(frame["low"].rolling(window=20, min_periods=1).min().iloc[-1])
-        resistance = float(frame["high"].rolling(window=20, min_periods=1).max().iloc[-1])
+        support = float(frame["low"].rolling(window=50, min_periods=1).min().iloc[-1])
+        resistance = float(frame["high"].rolling(window=50, min_periods=1).max().iloc[-1])
 
         trend = "Neutral"
-        if ema20_value > ema50_value:
+        if ema20_value > ema50_value > ema200_value and price >= ema20_value:
             trend = "Bullish"
-        elif ema20_value < ema50_value:
+        elif ema20_value < ema50_value < ema200_value and price <= ema20_value:
             trend = "Bearish"
 
         macd_state = "Neutral"
@@ -718,6 +817,10 @@ class FinancePipelineService:
             weighted_points += float(scoring.get("ema_cross", 0.0))
             reasons.append("EMA20 above EMA50")
 
+        if ema50_value > ema200_value:
+            weighted_points += float(scoring.get("trend", 0.0)) * 0.5
+            reasons.append("EMA50 above EMA200")
+
         if macd_state == "Bullish":
             weighted_points += float(scoring.get("macd_cross", 0.0))
             reasons.append("MACD bullish crossover")
@@ -731,18 +834,25 @@ class FinancePipelineService:
             weighted_points += volume_weight * min(relative_volume / 2.0, 1.0)
             reasons.append("Volume above average")
 
-        if 40.0 <= rsi14_value <= 60.0:
+        if 45.0 <= rsi14_value <= 62.0:
             weighted_points += float(scoring.get("rsi", 0.0))
-            reasons.append("RSI in balanced bullish zone")
+            reasons.append("RSI in healthy zone")
         elif 30.0 <= rsi14_value < 40.0:
             weighted_points += float(scoring.get("rsi", 0.0)) * 0.5
             reasons.append("RSI recovery zone")
+        elif 62.0 < rsi14_value <= 70.0:
+            weighted_points += float(scoring.get("rsi", 0.0)) * 0.35
+            reasons.append("RSI strong but elevated")
 
         if trend == "Bullish":
             weighted_points += float(scoring.get("trend", 0.0))
             reasons.append("Overall trend bullish")
         elif trend == "Neutral":
             weighted_points += float(scoring.get("trend", 0.0)) * 0.5
+
+        if price <= support * 1.03:
+            weighted_points += float(scoring.get("gap", 0.0)) * 0.35
+            reasons.append("Support bounce zone")
 
         technical_score = int(round(max(0.0, min(100.0, (weighted_points / total_weight) * 100.0))))
         if not reasons:
@@ -883,3 +993,65 @@ class FinancePipelineService:
         if score <= 45.0:
             return "Negative"
         return "Neutral"
+
+    def _build_ticker_alias_map(self, market_payload: list[dict[str, Any]]) -> dict[str, list[str]]:
+        alias_map: dict[str, list[str]] = {}
+        for item in market_payload:
+            ticker = str(item.get("symbol") or "").strip().upper()
+            name = str(item.get("name") or item.get("company_name") or "").strip()
+            if not ticker or not name:
+                continue
+
+            aliases = {
+                name.lower(),
+                name.replace("A.Ş.", "").replace("A.S.", "").strip().lower(),
+                name.replace("SANAYİ", "").replace("SANAYI", "").strip().lower(),
+                name.split(" ")[0].strip().lower(),
+            }
+            clean_aliases = [alias for alias in aliases if len(alias) >= 3]
+            if clean_aliases:
+                alias_map.setdefault(ticker, [])
+                alias_map[ticker].extend(clean_aliases)
+
+        deduped: dict[str, list[str]] = {}
+        for ticker, aliases in alias_map.items():
+            seen: set[str] = set()
+            unique: list[str] = []
+            for alias in aliases:
+                if alias in seen:
+                    continue
+                seen.add(alias)
+                unique.append(alias)
+            deduped[ticker] = unique[:8]
+        return deduped
+
+    def _market_close_lookup(self) -> dict[str, float]:
+        market_payload = self._load_cached("market.json", default=[])
+        close_by_ticker: dict[str, float] = {}
+        for item in market_payload:
+            ticker = str(item.get("symbol") or "").strip().upper()
+            price = float(item.get("last_price") or item.get("current_price") or 0.0)
+            if ticker and price > 0:
+                close_by_ticker[ticker] = price
+        return close_by_ticker
+
+    def _load_cached(self, filename: str, default: Any | None = None) -> Any:
+        if filename in self._runtime_cache:
+            return self._runtime_cache[filename]
+
+        payload = self.storage.load(filename, default=default)
+        self._runtime_cache[filename] = payload
+        return payload
+
+    def _save_if_changed(self, filename: str, payload: Any) -> Any:
+        current = self._runtime_cache.get(filename)
+        if current is None:
+            current = self.storage.load(filename, default=None) if self.storage.exists(filename) else None
+
+        if current == payload:
+            self._runtime_cache[filename] = payload
+            return payload
+
+        saved = self.storage.save(filename, payload)
+        self._runtime_cache[filename] = saved
+        return saved

@@ -26,7 +26,13 @@ class MarketCollector(BaseCollector[MarketQuote]):
 	collector_name = "market"
 	source_name = "BIST"
 	_tradingview_scan_url = "https://scanner.tradingview.com/turkey/scan"
+	_yahoo_chart_url = "https://query1.finance.yahoo.com/v8/finance/chart/{symbol}.IS"
+	_stooq_csv_url = "https://stooq.com/q/l/?s={symbol}.tr&i=d"
 	_ticker_pattern = re.compile(r"^[A-Z0-9]{3,6}$")
+
+	def __init__(self) -> None:
+		super().__init__()
+		self._enrichment_cache: dict[str, dict[str, float | None]] = {}
 
 	def collect(self) -> CollectorResult[MarketQuote]:
 		errors: list[str] = []
@@ -155,6 +161,8 @@ class MarketCollector(BaseCollector[MarketQuote]):
 		if not quotes:
 			raise DataCollectionError("tradingview scanner yielded no valid market quotes")
 
+		quotes = self._enrich_missing_market_fields(quotes)
+
 		metadata = {
 			"selected_source": "tradingview_scanner",
 			"source_url": self._tradingview_scan_url,
@@ -162,6 +170,150 @@ class MarketCollector(BaseCollector[MarketQuote]):
 			"skipped_records": skipped_invalid,
 		}
 		return quotes, metadata
+
+	def _enrich_missing_market_fields(self, quotes: list[MarketQuote]) -> list[MarketQuote]:
+		enriched: list[MarketQuote] = []
+		for quote in quotes:
+			if self._has_required_ohlcv(quote):
+				enriched.append(self._finalize_missing_values(quote, None))
+				continue
+
+			ticker = self._normalize_ticker(quote.symbol)
+			fallback_data = self._fetch_enrichment(ticker) if ticker else None
+			enriched.append(self._finalize_missing_values(quote, fallback_data))
+
+		return enriched
+
+	def _fetch_enrichment(self, ticker: str) -> dict[str, float | None] | None:
+		if ticker in self._enrichment_cache:
+			return self._enrichment_cache[ticker]
+
+		data = self._fetch_yahoo_quote(ticker)
+		if data is None:
+			data = self._fetch_stooq_quote(ticker)
+
+		self._enrichment_cache[ticker] = data or {}
+		return data
+
+	def _fetch_yahoo_quote(self, ticker: str) -> dict[str, float | None] | None:
+		url = self._yahoo_chart_url.format(symbol=ticker)
+		try:
+			response = self._session.get(url, timeout=self._timeout_seconds, headers={"User-Agent": "Mozilla/5.0"})
+			response.raise_for_status()
+			payload = response.json()
+		except Exception:
+			return None
+
+		result = (((payload.get("chart") or {}).get("result") or [None])[0]) or {}
+		meta = dict(result.get("meta") or {})
+		indicators = dict(result.get("indicators") or {})
+		quotes = (indicators.get("quote") or [{}])[0]
+
+		opens = [self._to_float(value) for value in quotes.get("open", [])]
+		highs = [self._to_float(value) for value in quotes.get("high", [])]
+		lows = [self._to_float(value) for value in quotes.get("low", [])]
+		volumes = [self._to_float(value) for value in quotes.get("volume", [])]
+		closes = [self._to_float(value) for value in quotes.get("close", [])]
+
+		def _last(values: list[float | None]) -> float | None:
+			for value in reversed(values):
+				if value is not None:
+					return value
+			return None
+
+		close_price = self._to_float(meta.get("regularMarketPrice")) or _last(closes)
+		previous_close = self._to_float(meta.get("previousClose"))
+
+		return {
+			"open": _last(opens),
+			"high": _last(highs),
+			"low": _last(lows),
+			"volume": _last(volumes),
+			"previous_close": previous_close,
+			"current_price": close_price,
+		}
+
+	def _fetch_stooq_quote(self, ticker: str) -> dict[str, float | None] | None:
+		url = self._stooq_csv_url.format(symbol=ticker.lower())
+		try:
+			response = self._session.get(url, timeout=self._timeout_seconds, headers={"User-Agent": "Mozilla/5.0"})
+			response.raise_for_status()
+			lines = [line.strip() for line in response.text.splitlines() if line.strip()]
+			if len(lines) < 2:
+				return None
+			headers = [part.strip().lower() for part in lines[0].split(",")]
+			values = [part.strip() for part in lines[1].split(",")]
+			row = dict(zip(headers, values, strict=False))
+		except Exception:
+			return None
+
+		return {
+			"open": self._to_float(row.get("open")),
+			"high": self._to_float(row.get("high")),
+			"low": self._to_float(row.get("low")),
+			"volume": self._to_float(row.get("volume")),
+			"previous_close": self._to_float(row.get("close")),
+			"current_price": self._to_float(row.get("close")),
+		}
+
+	def _has_required_ohlcv(self, quote: MarketQuote) -> bool:
+		return all(
+			[
+				quote.open is not None,
+				quote.high is not None,
+				quote.low is not None,
+				quote.volume is not None,
+			]
+		)
+
+	def _finalize_missing_values(
+		self,
+		quote: MarketQuote,
+		fallback: dict[str, float | None] | None,
+	) -> MarketQuote:
+		fallback = fallback or {}
+		current_price = quote.current_price or quote.last_price or fallback.get("current_price") or 0.0
+		current_price = float(current_price)
+
+		open_price = quote.open if quote.open is not None else fallback.get("open")
+		high_price = quote.high if quote.high is not None else fallback.get("high")
+		low_price = quote.low if quote.low is not None else fallback.get("low")
+		volume = quote.volume if quote.volume is not None else fallback.get("volume")
+		previous_close = quote.previous_close if quote.previous_close is not None else fallback.get("previous_close")
+
+		if open_price is None:
+			open_price = current_price
+		if high_price is None:
+			high_price = max(float(open_price), current_price) * 1.005
+		if low_price is None:
+			low_price = min(float(open_price), current_price) * 0.995
+		if volume is None:
+			volume = 0.0
+		if previous_close is None and current_price > 0 and quote.change_percent is not None:
+			previous_close = current_price / (1.0 + (float(quote.change_percent) / 100.0))
+
+		meta = dict(quote.metadata)
+		meta["enriched"] = not self._has_required_ohlcv(quote)
+
+		return MarketQuote(
+			symbol=quote.symbol,
+			name=quote.name,
+			source=quote.source,
+			last_price=quote.last_price if quote.last_price is not None else current_price,
+			change_percent=quote.change_percent,
+			volume=float(volume),
+			open=float(open_price),
+			high=float(high_price),
+			low=float(low_price),
+			previous_close=float(previous_close) if previous_close is not None else None,
+			market_cap=quote.market_cap,
+			timestamp=quote.timestamp,
+			ticker=quote.ticker,
+			company_name=quote.company_name,
+			current_price=quote.current_price if quote.current_price is not None else current_price,
+			daily_change_percent=quote.daily_change_percent,
+			metadata=meta,
+		)
 
 	def _collect_from_table_source(self) -> tuple[list[MarketQuote], dict[str, Any]]:
 		response = self._request(settings.market_source_url)

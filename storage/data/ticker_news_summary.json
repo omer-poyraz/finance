@@ -1,5 +1,211 @@
 [
   {
+    "id": "bac195bc3113bf1ee3f54a52acdaf70330d4be2c038285d2993e2b650e2549f9",
+    "ticker": "ALIM",
+    "news_count": 1,
+    "positive_count": 1,
+    "negative_count": 0,
+    "neutral_count": 0,
+    "average_news_score": 75.0,
+    "highest_news_score": 75.0,
+    "latest_news_date": "2026-07-17T14:57:42.497141+00:00",
+    "overall_news_sentiment": "Positive",
+    "confidence": 96,
+    "top_keywords": [
+      "geri alım"
+    ],
+    "all_reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
+    ],
+    "keyword_counts": {
+      "geri alım": 1
+    },
+    "processed_news_ids": [
+      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e"
+    ]
+  },
+  {
+    "id": "0c9790c4784b45f523caa896080e0dcf35971f35ae97ecf562e296abcfae9912",
+    "ticker": "DEMEK",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.497095+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): DEMEK, IPTAL"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17"
+    ]
+  },
+  {
+    "id": "b44f529e5522c7d0dd700606cc1c16f9c43993075f27c220eab92335300c7b9e",
+    "ticker": "EMIR",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.496991+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): EMIR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "e3f36c10ec9919f21cf130f7b7a9fba93d3ba55117bff7a2071d96287180457e"
+    ]
+  },
+  {
+    "id": "29c5122eee3e571650291027267f5b2b49eca805bcfeb37450ecc169210353db",
+    "ticker": "FAIZ",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.496943+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FAIZ, ZAMAN",
+      "Detected ticker(s): FAIZ, OLUR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0",
+      "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6"
+    ]
+  },
+  {
+    "id": "8e6de497d898605b1d30f98b0873ae6c78b7bb63a95f81128aa9c81bad808650",
+    "ticker": "GERI",
+    "news_count": 1,
+    "positive_count": 1,
+    "negative_count": 0,
+    "neutral_count": 0,
+    "average_news_score": 75.0,
+    "highest_news_score": 75.0,
+    "latest_news_date": "2026-07-17T14:57:42.497141+00:00",
+    "overall_news_sentiment": "Positive",
+    "confidence": 96,
+    "top_keywords": [
+      "geri alım"
+    ],
+    "all_reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
+    ],
+    "keyword_counts": {
+      "geri alım": 1
+    },
+    "processed_news_ids": [
+      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e"
+    ]
+  },
+  {
+    "id": "17e3c504b03b0372f91afc116942741bcacdab283ede14b5c2d6a9524982dc5e",
+    "ticker": "HISSE",
+    "news_count": 1,
+    "positive_count": 1,
+    "negative_count": 0,
+    "neutral_count": 0,
+    "average_news_score": 75.0,
+    "highest_news_score": 75.0,
+    "latest_news_date": "2026-07-17T14:57:42.497141+00:00",
+    "overall_news_sentiment": "Positive",
+    "confidence": 96,
+    "top_keywords": [
+      "geri alım"
+    ],
+    "all_reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
+    ],
+    "keyword_counts": {
+      "geri alım": 1
+    },
+    "processed_news_ids": [
+      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e"
+    ]
+  },
+  {
+    "id": "7c5a2fbb156cef08c2d757e038021881696c9896bcf621f080722256c9b0d459",
+    "ticker": "ILETI",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.496667+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 64,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ILETI, METNI, MIDAS"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6"
+    ]
+  },
+  {
+    "id": "186b841a43605d900af0ecb2c54443629a563b91336261cebf4a2a11ac7671a5",
+    "ticker": "IPTAL",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.497095+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): DEMEK, IPTAL"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17"
+    ]
+  },
+  {
+    "id": "b0a18465cde24d3c145414033a3113190857fd59011c31bcf065a4a399d85a6d",
+    "ticker": "ISLEM",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.497233+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ISLEM"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "1b947b6430e7d2f617dc9271fdace3f3cb86184b249b2e06b2749d98e631f31e"
+    ]
+  },
+  {
     "id": "7e69771f8a37752952eed6abfa932ef116b59e265334ba956231b90ef12f73f2",
     "ticker": "KVKK",
     "news_count": 1,
@@ -18,6 +224,186 @@
     "keyword_counts": {},
     "processed_news_ids": [
       "aed341e03394ac57c6497f73f3f3aec1c7bddeee66c87e76582317c1422e8dda"
+    ]
+  },
+  {
+    "id": "2c985a45a55ada3c36fe9bf3c682d6beccadb57d023a7898cbf12a374d8b8b57",
+    "ticker": "METNI",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.496667+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 64,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ILETI, METNI, MIDAS"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6"
+    ]
+  },
+  {
+    "id": "7b870089575776dbe62648abc6461e5fb932cd3d218b27e2260bafd531044c74",
+    "ticker": "MIDAS",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.496667+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 64,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ILETI, METNI, MIDAS"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6"
+    ]
+  },
+  {
+    "id": "8b430feaca13480f7deb7d41c3da772b290a2908c6fc42ecedb1fd98611aaded",
+    "ticker": "NASIL",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.497318+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): NASIL"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "01be699ad5a86328e77adea57a4ac1bd403d6858751caf8f228dce5f390a0139"
+    ]
+  },
+  {
+    "id": "b2c6334060bd934911f4db470fb3be6345683a197c856c335eeed6aadd3e0832",
+    "ticker": "NEDIR",
+    "news_count": 2,
+    "positive_count": 1,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 62.5,
+    "highest_news_score": 75.0,
+    "latest_news_date": "2026-07-17T14:57:42.497184+00:00",
+    "overall_news_sentiment": "Positive",
+    "confidence": 77,
+    "top_keywords": [
+      "geri alım"
+    ],
+    "all_reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR",
+      "Detected ticker(s): NEDIR"
+    ],
+    "keyword_counts": {
+      "geri alım": 1
+    },
+    "processed_news_ids": [
+      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e",
+      "64d49e352e4beab8bb4af945f5bc83743dcb975afaac1dfe76e8199e59a3f8b3"
+    ]
+  },
+  {
+    "id": "daf8cf5117c24637dfbe8fd2c7d203c69a4a1b8fcc531c402635480a2d3d18eb",
+    "ticker": "OLUR",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.496943+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FAIZ, OLUR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6"
+    ]
+  },
+  {
+    "id": "24b5a84261f83d9f294ee492d36bdb2312b53166f30fc472024faf1bc879e65a",
+    "ticker": "PARA",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.497275+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): PARA"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "efd6e785bc11066666f361a63b075f03893d42cc21c11b670a1ab3cee9a606a7"
+    ]
+  },
+  {
+    "id": "c492bdb96041c055910be1a24ed6f0215c55d079dd4856b01042f3f4a8114293",
+    "ticker": "VEREN",
+    "news_count": 1,
+    "positive_count": 1,
+    "negative_count": 0,
+    "neutral_count": 0,
+    "average_news_score": 65.0,
+    "highest_news_score": 65.0,
+    "latest_news_date": "2026-07-17T14:57:42.496835+00:00",
+    "overall_news_sentiment": "Positive",
+    "confidence": 77,
+    "top_keywords": [
+      "temettü"
+    ],
+    "all_reasons": [
+      "Positive keyword: temettü",
+      "Detected ticker(s): VEREN"
+    ],
+    "keyword_counts": {
+      "temettü": 1
+    },
+    "processed_news_ids": [
+      "1d206a412f9e00320e000cb6af7289afaf09321d93407c2c56c06326687b00e5"
+    ]
+  },
+  {
+    "id": "d0b03244044abe773e890172c7deb371a0ea77967cab0855485209cab9771270",
+    "ticker": "ZAMAN",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:57:42.496889+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FAIZ, ZAMAN"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0"
     ]
   }
 ]

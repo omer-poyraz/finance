@@ -6,10 +6,22 @@ from datetime import UTC
 from datetime import datetime
 import hashlib
 import re
+from urllib.parse import parse_qsl
+from urllib.parse import urlparse
+from urllib.parse import urlunparse
+from urllib.parse import urlencode
 from typing import Any
 
 
 _WHITESPACE_PATTERN = re.compile(r"\s+")
+_PUNCT_PATTERN = re.compile(r"[^\w\s]")
+_COMMON_NEWS_PREFIXES = (
+    "son dakika",
+    "flaş",
+    "flas",
+    "güncel",
+    "guncel",
+)
 
 
 def normalize_text(value: str) -> str:
@@ -43,6 +55,45 @@ def build_item_id(*parts: str) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def canonicalize_url(value: str) -> str:
+    """Normalize URL for stable deduplication across source variants."""
+
+    text = normalize_text(value)
+    if not text:
+        return ""
+
+    parsed = urlparse(text)
+    scheme = parsed.scheme.lower() or "https"
+    netloc = parsed.netloc.lower()
+    if netloc.startswith("www."):
+        netloc = netloc[4:]
+    path = re.sub(r"/+", "/", parsed.path).rstrip("/")
+
+    query_pairs = []
+    for key, val in parse_qsl(parsed.query, keep_blank_values=False):
+        lowered_key = key.lower()
+        if lowered_key.startswith("utm_") or lowered_key in {"fbclid", "gclid", "ref", "source"}:
+            continue
+        query_pairs.append((key, val))
+    query = urlencode(sorted(query_pairs))
+
+    return urlunparse((scheme, netloc, path, "", query, ""))
+
+
+def canonicalize_news_title(value: str) -> str:
+    """Normalize news titles for cross-site duplicate collapsing."""
+
+    text = normalize_text(value).lower()
+    for prefix in _COMMON_NEWS_PREFIXES:
+        if text.startswith(prefix + " "):
+            text = text[len(prefix):].strip()
+            break
+
+    text = _PUNCT_PATTERN.sub(" ", text)
+    text = normalize_text(text)
+    return text
+
+
 def normalize_records(
     records: list[dict[str, Any]],
     *,
@@ -65,10 +116,25 @@ def normalize_records(
             else:
                 transformed[key] = value
 
+        if source == "news":
+            normalized_title = canonicalize_news_title(str(transformed.get("title", "")))
+            normalized_url = canonicalize_url(str(transformed.get("url", "")))
+            if not normalized_title or not normalized_url:
+                continue
+
         transformed["source"] = source
         transformed["collected_at"] = normalize_datetime(record.get("published_at"))
 
-        key_basis = [str(transformed.get(key, "")) for key in required_keys]
+        if source == "news":
+            time_bucket = str(transformed.get("collected_at", ""))[:10]
+            key_basis = [
+                normalized_title,
+                normalized_url,
+                time_bucket,
+            ]
+        else:
+            key_basis = [str(transformed.get(key, "")) for key in required_keys]
+
         item_id = build_item_id(*key_basis, source)
         transformed["id"] = item_id
 

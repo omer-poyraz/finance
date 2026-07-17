@@ -1,0 +1,18 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Start Project",
+            "type": "shell",
+            "command": "${config:python.defaultInterpreterPath}",
+            "args": [
+                "-m",
+                "uvicorn",
+                "main:app",
+                "--reload"
+            ],
+            "group": "build",
+            "problemMatcher": []
+        }
+    ]
+}

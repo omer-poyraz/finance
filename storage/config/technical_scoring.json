@@ -1,0 +1,8 @@
+{
+  "ema_cross": 20,
+  "macd_cross": 20,
+  "gap": 20,
+  "volume": 15,
+  "rsi": 15,
+  "trend": 10
+}

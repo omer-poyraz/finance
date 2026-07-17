@@ -1,0 +1,23 @@
+[
+  {
+    "id": "7e69771f8a37752952eed6abfa932ef116b59e265334ba956231b90ef12f73f2",
+    "ticker": "KVKK",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-17T14:09:11.454932+00:00",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): KVKK"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "aed341e03394ac57c6497f73f3f3aec1c7bddeee66c87e76582317c1422e8dda"
+    ]
+  }
+]

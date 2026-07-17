@@ -1,0 +1,21 @@
+{
+  "positive": {
+    "ihale": 40,
+    "yatırım": 20,
+    "kapasite artışı": 30,
+    "geri alım": 25,
+    "temettü": 15,
+    "bedelsiz": 35,
+    "yeni sözleşme": 30,
+    "teşvik": 20
+  },
+  "negative": {
+    "sermaye azaltımı": -40,
+    "konkordato": -100,
+    "iflas": -100,
+    "ceza": -70,
+    "zarar": -30,
+    "dava": -25,
+    "kredi notu düşürüldü": -35
+  }
+}

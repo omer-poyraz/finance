@@ -25,17 +25,29 @@ def _market_frame() -> pd.DataFrame:
 
 
 def test_news_analyzer_scores_positive_headlines_higher() -> None:
-    analyzer = NewsAnalyzer()
+    analyzer = NewsAnalyzer(
+        {
+            "positive": {
+                "yeni sozlesme": 30,
+                "rekor kar": 28,
+                "yatirim": 25,
+                "temettu": 24,
+                "kapasite artisi": 28,
+                "siparis": 18,
+            },
+            "negative": {},
+        }
+    )
     score = analyzer.score(
         [
             NewsItem(
-                title="Company announces strong profit growth and new contract",
+                title="Sirket yeni sozlesme ile rekor kar ve yatirim acikladi",
                 url="https://example.com/1",
                 source="test",
                 published_at=datetime.now(UTC),
             ),
             NewsItem(
-                title="Upgrade after record quarter and positive outlook",
+                title="Temettu ve kapasite artisi aciklandi, yeni siparis geldi",
                 url="https://example.com/2",
                 source="test",
                 published_at=datetime.now(UTC),

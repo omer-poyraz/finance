@@ -25,6 +25,10 @@ class Settings:
         "NEWS_SOURCE_URL",
         "https://www.getmidas.com/",
     )
+    news_sources: str = os.getenv(
+        "NEWS_SOURCES",
+        "https://www.getmidas.com/|https://www.getmidas.com/borsa-haberleri/|https://www.kap.org.tr/tr/rss|https://www.borsaistanbul.com/tr/rss|https://feeds.finance.yahoo.com/rss/2.0/headline?s=THYAO.IS,SISE.IS,ASELS.IS&region=TR&lang=tr-TR|https://www.bloomberght.com/rss",
+    )
     kap_source_url: str = os.getenv(
         "KAP_SOURCE_URL",
         "https://www.kap.org.tr/tr/bildirim-sorgu",
@@ -40,6 +44,10 @@ class Settings:
     whatsapp_phone_number_id: str = os.getenv("WHATSAPP_PHONE_NUMBER_ID", "")
     whatsapp_access_token: str = os.getenv("WHATSAPP_ACCESS_TOKEN", "")
     whatsapp_recipient_phone: str = os.getenv("WHATSAPP_RECIPIENT_PHONE", "")
+    telegram_bot_token: str = os.getenv("TELEGRAM_BOT_TOKEN", "")
+    telegram_chat_id: str = os.getenv("TELEGRAM_CHAT_ID", "")
+    gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
+    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     storage_data_dir: str = os.getenv("STORAGE_DATA_DIR", "storage/data")
 
     @property
@@ -66,6 +74,19 @@ class Settings:
                 self.whatsapp_recipient_phone,
             ]
         )
+
+    @property
+    def telegram_configured(self) -> bool:
+        """Return whether Telegram Bot API credentials are present."""
+
+        return bool(self.telegram_bot_token and self.telegram_chat_id)
+
+    @property
+    def news_source_list(self) -> list[str]:
+        """Return configured multi-source news URLs from environment."""
+
+        values = [item.strip() for item in self.news_sources.split("|")]
+        return [item for item in values if item]
 
 
 settings = Settings()

@@ -1,23 +1,29 @@
 {
-  "timestamp": "2026-07-17T14:09:41.627079+00:00",
+  "timestamp": "2026-07-18T20:44:32.370283+00:00",
   "scores": {
-    "news": 50.44444444444444,
-    "technical": 22.0,
-    "risk": 92.0,
-    "financial": 70.6
+    "news": 54.891304347826086,
+    "technical": 5.0,
+    "risk": 10.0,
+    "financial": 62.0
+  },
+  "news_intelligence": {
+    "analyzed": 46,
+    "positive": 9,
+    "negative": 0,
+    "neutral": 37
   },
   "reasons": {
     "news": [
-      "News score is weak (50.4)"
+      "News score is weak (54.9)"
     ],
     "technical": [
-      "Technical score is weak (22.0)"
+      "Technical score is weak (5.0)"
     ],
     "risk": [
-      "Risk score is strong (92.0)"
+      "Risk score is weak (10.0)"
     ],
     "financial": [
-      "Financial score is moderate (70.6)"
+      "Financial score is moderate (62.0)"
     ]
   }
 }

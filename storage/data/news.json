@@ -3,126 +3,1073 @@
     "title": "Midas Elektronik Ticari İleti Kuralları ve Bilgilendirme Metni",
     "url": "https://webcdn.getmidas.com/uploads/2025/09/19200930/Midas-Elektronik-Ticari-Ileti-Kurallari-ve-Bilgilendirme-Metni-v1.pdf",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720153+00:00",
-    "id": "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Midas Elektronik Ticari\", \"İleti Kuralları\", \"Bilgilendirme Metni\"], \"ticker_candidates\": [\"METNI\", \"MIDAS\", \"İLETI\"], \"detected_tickers\": [\"METNI\", \"MIDAS\", \"İLETI\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Midas Elektronik Ticari",
+      "İleti Kuralları",
+      "Bilgilendirme Metni"
+    ],
+    "ticker_candidates": [
+      "METNI",
+      "MIDAS",
+      "İLETI"
+    ],
+    "detected_tickers": [
+      "METNI",
+      "MIDAS",
+      "İLETI"
+    ],
+    "collected_at": "2026-07-18T21:26:22.037847+00:00",
+    "id": "70c68d047ffd27499efe9f7453a77ac7fdc2f990c8cbb66a4017e80a7e0237a2"
   },
   {
     "title": "KVKK Aydınlatma Metnini",
     "url": "https://webcdn.getmidas.com/uploads/2025/09/19200929/Midas-Aydinlatma-Metni-v1.pdf",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720235+00:00",
-    "id": "f7663e6752fab4c6932f682759176041a233d3c2a41d93b9ffd7b33290830597"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Aydınlatma Metnini\"], \"ticker_candidates\": [\"KVKK\"], \"detected_tickers\": [\"KVKK\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Aydınlatma Metnini"
+    ],
+    "ticker_candidates": [
+      "KVKK"
+    ],
+    "detected_tickers": [
+      "KVKK"
+    ],
+    "collected_at": "2026-07-18T21:26:22.038843+00:00",
+    "id": "6f3edec81ce61cb93f1d4ef962f33e8cd2d3bea25cfeaee1c4299e97c603af6e"
   },
   {
     "title": "Temettü Veren Hisseler",
     "url": "https://www.getmidas.com/midasin-kulaklari/son-10-yilda-duzenli-temettu-veren-hisseler-p-18957",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720285+00:00",
-    "id": "1d206a412f9e00320e000cb6af7289afaf09321d93407c2c56c06326687b00e5"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Temettü Veren Hisseler\"], \"ticker_candidates\": [\"VEREN\"], \"detected_tickers\": [\"VEREN\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Temettü Veren Hisseler"
+    ],
+    "ticker_candidates": [
+      "VEREN"
+    ],
+    "detected_tickers": [
+      "VEREN"
+    ],
+    "collected_at": "2026-07-18T21:26:22.038843+00:00",
+    "id": "c8e4e92b5e6c5bb72c729524a7546ea438d4417b5a98eca637811998255aac16"
   },
   {
     "title": "Fed Faiz Kararı Ne Zaman",
     "url": "https://www.getmidas.com/midasin-kulaklari/fed-faiz-karari-ne-zaman-2-p-30758",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720333+00:00",
-    "id": "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Fed Faiz Kararı\", \"Ne Zaman\"], \"ticker_candidates\": [\"FAIZ\", \"ZAMAN\"], \"detected_tickers\": [\"FAIZ\", \"ZAMAN\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Fed Faiz Kararı",
+      "Ne Zaman"
+    ],
+    "ticker_candidates": [
+      "FAIZ",
+      "ZAMAN"
+    ],
+    "detected_tickers": [
+      "FAIZ",
+      "ZAMAN"
+    ],
+    "collected_at": "2026-07-18T21:26:22.038843+00:00",
+    "id": "4c77d3a174cadd268ff55d6b05551e73463cecf709a575775c5cb4b80ac27fb9"
   },
   {
     "title": "Fed Faiz Arttırsa Ne Olur?",
     "url": "https://www.getmidas.com/midas-akademi/fed-faiz-artirirsa-ne-olur-fed-faiz-karari-ne-zaman/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720384+00:00",
-    "id": "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Fed Faiz Arttırsa\", \"Ne Olur\"], \"ticker_candidates\": [\"FAIZ\", \"OLUR\"], \"detected_tickers\": [\"FAIZ\", \"OLUR\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Fed Faiz Arttırsa",
+      "Ne Olur"
+    ],
+    "ticker_candidates": [
+      "FAIZ",
+      "OLUR"
+    ],
+    "detected_tickers": [
+      "FAIZ",
+      "OLUR"
+    ],
+    "collected_at": "2026-07-18T21:26:22.038843+00:00",
+    "id": "b0fc925e82ba633d06bb05ab9de32f27df38f1db89fc6b729adf86a5e55971ff"
   },
   {
     "title": "Emir Tipleri Nelerdir?",
     "url": "https://www.getmidas.com/midas-akademi/emir-tipleri-nelerdir/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720439+00:00",
-    "id": "e3f36c10ec9919f21cf130f7b7a9fba93d3ba55117bff7a2071d96287180457e"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Emir Tipleri Nelerdir\"], \"ticker_candidates\": [\"EMIR\"], \"detected_tickers\": [\"EMIR\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Emir Tipleri Nelerdir"
+    ],
+    "ticker_candidates": [
+      "EMIR"
+    ],
+    "detected_tickers": [
+      "EMIR"
+    ],
+    "collected_at": "2026-07-18T21:26:22.039841+00:00",
+    "id": "4f11c8a3e20bc3ce642e9064d84cbc0f33f2192c5cc398dd00e617e0be87e0e0"
   },
   {
     "title": "Bedelsiz Sermaye Arttırımı",
     "url": "https://www.getmidas.com/borsa-terimleri/bedelsiz-sermaye-artirimi-nedir/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720500+00:00",
-    "id": "f73d47295a85b9dcc0d532381d12926d0d892eaeffb854b5f72f14250476dca9"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Bedelsiz Sermaye Arttırımı\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "",
+    "company_names": [
+      "Bedelsiz Sermaye Arttırımı"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.039841+00:00",
+    "id": "c7373fb73fb980e250919cca5232760f0c0430a1fa8fc997cc51b410d24981d0"
   },
   {
     "title": "Kalanı İptal Et Ne Demek?",
     "url": "https://www.getmidas.com/borsa-terimleri/kalanini-iptal-et-kie-ne-demek/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720561+00:00",
-    "id": "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Kalanı İptal Et\", \"Ne Demek\"], \"ticker_candidates\": [\"DEMEK\", \"İPTAL\"], \"detected_tickers\": [\"DEMEK\", \"İPTAL\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Kalanı İptal Et",
+      "Ne Demek"
+    ],
+    "ticker_candidates": [
+      "DEMEK",
+      "İPTAL"
+    ],
+    "detected_tickers": [
+      "DEMEK",
+      "İPTAL"
+    ],
+    "collected_at": "2026-07-18T21:26:22.039841+00:00",
+    "id": "7676127d34b1cc16933f6c5f98139231e2e2d8089d4dc7fd0f92ae8fc51ae974"
   },
   {
     "title": "Hisse Geri Alım Nedir?",
     "url": "https://www.getmidas.com/borsa-terimleri/hisse-geri-alimi-nedir/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720622+00:00",
-    "id": "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Hisse Geri Alım\", \"Nedir\"], \"ticker_candidates\": [\"ALIM\", \"GERI\", \"HISSE\", \"NEDIR\"], \"detected_tickers\": [\"ALIM\", \"GERI\", \"HISSE\", \"NEDIR\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Hisse Geri Alım",
+      "Nedir"
+    ],
+    "ticker_candidates": [
+      "ALIM",
+      "GERI",
+      "HISSE",
+      "NEDIR"
+    ],
+    "detected_tickers": [
+      "ALIM",
+      "GERI",
+      "HISSE",
+      "NEDIR"
+    ],
+    "collected_at": "2026-07-18T21:26:22.039841+00:00",
+    "id": "eaac06a971e5b3938a6003abaceff02deb37a85bbddf63a0e25cf19c9f5f16a2"
   },
   {
     "title": "Bist 100 Endeksi Nedir?",
     "url": "https://www.getmidas.com/borsa-terimleri/bist-100-endeksi-nedir/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720671+00:00",
-    "id": "64d49e352e4beab8bb4af945f5bc83743dcb975afaac1dfe76e8199e59a3f8b3"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Bist\", \"Endeksi Nedir\"], \"ticker_candidates\": [\"BIST\", \"NEDIR\"], \"detected_tickers\": [\"BIST\", \"NEDIR\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Bist",
+      "Endeksi Nedir"
+    ],
+    "ticker_candidates": [
+      "BIST",
+      "NEDIR"
+    ],
+    "detected_tickers": [
+      "BIST",
+      "NEDIR"
+    ],
+    "collected_at": "2026-07-18T21:26:22.040837+00:00",
+    "id": "1307e0a0a32be89261fda52385e313bc6ca0c5bfba3e857e88bd8adb51a2b351"
   },
   {
     "title": "En Çok İşlem Görenler",
     "url": "https://www.getmidas.com/canli-borsa/en-cok-islem-goren-hisseler",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720714+00:00",
-    "id": "1b947b6430e7d2f617dc9271fdace3f3cb86184b249b2e06b2749d98e631f31e"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"En Çok İşlem\", \"Görenler\"], \"ticker_candidates\": [\"İŞLEM\"], \"detected_tickers\": [\"İŞLEM\"]}",
+    "publish_date": "",
+    "company_names": [
+      "En Çok İşlem",
+      "Görenler"
+    ],
+    "ticker_candidates": [
+      "İŞLEM"
+    ],
+    "detected_tickers": [
+      "İŞLEM"
+    ],
+    "collected_at": "2026-07-18T21:26:22.040837+00:00",
+    "id": "6f2334c78e96feca0c4722064590ea9cc41fdf5c5be666137888c2fda1668399"
   },
   {
     "title": "Kripto Para Haberleri",
     "url": "https://www.getmidas.com/midas-kulaklari/kripto-para-haber/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720773+00:00",
-    "id": "efd6e785bc11066666f361a63b075f03893d42cc21c11b670a1ab3cee9a606a7"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Kripto Para Haberleri\"], \"ticker_candidates\": [\"PARA\"], \"detected_tickers\": [\"PARA\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Kripto Para Haberleri"
+    ],
+    "ticker_candidates": [
+      "PARA"
+    ],
+    "detected_tickers": [
+      "PARA"
+    ],
+    "collected_at": "2026-07-18T21:26:22.040837+00:00",
+    "id": "e98d6145bfc479c56c286f9eda78f462b522ce7ad7a5607bab4157b4b14acfa2"
   },
   {
     "title": "Bitcoin Nasıl Alınır?",
     "url": "https://www.getmidas.com/midas-kripto/bitcoin-nasil-alinir/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720844+00:00",
-    "id": "01be699ad5a86328e77adea57a4ac1bd403d6858751caf8f228dce5f390a0139"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Bitcoin Nasıl Alınır\"], \"ticker_candidates\": [\"NASIL\"], \"detected_tickers\": [\"NASIL\"]}",
+    "publish_date": "",
+    "company_names": [
+      "Bitcoin Nasıl Alınır"
+    ],
+    "ticker_candidates": [
+      "NASIL"
+    ],
+    "detected_tickers": [
+      "NASIL"
+    ],
+    "collected_at": "2026-07-18T21:26:22.040837+00:00",
+    "id": "477cb2ed426379d0222824e641bc405622cce891d8bb996a2c533d89b92206f9"
   },
   {
     "title": "Kişisel Verilerin Korunması",
     "url": "https://www.getmidas.com/kisisel-verilerin-korunmasi-kvkk/",
     "source": "news",
-    "published_at": null,
-    "summary": null,
-    "collected_at": "2026-07-17T15:01:02.720889+00:00",
-    "id": "bf53d4da2d74fd908206ef9dc57f914a70b3a67f453b04d899ced630d35ab8c8"
+    "published_at": "",
+    "summary": "{\"source\": \"getmidas.com\", \"publish_date\": \"\", \"company_names\": [\"Kişisel Verilerin Korunması\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "",
+    "company_names": [
+      "Kişisel Verilerin Korunması"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.041833+00:00",
+    "id": "b66531a5f49763cc6b6ccb2effd5fd4342b42f6c7e302c27815c5504440c537a"
+  },
+  {
+    "title": "StandardAero Inducts First SunExpress CFM LEAP-1B Engine Under New Agreement",
+    "url": "https://finance.yahoo.com/technology/articles/standardaero-inducts-first-sunexpress-cfm-120000974.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Thu, 16 Jul 2026 12:00:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Thu, 16 Jul 2026 12:00:00 +0000\", \"company_names\": [\"Standard\", \"Aero Inducts First\", \"Express\", \"Engine Under New\"], \"ticker_candidates\": [\"FIRST\", \"LEAP\", \"UNDER\"], \"detected_tickers\": [\"FIRST\", \"LEAP\", \"UNDER\"]}",
+    "publish_date": "Thu, 16 Jul 2026 12:00:00 +0000",
+    "company_names": [
+      "Standard",
+      "Aero Inducts First",
+      "Express",
+      "Engine Under New"
+    ],
+    "ticker_candidates": [
+      "FIRST",
+      "LEAP",
+      "UNDER"
+    ],
+    "detected_tickers": [
+      "FIRST",
+      "LEAP",
+      "UNDER"
+    ],
+    "collected_at": "2026-07-18T21:26:22.041833+00:00",
+    "id": "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd"
+  },
+  {
+    "title": "Air Transat Launches New Non-Stop Service Between Montreal and Istanbul",
+    "url": "https://finance.yahoo.com/sectors/technology/articles/air-transat-launches-non-stop-171600402.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Fri, 29 May 2026 17:16:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Fri, 29 May 2026 17:16:00 +0000\", \"company_names\": [\"Air Transat Launches\", \"New Non\", \"Stop Service Between\", \"Montreal\", \"Istanbul\"], \"ticker_candidates\": [\"STOP\"], \"detected_tickers\": [\"STOP\"]}",
+    "publish_date": "Fri, 29 May 2026 17:16:00 +0000",
+    "company_names": [
+      "Air Transat Launches",
+      "New Non",
+      "Stop Service Between",
+      "Montreal",
+      "Istanbul"
+    ],
+    "ticker_candidates": [
+      "STOP"
+    ],
+    "detected_tickers": [
+      "STOP"
+    ],
+    "collected_at": "2026-07-18T21:26:22.041833+00:00",
+    "id": "9fbdfcc42612d714743cd692a50510d84a791b2a3ab4a8fb8ebd2211447de03b"
+  },
+  {
+    "title": "Deucalion Aviation Arranges Acquisition of Two Airbus A330-300 Aircraft on Lease to Turkish Airlines",
+    "url": "https://finance.yahoo.com/news/deucalion-aviation-arranges-acquisition-two-141800725.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Wed, 13 May 2026 14:18:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Wed, 13 May 2026 14:18:00 +0000\", \"company_names\": [\"Deucalion Aviation Arranges\", \"Acquisition\", \"Two Airbus\", \"Aircraft\", \"Lease\"], \"ticker_candidates\": [\"LEASE\"], \"detected_tickers\": [\"LEASE\"]}",
+    "publish_date": "Wed, 13 May 2026 14:18:00 +0000",
+    "company_names": [
+      "Deucalion Aviation Arranges",
+      "Acquisition",
+      "Two Airbus",
+      "Aircraft",
+      "Lease"
+    ],
+    "ticker_candidates": [
+      "LEASE"
+    ],
+    "detected_tickers": [
+      "LEASE"
+    ],
+    "collected_at": "2026-07-18T21:26:22.042833+00:00",
+    "id": "9df36d4d851442234709ac8dc0e8fb9cdd02c6094ff057ef999fe72856e0dfc4"
+  },
+  {
+    "title": "Turk Hava Yollari AO (TKHVY) Q4 2025 Earnings Call Highlights: Strong Passenger Growth Amid ...",
+    "url": "https://finance.yahoo.com/news/turk-hava-yollari-ao-tkhvy-010049686.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Sat, 14 Mar 2026 01:00:49 +0000\", \"company_names\": [\"Turk Hava Yollari\", \"Earnings Call Highlights\", \"Strong Passenger Growth\", \"Amid\"], \"ticker_candidates\": [\"AMID\", \"CALL\", \"HAVA\", \"TKHVY\", \"TURK\"], \"detected_tickers\": [\"AMID\", \"CALL\", \"HAVA\", \"TKHVY\", \"TURK\"]}",
+    "publish_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "company_names": [
+      "Turk Hava Yollari",
+      "Earnings Call Highlights",
+      "Strong Passenger Growth",
+      "Amid"
+    ],
+    "ticker_candidates": [
+      "AMID",
+      "CALL",
+      "HAVA",
+      "TKHVY",
+      "TURK"
+    ],
+    "detected_tickers": [
+      "AMID",
+      "CALL",
+      "HAVA",
+      "TKHVY",
+      "TURK"
+    ],
+    "collected_at": "2026-07-18T21:26:22.042988+00:00",
+    "id": "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2"
+  },
+  {
+    "title": "Struggling airline files for Chapter 11 bankruptcy",
+    "url": "https://www.thestreet.com/travel/struggling-airline-files-for-chapter-11-bankruptcy?.tsrc=rss",
+    "source": "news",
+    "published_at": "Wed, 24 Dec 2025 16:25:09 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Wed, 24 Dec 2025 16:25:09 +0000\", \"company_names\": [\"Struggling\", \"Chapter\"], \"ticker_candidates\": [\"FILES\"], \"detected_tickers\": [\"FILES\"]}",
+    "publish_date": "Wed, 24 Dec 2025 16:25:09 +0000",
+    "company_names": [
+      "Struggling",
+      "Chapter"
+    ],
+    "ticker_candidates": [
+      "FILES"
+    ],
+    "detected_tickers": [
+      "FILES"
+    ],
+    "collected_at": "2026-07-18T21:26:22.042988+00:00",
+    "id": "70ac833c442652edcd6fded6167cb6aa0b0f745d29d91faf46dd8ab0ff8b20f1"
+  },
+  {
+    "title": "National airline cancels flights, strands passengers, no bankruptcy",
+    "url": "https://www.thestreet.com/travel/national-airline-cancels-flights-strands-passengers-no-bankruptcy?.tsrc=rss",
+    "source": "news",
+    "published_at": "Sun, 21 Dec 2025 19:17:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Sun, 21 Dec 2025 19:17:00 +0000\", \"company_names\": [\"National\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Sun, 21 Dec 2025 19:17:00 +0000",
+    "company_names": [
+      "National"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.042988+00:00",
+    "id": "d55dd5647dff63164d1e8f804f867eb79b288cc64f1e7faf9d679c8acf1d127d"
+  },
+  {
+    "title": "Southwest Airlines Ties Up With Turkish Airlines for Global Connection",
+    "url": "https://finance.yahoo.com/news/southwest-airlines-ties-turkish-airlines-145500205.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Thu, 18 Dec 2025 14:55:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Thu, 18 Dec 2025 14:55:00 +0000\", \"company_names\": [\"Southwest Airlines Ties\", \"Up With Turkish\", \"Airlines\", \"Global Connection\"], \"ticker_candidates\": [\"TIES\", \"WITH\"], \"detected_tickers\": [\"TIES\", \"WITH\"]}",
+    "publish_date": "Thu, 18 Dec 2025 14:55:00 +0000",
+    "company_names": [
+      "Southwest Airlines Ties",
+      "Up With Turkish",
+      "Airlines",
+      "Global Connection"
+    ],
+    "ticker_candidates": [
+      "TIES",
+      "WITH"
+    ],
+    "detected_tickers": [
+      "TIES",
+      "WITH"
+    ],
+    "collected_at": "2026-07-18T21:26:22.044027+00:00",
+    "id": "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751"
+  },
+  {
+    "title": "SOUTHWEST AIRLINES AND TURKISH AIRLINES TO PARTNER IN TRANSATLANTIC TRAVEL BEGINNING IN JANUARY 2026",
+    "url": "https://finance.yahoo.com/news/southwest-airlines-turkish-airlines-partner-160000936.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Wed, 17 Dec 2025 16:00:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Wed, 17 Dec 2025 16:00:00 +0000\", \"company_names\": [], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Wed, 17 Dec 2025 16:00:00 +0000",
+    "company_names": [],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.044027+00:00",
+    "id": "c6d5a849e21a34ebd6c187ff7a884d5aea9773bcbd24b6ca516da9976ee32a1a"
+  },
+  {
+    "title": "Air Transat Now Connects Toronto to Istanbul, Türkiye, and Georgetown, Guyana",
+    "url": "https://finance.yahoo.com/news/air-transat-now-connects-toronto-154700298.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Wed, 17 Dec 2025 15:47:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Wed, 17 Dec 2025 15:47:00 +0000\", \"company_names\": [\"Air Transat Now\", \"Connects Toronto\", \"Istanbul\", \"Türkiye\", \"Georgetown\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Wed, 17 Dec 2025 15:47:00 +0000",
+    "company_names": [
+      "Air Transat Now",
+      "Connects Toronto",
+      "Istanbul",
+      "Türkiye",
+      "Georgetown"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.044027+00:00",
+    "id": "1d1841816989536a7465e0b445d3035ee7e979b3bbdc04efedaf427e27c2d4b9"
+  },
+  {
+    "title": "Airline cancels all flights and travelers stranded, no bankruptcy",
+    "url": "https://www.thestreet.com/travel/holiday-airline-cancels-all-flights-travelers-stranded?.tsrc=rss",
+    "source": "news",
+    "published_at": "Sat, 13 Dec 2025 19:33:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Sat, 13 Dec 2025 19:33:00 +0000\", \"company_names\": [\"Airline\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Sat, 13 Dec 2025 19:33:00 +0000",
+    "company_names": [
+      "Airline"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.045025+00:00",
+    "id": "df4fee909672ca85dd50eeb7aa4d85d3b457e278fc2ef8c9ed8a1646c837154e"
+  },
+  {
+    "title": "Global Traveler Names Airline and Hotel of the Year",
+    "url": "https://finance.yahoo.com/news/global-traveler-names-airline-hotel-140000495.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Mon, 01 Dec 2025 14:00:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Mon, 01 Dec 2025 14:00:00 +0000\", \"company_names\": [\"Global Traveler Names\", \"Airline\", \"Hotel\", \"Year\"], \"ticker_candidates\": [\"HOTEL\", \"NAMES\", \"YEAR\"], \"detected_tickers\": [\"HOTEL\", \"NAMES\", \"YEAR\"]}",
+    "publish_date": "Mon, 01 Dec 2025 14:00:00 +0000",
+    "company_names": [
+      "Global Traveler Names",
+      "Airline",
+      "Hotel",
+      "Year"
+    ],
+    "ticker_candidates": [
+      "HOTEL",
+      "NAMES",
+      "YEAR"
+    ],
+    "detected_tickers": [
+      "HOTEL",
+      "NAMES",
+      "YEAR"
+    ],
+    "collected_at": "2026-07-18T21:26:22.045025+00:00",
+    "id": "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00"
+  },
+  {
+    "title": "Turk Hava Yollari AO (TKHVY) Q3 2025 Earnings Call Highlights: Record Passenger Numbers and ...",
+    "url": "https://finance.yahoo.com/news/turk-hava-yollari-ao-tkhvy-070649371.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Sat, 08 Nov 2025 07:06:49 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Sat, 08 Nov 2025 07:06:49 +0000\", \"company_names\": [\"Turk Hava Yollari\", \"Earnings Call Highlights\", \"Record Passenger Numbers\"], \"ticker_candidates\": [\"CALL\", \"HAVA\", \"TKHVY\", \"TURK\"], \"detected_tickers\": [\"CALL\", \"HAVA\", \"TKHVY\", \"TURK\"]}",
+    "publish_date": "Sat, 08 Nov 2025 07:06:49 +0000",
+    "company_names": [
+      "Turk Hava Yollari",
+      "Earnings Call Highlights",
+      "Record Passenger Numbers"
+    ],
+    "ticker_candidates": [
+      "CALL",
+      "HAVA",
+      "TKHVY",
+      "TURK"
+    ],
+    "detected_tickers": [
+      "CALL",
+      "HAVA",
+      "TKHVY",
+      "TURK"
+    ],
+    "collected_at": "2026-07-18T21:26:22.045981+00:00",
+    "id": "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+  },
+  {
+    "title": "33-year-old airline facing bankruptcy, asset sale",
+    "url": "https://www.thestreet.com/travel/33-year-old-airline-facing-bankruptcy-asset-sale?.tsrc=rss",
+    "source": "news",
+    "published_at": "Fri, 07 Nov 2025 20:13:53 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Fri, 07 Nov 2025 20:13:53 +0000\", \"company_names\": [], \"ticker_candidates\": [\"ASSET\", \"SALE\", \"YEAR\"], \"detected_tickers\": [\"ASSET\", \"SALE\", \"YEAR\"]}",
+    "publish_date": "Fri, 07 Nov 2025 20:13:53 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "ASSET",
+      "SALE",
+      "YEAR"
+    ],
+    "detected_tickers": [
+      "ASSET",
+      "SALE",
+      "YEAR"
+    ],
+    "collected_at": "2026-07-18T21:26:22.045981+00:00",
+    "id": "c1ebcad703e02f30c712f70cbc5190aca215a64f57a9a71bf8f36c04c51f7990"
+  },
+  {
+    "title": "Boeing posts Q3 revenue beat, improving cash flow burn rate as CEO Ortberg's turnaround plan takes off",
+    "url": "https://finance.yahoo.com/news/boeing-posts-q3-revenue-beat-improving-cash-flow-burn-rate-as-ceo-ortbergs-turnaround-plan-takes-off-114417219.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Wed, 29 Oct 2025 14:42:18 +0000\", \"company_names\": [\"Boeing\", \"Ortberg\"], \"ticker_candidates\": [\"BEAT\", \"BURN\", \"CASH\", \"FLOW\", \"PLAN\", \"POSTS\", \"RATE\", \"TAKES\"], \"detected_tickers\": [\"BEAT\", \"BURN\", \"CASH\", \"FLOW\", \"PLAN\", \"POSTS\", \"RATE\", \"TAKES\"]}",
+    "publish_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "company_names": [
+      "Boeing",
+      "Ortberg"
+    ],
+    "ticker_candidates": [
+      "BEAT",
+      "BURN",
+      "CASH",
+      "FLOW",
+      "PLAN",
+      "POSTS",
+      "RATE",
+      "TAKES"
+    ],
+    "detected_tickers": [
+      "BEAT",
+      "BURN",
+      "CASH",
+      "FLOW",
+      "PLAN",
+      "POSTS",
+      "RATE",
+      "TAKES"
+    ],
+    "collected_at": "2026-07-18T21:26:22.046979+00:00",
+    "id": "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+  },
+  {
+    "title": "Boeing Reports Third Quarter Results",
+    "url": "https://finance.yahoo.com/news/boeing-reports-third-quarter-results-113000609.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Wed, 29 Oct 2025 11:30:00 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Wed, 29 Oct 2025 11:30:00 +0000\", \"company_names\": [\"Boeing Reports Third\", \"Quarter Results\"], \"ticker_candidates\": [\"THIRD\"], \"detected_tickers\": [\"THIRD\"]}",
+    "publish_date": "Wed, 29 Oct 2025 11:30:00 +0000",
+    "company_names": [
+      "Boeing Reports Third",
+      "Quarter Results"
+    ],
+    "ticker_candidates": [
+      "THIRD"
+    ],
+    "detected_tickers": [
+      "THIRD"
+    ],
+    "collected_at": "2026-07-18T21:26:22.046979+00:00",
+    "id": "1cd37fdd5053c2008bcbe1c2221e2e30672c54127aaa97b43742bcd17abc20a6"
+  },
+  {
+    "title": "How Investors May Respond To Airbus (ENXTPA:AIR) Surpassing Boeing in Deliveries and Winning Key Airline Orders",
+    "url": "https://finance.yahoo.com/news/investors-may-respond-airbus-enxtpa-011104880.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Fri, 10 Oct 2025 01:11:04 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Fri, 10 Oct 2025 01:11:04 +0000\", \"company_names\": [\"How Investors May\", \"Respond To Airbus\", \"Surpassing Boeing\", \"Deliveries\", \"Winning Key Airline\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Fri, 10 Oct 2025 01:11:04 +0000",
+    "company_names": [
+      "How Investors May",
+      "Respond To Airbus",
+      "Surpassing Boeing",
+      "Deliveries",
+      "Winning Key Airline"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.046979+00:00",
+    "id": "a3008b2562f9f227285790a3628e173b848b1c8fba19399334877d89fa83a387"
+  },
+  {
+    "title": "How Investors May Respond To Boeing (BA) Ramping Up 737 MAX Production and Securing Major Orders",
+    "url": "https://finance.yahoo.com/news/investors-may-respond-boeing-ba-131942470.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Tue, 07 Oct 2025 13:19:42 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Tue, 07 Oct 2025 13:19:42 +0000\", \"company_names\": [\"How Investors May\", \"Respond To Boeing\", \"Ramping Up\", \"Production\", \"Securing Major Orders\"], \"ticker_candidates\": [\"MAJOR\"], \"detected_tickers\": [\"MAJOR\"]}",
+    "publish_date": "Tue, 07 Oct 2025 13:19:42 +0000",
+    "company_names": [
+      "How Investors May",
+      "Respond To Boeing",
+      "Ramping Up",
+      "Production",
+      "Securing Major Orders"
+    ],
+    "ticker_candidates": [
+      "MAJOR"
+    ],
+    "detected_tickers": [
+      "MAJOR"
+    ],
+    "collected_at": "2026-07-18T21:26:22.046979+00:00",
+    "id": "f26ebcff70eaf088c522ac0f23cc75d04fdc3008a4bb15d3210419cf3dd197c2"
+  },
+  {
+    "title": "Why Jim Cramer says this is the most underrated CEO in America",
+    "url": "https://finance.yahoo.com/news/why-jim-cramer-says-this-is-the-most-underrated-ceo-in-america-160040868.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Mon, 06 Oct 2025 16:00:40 +0000\", \"company_names\": [\"Why Jim Cramer\", \"America\"], \"ticker_candidates\": [\"MOST\", \"SAYS\", \"THIS\"], \"detected_tickers\": [\"MOST\", \"SAYS\", \"THIS\"]}",
+    "publish_date": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "company_names": [
+      "Why Jim Cramer",
+      "America"
+    ],
+    "ticker_candidates": [
+      "MOST",
+      "SAYS",
+      "THIS"
+    ],
+    "detected_tickers": [
+      "MOST",
+      "SAYS",
+      "THIS"
+    ],
+    "collected_at": "2026-07-18T21:26:22.047977+00:00",
+    "id": "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3"
+  },
+  {
+    "title": "This Analyst is Bullish on Boeing (BA) – Here’s Why",
+    "url": "https://finance.yahoo.com/news/analyst-bullish-boeing-ba-why-133643535.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Fri, 03 Oct 2025 13:36:43 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Fri, 03 Oct 2025 13:36:43 +0000\", \"company_names\": [\"This Analyst\", \"Bullish\", \"Boeing\", \"Here\"], \"ticker_candidates\": [\"HERE\", \"THIS\"], \"detected_tickers\": [\"HERE\", \"THIS\"]}",
+    "publish_date": "Fri, 03 Oct 2025 13:36:43 +0000",
+    "company_names": [
+      "This Analyst",
+      "Bullish",
+      "Boeing",
+      "Here"
+    ],
+    "ticker_candidates": [
+      "HERE",
+      "THIS"
+    ],
+    "detected_tickers": [
+      "HERE",
+      "THIS"
+    ],
+    "collected_at": "2026-07-18T21:26:22.047977+00:00",
+    "id": "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0"
+  },
+  {
+    "title": "The Boeing Company (BA) Gains FAA Approval Boost, Expedited 737 Max and 787 Deliveries Ahead",
+    "url": "https://finance.yahoo.com/news/boeing-company-ba-gains-faa-225306609.html?.tsrc=rss",
+    "source": "news",
+    "published_at": "Sun, 28 Sep 2025 22:53:06 +0000",
+    "summary": "{\"source\": \"feeds.finance.yahoo.com\", \"publish_date\": \"Sun, 28 Sep 2025 22:53:06 +0000\", \"company_names\": [\"The Boeing Company\", \"Gains\", \"Approval Boost\", \"Expedited\"], \"ticker_candidates\": [\"AHEAD\", \"BOOST\", \"GAINS\"], \"detected_tickers\": [\"AHEAD\", \"BOOST\", \"GAINS\"]}",
+    "publish_date": "Sun, 28 Sep 2025 22:53:06 +0000",
+    "company_names": [
+      "The Boeing Company",
+      "Gains",
+      "Approval Boost",
+      "Expedited"
+    ],
+    "ticker_candidates": [
+      "AHEAD",
+      "BOOST",
+      "GAINS"
+    ],
+    "detected_tickers": [
+      "AHEAD",
+      "BOOST",
+      "GAINS"
+    ],
+    "collected_at": "2026-07-18T21:26:22.047977+00:00",
+    "id": "a28d2d8ca6ca61aaecbaadc5a2bab0a34ae50e1fd560dd748f5263e7c4be9607"
+  },
+  {
+    "title": "BES havuzundaki birikim 2,4 trilyon lirayÄ± aÅtÄ±",
+    "url": "https://www.bloomberght.com/bes-havuzundaki-birikim-2-4-trilyon-lirayi-asti-3782452",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 08:48:51 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 08:48:51 +0000\", \"company_names\": [], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Thu, 09 Jul 2026 08:48:51 +0000",
+    "company_names": [],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.047977+00:00",
+    "id": "5c5626be6624e7b77426d100dca8a1cfdd0ec7ad396649923bc30d33118bdb05"
+  },
+  {
+    "title": "Almanya ABD'den Tomahawk fÃ¼zeleri satÄ±n alacak",
+    "url": "https://www.bloomberght.com/almanya-abd-den-tomahawk-fuzeleri-satin-alacak-3782451",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 08:19:53 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 08:19:53 +0000\", \"company_names\": [\"Almanya\", \"Tomahawk\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Thu, 09 Jul 2026 08:19:53 +0000",
+    "company_names": [
+      "Almanya",
+      "Tomahawk"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.048974+00:00",
+    "id": "ecb11a44bbe2a4db655e43b7299270b347bdcd53aaa4175897724d7a44d364fb"
+  },
+  {
+    "title": "QNB: AltÄ±ndaki dÃ¼ÅÃ¼Å, TÃ¼rkiye'de tÃ¼ketici talebini etkiliyor",
+    "url": "https://www.bloomberght.com/qnb-altinin-dususu-turkiye-de-tuketici-talebini-etkiliyor-3782450",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 08:11:26 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 08:11:26 +0000\", \"company_names\": [], \"ticker_candidates\": [\"NDAKI\"], \"detected_tickers\": [\"NDAKI\"]}",
+    "publish_date": "Thu, 09 Jul 2026 08:11:26 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "NDAKI"
+    ],
+    "detected_tickers": [
+      "NDAKI"
+    ],
+    "collected_at": "2026-07-18T21:26:22.048974+00:00",
+    "id": "72861e1a69ed679ecae89c6afab9e207046e020af09ab64728ea3d4836093df4"
+  },
+  {
+    "title": "Porscheâye kÃ¼resel talep Åoku: Ä°lk yarÄ± satÄ±ÅlarÄ± 6 yÄ±lÄ±n dibinde",
+    "url": "https://www.bloomberght.com/porscheye-kuresel-talep-soku-ilk-yari-satislari-6-yilin-dibinde-3782449",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 08:01:00 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 08:01:00 +0000\", \"company_names\": [\"Porsche\"], \"ticker_candidates\": [\"TALEP\"], \"detected_tickers\": [\"TALEP\"]}",
+    "publish_date": "Thu, 09 Jul 2026 08:01:00 +0000",
+    "company_names": [
+      "Porsche"
+    ],
+    "ticker_candidates": [
+      "TALEP"
+    ],
+    "detected_tickers": [
+      "TALEP"
+    ],
+    "collected_at": "2026-07-18T21:26:22.048974+00:00",
+    "id": "9de14a14c16153457760272b981679b4f5bd9bffa147a64f841c4ee523c40565"
+  },
+  {
+    "title": "ING TÃ¼rkiye sendikasyon temin etti",
+    "url": "https://www.bloomberght.com/ing-turkiye-sendikasyon-temin-etti-3782447",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 07:25:26 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 07:25:26 +0000\", \"company_names\": [], \"ticker_candidates\": [\"ETTI\", \"TEMIN\"], \"detected_tickers\": [\"ETTI\", \"TEMIN\"]}",
+    "publish_date": "Thu, 09 Jul 2026 07:25:26 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "ETTI",
+      "TEMIN"
+    ],
+    "detected_tickers": [
+      "ETTI",
+      "TEMIN"
+    ],
+    "collected_at": "2026-07-18T21:26:22.048974+00:00",
+    "id": "0a916d433770bcc0c69b3901b28cf79a1fa081b1be3315003fcd039385f215a0"
+  },
+  {
+    "title": "3. Ã§eyrek ihracat beklenti endeksi arttÄ±",
+    "url": "https://www.bloomberght.com/3-ceyrek-ihracat-beklenti-endeksi-artti-3782446",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 07:26:06 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 07:26:06 +0000\", \"company_names\": [], \"ticker_candidates\": [\"EYREK\"], \"detected_tickers\": [\"EYREK\"]}",
+    "publish_date": "Thu, 09 Jul 2026 07:26:06 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "EYREK"
+    ],
+    "detected_tickers": [
+      "EYREK"
+    ],
+    "collected_at": "2026-07-18T21:26:22.048974+00:00",
+    "id": "6cd59bd24c4543979e86ba2ae6f983971090a1929b03bf57c1a175d05a7f8576"
+  },
+  {
+    "title": "Ä°nÅaat maliyet endeksi MayÄ±s'ta arttÄ±",
+    "url": "https://www.bloomberght.com/insaat-maliyet-endeksi-mayis-ta-artti-3782445",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 07:11:50 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 07:11:50 +0000\", \"company_names\": [], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Thu, 09 Jul 2026 07:11:50 +0000",
+    "company_names": [],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.048974+00:00",
+    "id": "8399a33c80a1cb9428dd7a8d2249ce8fcf61cbf2b61ec966320850ccdd1ca1f1"
+  },
+  {
+    "title": "TÃ¼rkiye, nÃ¼fus bÃ¼yÃ¼klÃ¼ÄÃ¼ne gÃ¶re 194 Ã¼lke arasÄ±nda 18. sÄ±rada",
+    "url": "https://www.bloomberght.com/turkiye-nufus-buyuklugune-gore-194-ulke-arasinda-18-sirada-3782444",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 07:11:41 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 07:11:41 +0000\", \"company_names\": [], \"ticker_candidates\": [\"RADA\"], \"detected_tickers\": [\"RADA\"]}",
+    "publish_date": "Thu, 09 Jul 2026 07:11:41 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "RADA"
+    ],
+    "detected_tickers": [
+      "RADA"
+    ],
+    "collected_at": "2026-07-18T21:26:22.049970+00:00",
+    "id": "7ba186d627e600452e61117d06f6db6bda3f5ddec875919ebaa69943f49f0449"
+  },
+  {
+    "title": "Ãin, Nvidia H200 Ã§ipi iÃ§in izin verecek",
+    "url": "https://www.bloomberght.com/cin-nvidia-h200-cipi-icin-izin-verecek-3782438",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 07:00:19 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 07:00:19 +0000\", \"company_names\": [\"Nvidia\"], \"ticker_candidates\": [\"IZIN\"], \"detected_tickers\": [\"IZIN\"]}",
+    "publish_date": "Thu, 09 Jul 2026 07:00:19 +0000",
+    "company_names": [
+      "Nvidia"
+    ],
+    "ticker_candidates": [
+      "IZIN"
+    ],
+    "detected_tickers": [
+      "IZIN"
+    ],
+    "collected_at": "2026-07-18T21:26:22.049970+00:00",
+    "id": "21afed8a167765e9ed678c1b3abefbcd2870b85e89877d7e6d4c15f00f565b1b"
+  },
+  {
+    "title": "KÃ¼resel piyasalarda yeniden jeopolitik tansiyon",
+    "url": "https://www.bloomberght.com/kuresel-piyasalarda-yeniden-jeopolitik-tansiyon-3782431",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 06:05:22 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 06:05:22 +0000\", \"company_names\": [], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Thu, 09 Jul 2026 06:05:22 +0000",
+    "company_names": [],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.049970+00:00",
+    "id": "879d16a4e0a8c0271e33c1722a16b74281a3e64e6ec02dc480fbec9f6fc47b96"
+  },
+  {
+    "title": "BirkaÃ§ Fed Ã¼yesi faiz artÄ±ÅÄ± iÃ§in gerekÃ§e gÃ¶rdÃ¼ÄÃ¼nÃ¼ belirtti",
+    "url": "https://www.bloomberght.com/birkac-fed-uyesi-faiz-artisi-icin-gerekce-gordugunu-belirtti-3782430",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 06:00:41 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 06:00:41 +0000\", \"company_names\": [\"Birka\"], \"ticker_candidates\": [\"FAIZ\"], \"detected_tickers\": [\"FAIZ\"]}",
+    "publish_date": "Thu, 09 Jul 2026 06:00:41 +0000",
+    "company_names": [
+      "Birka"
+    ],
+    "ticker_candidates": [
+      "FAIZ"
+    ],
+    "detected_tickers": [
+      "FAIZ"
+    ],
+    "collected_at": "2026-07-18T21:26:22.049970+00:00",
+    "id": "d0d6dc33e7343b07c20e34ac650e1144b14d718121b374ff7686406081e7b0f8"
+  },
+  {
+    "title": "BakÄ±r, jeopolitik gerilime raÄmen yÃ¼kseliÅe geÃ§ti",
+    "url": "https://www.bloomberght.com/bakir-jeopolitik-gerilime-ragmen-yukselise-gecti-3782429",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 05:34:27 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 05:34:27 +0000\", \"company_names\": [], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Thu, 09 Jul 2026 05:34:27 +0000",
+    "company_names": [],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.049970+00:00",
+    "id": "d41e2eabd86b0db3212c23a6ac76cc24e494028c509d54c97ef413ccf8e8b8f4"
+  },
+  {
+    "title": "ABD, Ä°ranâda yaklaÅÄ±k 90 askeri hedefi vurdu",
+    "url": "https://www.bloomberght.com/abd-iranda-ait-yaklasik-90-askeri-hedef-vurdu-3782428",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 05:19:59 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 05:19:59 +0000\", \"company_names\": [], \"ticker_candidates\": [\"VURDU\"], \"detected_tickers\": [\"VURDU\"]}",
+    "publish_date": "Thu, 09 Jul 2026 05:19:59 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "VURDU"
+    ],
+    "detected_tickers": [
+      "VURDU"
+    ],
+    "collected_at": "2026-07-18T21:26:22.050967+00:00",
+    "id": "402051e27740bb3a8cf968ef745ccf73a255e11ccc9bd645d2731bd704cf30e4"
+  },
+  {
+    "title": "Trump: Ä°ran bir anlaÅma yapmayÄ± Ã§ok istiyor",
+    "url": "https://www.bloomberght.com/trump-iran-bir-anlasma-yapmayi-cok-istiyor-3782427",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 05:15:48 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 05:15:48 +0000\", \"company_names\": [\"Trump\"], \"ticker_candidates\": [\"TRUMP\"], \"detected_tickers\": [\"TRUMP\"]}",
+    "publish_date": "Thu, 09 Jul 2026 05:15:48 +0000",
+    "company_names": [
+      "Trump"
+    ],
+    "ticker_candidates": [
+      "TRUMP"
+    ],
+    "detected_tickers": [
+      "TRUMP"
+    ],
+    "collected_at": "2026-07-18T21:26:22.050967+00:00",
+    "id": "2e926f3049795228a3769c66f61829151c16441e42921d7baefdb9809df3ca93"
+  },
+  {
+    "title": "Goldman Sachs, HÃ¼rmÃ¼z BoÄazÄ± iÃ§in petrol arzÄ± uyarÄ±sÄ± yaptÄ±",
+    "url": "https://www.bloomberght.com/goldman-sachs-hurmuz-bogazi-icin-petrol-arzi-uyarisi-yapti-3782426",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 05:12:15 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 05:12:15 +0000\", \"company_names\": [\"Goldman Sachs\"], \"ticker_candidates\": [\"SACHS\"], \"detected_tickers\": [\"SACHS\"]}",
+    "publish_date": "Thu, 09 Jul 2026 05:12:15 +0000",
+    "company_names": [
+      "Goldman Sachs"
+    ],
+    "ticker_candidates": [
+      "SACHS"
+    ],
+    "detected_tickers": [
+      "SACHS"
+    ],
+    "collected_at": "2026-07-18T21:26:22.050967+00:00",
+    "id": "8853bd0babb7dbb81bb5686d189f387abcaab8d4c6895fd2e4e223a0918a8a8e"
+  },
+  {
+    "title": "HÃ¼rmÃ¼z BoÄazÄ±ânda gemi trafiÄi neredeyse durdu",
+    "url": "https://www.bloomberght.com/hurmuz-bogazinda-gemi-trafigi-neredeyse-durdu-3782425",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 05:03:11 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 05:03:11 +0000\", \"company_names\": [], \"ticker_candidates\": [\"DURDU\", \"GEMI\"], \"detected_tickers\": [\"DURDU\", \"GEMI\"]}",
+    "publish_date": "Thu, 09 Jul 2026 05:03:11 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "DURDU",
+      "GEMI"
+    ],
+    "detected_tickers": [
+      "DURDU",
+      "GEMI"
+    ],
+    "collected_at": "2026-07-18T21:26:22.050967+00:00",
+    "id": "95c9934c5bf82e3dd9a298dfb5232d4e461060b407828d2e0c3465bb087bd160"
+  },
+  {
+    "title": "Ãinâde tÃ¼ketici enflasyonu beklentilerin altÄ±nda kaldÄ±",
+    "url": "https://www.bloomberght.com/cinde-tuketici-enflasyonu-beklentilerin-altinda-kaldi-3782417",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 04:11:22 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 04:11:22 +0000\", \"company_names\": [], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Thu, 09 Jul 2026 04:11:22 +0000",
+    "company_names": [],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.050967+00:00",
+    "id": "efb59ab6b2bc2ddd2598a4b2fd36ecc3488c828bd0bb031fa6e6b2f9b5e7b8f4"
+  },
+  {
+    "title": "AltÄ±n, enflasyon ve faiz endiÅelerinin geri dÃ¶nmesiyle geriledi",
+    "url": "https://www.bloomberght.com/altin-enflasyon-ve-faiz-endiselerinin-geri-donmesiyle-geriledi-3782416",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 03:47:57 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 03:47:57 +0000\", \"company_names\": [], \"ticker_candidates\": [\"FAIZ\", \"GERI\"], \"detected_tickers\": [\"FAIZ\", \"GERI\"]}",
+    "publish_date": "Thu, 09 Jul 2026 03:47:57 +0000",
+    "company_names": [],
+    "ticker_candidates": [
+      "FAIZ",
+      "GERI"
+    ],
+    "detected_tickers": [
+      "FAIZ",
+      "GERI"
+    ],
+    "collected_at": "2026-07-18T21:26:22.050967+00:00",
+    "id": "f3f85ba76a2254687fa88845ae6681393c1bd427243ce5ba39d967a14e6e1470"
+  },
+  {
+    "title": "Petrol ABD-Ä°ran gerilimiyle yeniden yÃ¼kseldi",
+    "url": "https://www.bloomberght.com/petrol-abd-iran-gerilimiyle-yeniden-yukseldi-3782415",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 03:38:49 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 03:38:49 +0000\", \"company_names\": [\"Petrol\"], \"ticker_candidates\": [], \"detected_tickers\": []}",
+    "publish_date": "Thu, 09 Jul 2026 03:38:49 +0000",
+    "company_names": [
+      "Petrol"
+    ],
+    "ticker_candidates": [],
+    "detected_tickers": [],
+    "collected_at": "2026-07-18T21:26:22.051964+00:00",
+    "id": "a954cd3a098e733a999d29a8b31e5c4f307c86d02cad5f5253e3555159b3c62e"
+  },
+  {
+    "title": "Ä°ran, ABD'nin saldÄ±rÄ±larla mutabakatÄ± ihlal ettiÄini BM GÃ¼venlik Konseyi'ne bildirdi",
+    "url": "https://www.bloomberght.com/iran-abd-nin-saldirilarla-mutabakati-ihlal-ettigini-bm-guvenlik-konseyi-ne-bildirdi-3782414",
+    "source": "news",
+    "published_at": "Thu, 09 Jul 2026 03:24:39 +0000",
+    "summary": "{\"source\": \"bloomberght.com\", \"publish_date\": \"Thu, 09 Jul 2026 03:24:39 +0000\", \"company_names\": [\"Konseyi\"], \"ticker_candidates\": [\"IHLAL\", \"LARLA\"], \"detected_tickers\": [\"IHLAL\", \"LARLA\"]}",
+    "publish_date": "Thu, 09 Jul 2026 03:24:39 +0000",
+    "company_names": [
+      "Konseyi"
+    ],
+    "ticker_candidates": [
+      "IHLAL",
+      "LARLA"
+    ],
+    "detected_tickers": [
+      "IHLAL",
+      "LARLA"
+    ],
+    "collected_at": "2026-07-18T21:26:22.051964+00:00",
+    "id": "70f1d1fa3730eae7b3681434addd6df78a07169ed5f92dc83525a64dd51e26b8"
   }
 ]

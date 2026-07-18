@@ -3,6 +3,7 @@ from __future__ import annotations
 from types import SimpleNamespace
 
 from notifier import ConsoleNotifier
+from notifier import TelegramNotifier
 from notifier import WhatsAppNotifier
 
 
@@ -35,3 +36,23 @@ def test_whatsapp_notifier_fails_gracefully_when_unconfigured(monkeypatch) -> No
 
     assert result.success is False
     assert result.channel == "whatsapp"
+
+
+def test_telegram_notifier_fails_gracefully_when_unconfigured(monkeypatch) -> None:
+    from notifier import telegram_notifier as telegram_module
+
+    monkeypatch.setattr(
+        telegram_module,
+        "settings",
+        SimpleNamespace(
+            telegram_configured=False,
+            telegram_bot_token="",
+            telegram_chat_id="",
+        ),
+    )
+
+    notifier = TelegramNotifier()
+    result = notifier.send("Hello world")
+
+    assert result.success is False
+    assert result.channel == "telegram"

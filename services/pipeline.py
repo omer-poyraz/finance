@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from dataclasses import asdict
 from datetime import UTC
 from datetime import datetime
+import json
 import logging
 from typing import Any
 
@@ -29,8 +31,8 @@ from indicators import macd
 from indicators import rsi
 from indicators import sma
 from indicators import volume_analysis
-from notifier import ConsoleNotifier
-from notifier import WhatsAppNotifier
+from notifier import TelegramNotifier
+from services.gemini_service import GeminiService
 from shared.normalization import build_item_id
 from shared.normalization import normalize_records
 from storage import JsonStorage
@@ -49,6 +51,7 @@ REQUIRED_STORAGE_FILES = [
     "market_analysis.json",
     "recommendations.json",
     "history.json",
+    "performance.json",
 ]
 
 
@@ -126,16 +129,39 @@ class FinancePipelineService:
         self.risk_analyzer = RiskAnalyzer()
         self.financial_analyzer = FinancialAnalyzer()
         self.decision_engine = DecisionEngine()
+        self.gemini_service = GeminiService()
 
-        self.console_notifier = ConsoleNotifier()
-        self.whatsapp_notifier = WhatsAppNotifier()
+        self.telegram_notifier = TelegramNotifier()
 
     def collect_news(self) -> list[dict[str, Any]]:
         """Collect and persist normalized news records."""
 
         try:
             result = self.collector_manager.collect_one("news")
-            payload = [asdict(item) for item in result.items]
+            payload: list[dict[str, Any]] = []
+            for item in result.items:
+                row = asdict(item)
+                summary_raw = str(row.get("summary") or "").strip()
+                metadata: dict[str, Any] = {}
+                if summary_raw:
+                    try:
+                        metadata = dict(json.loads(summary_raw))
+                    except json.JSONDecodeError:
+                        metadata = {}
+
+                publish_date = str(metadata.get("publish_date") or row.get("published_at") or "")
+                row.update(
+                    {
+                        "source": str(row.get("source") or metadata.get("source") or "news"),
+                        "published_at": publish_date,
+                        "publish_date": publish_date,
+                        "company_names": list(metadata.get("company_names") or []),
+                        "ticker_candidates": list(metadata.get("ticker_candidates") or []),
+                        "detected_tickers": list(metadata.get("detected_tickers") or []),
+                    }
+                )
+                payload.append(row)
+
             normalized = normalize_records(payload, required_keys=["title", "url"], source="news")
             self._save_if_changed("news.json", normalized)
             return normalized
@@ -531,7 +557,9 @@ class FinancePipelineService:
         )
         top_recommendations = recommendations[:10]
         self._save_if_changed("recommendations.json", top_recommendations)
-        return top_recommendations
+        enriched_recommendations = self._enrich_recommendations_with_ai(top_recommendations)
+        self._save_if_changed("recommendations.json", enriched_recommendations)
+        return enriched_recommendations
 
     def notify_recommendations(self) -> dict[str, Any]:
         """Send latest recommendations via configured notifiers."""
@@ -540,13 +568,32 @@ class FinancePipelineService:
         if not recommendations:
             recommendations = self.generate_recommendations()
 
-        message = self._format_recommendations_message(recommendations)
-        console_result = self.console_notifier.send(message, title="Daily Analysis")
-        whatsapp_result = self.whatsapp_notifier.send(message, title="Daily Analysis")
+        ai_market_summary: str | None = None
+        ai_recommendation_summary: str | None = None
+        ai_news_summary: str | None = None
+        try:
+            ai_market_summary = self.gemini_service.summarize_market(recommendations)
+            ai_recommendation_summary = self.gemini_service.summarize_recommendations(recommendations)
+            news_analysis = self._load_cached("news_analysis.json", default=[])
+            ai_news_summary = self.gemini_service.summarize_news(news_analysis)
+        except Exception as exc:
+            logger.warning("Gemini daily summary failed: %s", exc)
+        telegram_summary = "\n\n".join(
+            [
+                value
+                for value in [ai_market_summary, ai_recommendation_summary, ai_news_summary]
+                if isinstance(value, str) and value.strip()
+            ]
+        )
+        telegram_message = self._format_telegram_message(
+            recommendations,
+            ai_market_summary=telegram_summary or ai_market_summary,
+        )
+
+        telegram_result = self.telegram_notifier.send(telegram_message)
 
         return {
-            "console": asdict(console_result),
-            "whatsapp": asdict(whatsapp_result),
+            "telegram": asdict(telegram_result),
         }
 
     def send_daily_recommendations(self) -> dict[str, Any]:
@@ -558,6 +605,8 @@ class FinancePipelineService:
         tickers = self.analyze_tickers()
         recommendations = self.generate_recommendations()
         notifications = self.notify_recommendations()
+        history_entries = self.archive_today()
+        performance = self.update_history_performance()
 
         return {
             "collection": collection,
@@ -565,6 +614,8 @@ class FinancePipelineService:
             "market": market,
             "tickers": tickers,
             "recommendations": len(recommendations),
+            "history": len(history_entries),
+            "performance": performance,
             "notifications": notifications,
         }
 
@@ -575,50 +626,78 @@ class FinancePipelineService:
         if not recommendations:
             return self._load_cached("history.json", default=[])
 
-        latest_market = self._market_close_lookup()
-
         history = list(self._load_cached("history.json", default=[]))
-        date_text = datetime.now(UTC).date().isoformat()
-        enriched: list[dict[str, Any]] = []
+        now_utc = datetime.now(UTC)
+        date_text = now_utc.date().isoformat()
+
+        existing_ids: set[str] = set()
+        for day in history:
+            for item in day.get("recommendations", []):
+                value = str(item.get("id") or "")
+                if value:
+                    existing_ids.add(value)
+
+        generated: list[dict[str, Any]] = []
 
         for item in recommendations:
             ticker = str(item.get("ticker") or "").strip().upper()
+            if not ticker:
+                continue
+
+            generated_time = now_utc.isoformat()
+            entry_id = build_item_id(ticker, generated_time, "paper")
+            if entry_id in existing_ids:
+                continue
+
             entry = float(item.get("entry_price") or 0.0)
             stop = float(item.get("stop_loss") or 0.0)
             tp1 = float(item.get("take_profit_1") or 0.0)
             tp2 = float(item.get("take_profit_2") or 0.0)
-            close_price = float(latest_market.get(ticker) or 0.0)
+            tp3 = float(item.get("take_profit_3") or (tp2 + max(tp2 - entry, 0.0)))
 
-            result = "open"
-            if close_price > 0 and entry > 0:
-                if close_price <= stop:
-                    result = "stop_hit"
-                elif close_price >= tp2:
-                    result = "tp2_hit"
-                elif close_price >= tp1:
-                    result = "tp1_hit"
-                else:
-                    result = "open"
-
-            pnl_pct = ((close_price - entry) / entry * 100.0) if close_price > 0 and entry > 0 else 0.0
-            enriched_item = dict(item)
-            enriched_item.update(
+            generated.append(
                 {
-                    "close_price": round(close_price, 4) if close_price > 0 else None,
-                    "result": result,
-                    "profit_pct": round(max(pnl_pct, 0.0), 4),
-                    "loss_pct": round(abs(min(pnl_pct, 0.0)), 4),
-                    "holding_days": 1,
+                    "id": entry_id,
+                    "ticker": ticker,
+                    "company": str(item.get("company_name") or ticker),
+                    "generated_time": generated_time,
+                    "opened_at": generated_time,
+                    "closed_at": "",
+                    "entry": round(entry, 4),
+                    "exit": 0.0,
+                    "stop": round(stop, 4),
+                    "tp1": round(tp1, 4),
+                    "tp2": round(tp2, 4),
+                    "tp3": round(tp3, 4),
+                    "risk_reward": round(float(item.get("risk_reward_ratio") or 0.0), 4),
+                    "confidence": round(float(item.get("confidence") or 0.0), 2),
+                    "overall_score": round(float(item.get("overall_score") or 0.0), 2),
+                    "technical_score": round(float(item.get("technical_score") or 0.0), 2),
+                    "news_score": round(float(item.get("news_score") or 0.0), 2),
+                    "current_price": round(float(item.get("current_price") or entry), 4),
+                    "decision_reasons": list(item.get("reasons") or []),
+                    "ai_summary": str(item.get("ai_summary") or ""),
+                    "status": "OPEN",
+                    "result": "PENDING",
+                    "risk_reward_result": "PENDING",
+                    "profit_percent": 0.0,
+                    "profit_pct": 0.0,
+                    "loss_percent": 0.0,
+                    "holding_days": 0,
+                    "max_gain": 0.0,
+                    "max_drawdown": 0.0,
                 }
             )
-            enriched.append(enriched_item)
+            existing_ids.add(entry_id)
 
-        history.append(
-            {
-                "date": date_text,
-                "recommendations": enriched,
-            }
-        )
+        if generated:
+            history.append(
+                {
+                    "date": date_text,
+                    "recommendations": generated,
+                }
+            )
+
         self._save_if_changed("history.json", history)
         return history
 
@@ -626,6 +705,118 @@ class FinancePipelineService:
         """Return archived recommendation history."""
 
         return self.storage.load("history.json", default=[])
+
+    def get_performance(self) -> dict[str, Any]:
+        """Return current paper trading performance statistics."""
+
+        return self.storage.load("performance.json", default={})
+
+    def update_history_performance(self) -> dict[str, Any]:
+        """Evaluate pending/open history entries and refresh performance statistics."""
+
+        history = list(self._load_cached("history.json", default=[]))
+        performance = self._calculate_performance(history)
+        self._save_if_changed("history.json", history)
+        self._save_if_changed("performance.json", performance)
+        return performance
+
+    def finalize_day_performance(self) -> dict[str, Any]:
+        """Close active daily recommendations using the latest market snapshot and refresh performance."""
+
+        history = deepcopy(self._load_cached("history.json", default=[]))
+        market_lookup = self._market_snapshot_lookup()
+        now_utc = datetime.now(UTC)
+
+        for day in history:
+            entries = day.get("recommendations", [])
+            if not isinstance(entries, list):
+                continue
+
+            for entry in entries:
+                status = str(entry.get("status") or "OPEN").upper()
+                if status == "CLOSED":
+                    continue
+
+                ticker = str(entry.get("ticker") or "").upper()
+                snapshot = market_lookup.get(ticker)
+                if snapshot is None:
+                    entry["status"] = "UNKNOWN"
+                    continue
+
+                opened_at = str(entry.get("opened_at") or entry.get("generated_time") or "")
+                opened_dt = now_utc
+                if opened_at:
+                    try:
+                        opened_dt = datetime.fromisoformat(opened_at.replace("Z", "+00:00")).astimezone(UTC)
+                    except ValueError:
+                        opened_dt = now_utc
+
+                entry_price = float(entry.get("entry") or entry.get("entry_price") or 0.0)
+                stop = float(entry.get("stop") or entry.get("stop_loss") or 0.0)
+                tp1 = float(entry.get("tp1") or entry.get("take_profit_1") or 0.0)
+                tp2 = float(entry.get("tp2") or entry.get("take_profit_2") or 0.0)
+                current_price = float(snapshot.get("last_price") or 0.0)
+                high = float(snapshot.get("high") or current_price)
+                low = float(snapshot.get("low") or current_price)
+
+                if current_price <= 0 or entry_price <= 0:
+                    entry["status"] = "UNKNOWN"
+                    continue
+
+                exit_price = current_price
+                risk_reward_result = "CLOSE"
+                result = "FLAT"
+
+                if stop > 0 and low <= stop:
+                    exit_price = stop
+                    risk_reward_result = "STOP"
+                    result = "LOSE"
+                elif tp2 > 0 and high >= tp2:
+                    exit_price = tp2
+                    risk_reward_result = "TP2"
+                    result = "WIN"
+                elif tp1 > 0 and high >= tp1:
+                    exit_price = tp1
+                    risk_reward_result = "TP1"
+                    result = "WIN"
+                elif exit_price > entry_price:
+                    risk_reward_result = "CLOSE_ABOVE_ENTRY"
+                    result = "WIN"
+                elif exit_price < entry_price:
+                    risk_reward_result = "CLOSE_BELOW_ENTRY"
+                    result = "LOSE"
+
+                profit_pct = ((exit_price - entry_price) / entry_price) * 100.0
+                max_gain = ((high - entry_price) / entry_price) * 100.0
+                max_drawdown = ((low - entry_price) / entry_price) * 100.0
+                holding_days = max(0, (now_utc.date() - opened_dt.date()).days)
+
+                entry["opened_at"] = opened_dt.isoformat()
+                entry["closed_at"] = now_utc.isoformat()
+                entry["exit"] = round(exit_price, 4)
+                entry["current_price"] = round(current_price, 4)
+                entry["status"] = "CLOSED"
+                entry["result"] = result
+                entry["risk_reward_result"] = risk_reward_result
+                entry["holding_days"] = int(holding_days)
+                entry["profit_percent"] = round(max(profit_pct, 0.0), 4)
+                entry["profit_pct"] = round(profit_pct, 4)
+                entry["loss_percent"] = round(abs(min(profit_pct, 0.0)), 4)
+                entry["max_gain"] = round(max(max_gain, 0.0), 4)
+                entry["max_drawdown"] = round(abs(min(max_drawdown, 0.0)), 4)
+
+        performance = self._calculate_performance(history)
+        self._save_if_changed("history.json", history)
+        self._save_if_changed("performance.json", performance)
+        return performance
+
+    def gemini_health(self) -> dict[str, bool]:
+        """Return Gemini feature health without interrupting the pipeline."""
+
+        return {
+            "enabled": self.gemini_service.enabled,
+            "healthy": self.gemini_service.health() if self.gemini_service.enabled else False,
+        }
 
     def _market_frame(self, market_payload: list[dict[str, Any]]) -> pd.DataFrame:
         rows: list[dict[str, float]] = []
@@ -938,8 +1129,13 @@ class FinancePipelineService:
         raw = self.config_storage.load(filename, default=DEFAULT_TECHNICAL_SCORING)
         return {str(key): float(value) for key, value in dict(raw).items()}
 
-    def _format_recommendations_message(self, recommendations: list[dict[str, Any]]) -> str:
-        lines = ["📈 Finance Robot", "", datetime.now(UTC).date().strftime("%d.%m.%Y"), "", "Top Opportunities"]
+    def _format_recommendations_message(
+        self,
+        recommendations: list[dict[str, Any]],
+        *,
+        ai_market_summary: str | None = None,
+    ) -> str:
+        lines = ["📈 Gunun En Guclu Firsatlari", "", datetime.now(UTC).date().strftime("%d.%m.%Y"), ""]
         for index, item in enumerate(recommendations, start=1):
             lines.extend(
                 [
@@ -959,9 +1155,171 @@ class FinancePipelineService:
             for reason in item.get("reasons", [])[:6]:
                 lines.append(str(reason))
 
+            ai_reason = str(item.get("ai_reason") or "").strip()
+            ai_risk = str(item.get("ai_risk") or "").strip()
+            ai_summary = str(item.get("ai_summary") or "").strip()
+            if ai_summary:
+                lines.append(f"AI Summary : {ai_summary}")
+            if ai_risk:
+                lines.append(f"AI Risk : {ai_risk}")
+            if ai_reason:
+                lines.append(f"AI Reason : {ai_reason}")
+
             lines.append("--------------------------------")
 
+        if ai_market_summary:
+            lines.extend(["", "Today's AI Summary", str(ai_market_summary).strip()])
+
         return "\n".join(lines)
+
+    def _format_telegram_message(
+        self,
+        recommendations: list[dict[str, Any]],
+        *,
+        ai_market_summary: str | None = None,
+    ) -> str:
+        date_text = datetime.now(UTC).strftime("%Y-%m-%d")
+        lines = [
+            "📈 BIST Daily Recommendations",
+            f"Date: {date_text}",
+            "------------------------------------------------",
+        ]
+
+        for index, item in enumerate(recommendations[:10], start=1):
+            lines.extend(
+                [
+                    f"#{index} {item.get('ticker', 'UNKNOWN')}",
+                    "Decision",
+                    "BUY",
+                    "Entry",
+                    f"{float(item.get('entry_price') or 0.0):.4f}",
+                    "Stop",
+                    f"{float(item.get('stop_loss') or 0.0):.4f}",
+                    "TP1",
+                    f"{float(item.get('take_profit_1') or 0.0):.4f}",
+                    "TP2",
+                    f"{float(item.get('take_profit_2') or 0.0):.4f}",
+                    "Risk Reward",
+                    f"{float(item.get('risk_reward_ratio') or 0.0):.2f}",
+                    "Confidence",
+                    f"{float(item.get('confidence') or 0.0):.2f}%",
+                    "Technical Score",
+                    f"{float(item.get('technical_score') or 0.0):.2f}",
+                    "News Score",
+                    f"{float(item.get('news_score') or 0.0):.2f}",
+                ]
+            )
+            ai_summary = str(item.get("ai_summary") or "").strip()
+            lines.append("AI Summary")
+            lines.append(ai_summary or "N/A")
+            lines.append("------------------------------------------------")
+
+        if ai_market_summary:
+            lines.append("Today's Overall Market Summary")
+            lines.append(str(ai_market_summary).strip())
+
+        lines.append(f"Generated Time: {datetime.now(UTC).isoformat()}")
+        return "\n".join(lines)
+
+    def _enrich_recommendations_with_ai(self, recommendations: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        if not recommendations:
+            return recommendations
+
+        news_payload = self._load_cached("news.json", default=[])
+        kap_payload = self._load_cached("kap.json", default=[])
+        enriched: list[dict[str, Any]] = []
+
+        for item in recommendations:
+            enriched_item = dict(item)
+            ticker = str(item.get("ticker") or "").strip().upper()
+
+            news_item = self._find_latest_item_for_ticker(news_payload, ticker)
+            kap_item = self._find_latest_item_for_ticker(kap_payload, ticker)
+            news_ai: dict[str, Any] | None = None
+            kap_ai: dict[str, Any] | None = None
+
+            try:
+                news_ai = self.gemini_service.analyze_news(news_item)
+            except Exception as exc:
+                logger.warning("Gemini news analysis failed for %s: %s", ticker, exc)
+
+            try:
+                kap_ai = self.gemini_service.analyze_kap(kap_item)
+            except Exception as exc:
+                logger.warning("Gemini KAP analysis failed for %s: %s", ticker, exc)
+
+            ai_summary = ""
+            ai_reason_parts: list[str] = []
+
+            if isinstance(news_ai, dict):
+                news_explanation = str(news_ai.get("explanation") or "").strip()
+                if news_explanation:
+                    ai_summary = news_explanation
+                    ai_reason_parts.append(f"News: {news_explanation}")
+
+            if isinstance(kap_ai, dict):
+                kap_explanation = str(kap_ai.get("explanation") or "").strip()
+                if kap_explanation:
+                    if not ai_summary:
+                        ai_summary = kap_explanation
+                    ai_reason_parts.append(f"KAP: {kap_explanation}")
+
+            enriched_item["ai_summary"] = ai_summary or None
+            enriched_item["ai_risk"] = self._ai_risk_label(news_ai, kap_ai)
+            enriched_item["ai_reason"] = " | ".join(ai_reason_parts) if ai_reason_parts else None
+            enriched.append(enriched_item)
+
+        return enriched
+
+    def _find_latest_item_for_ticker(self, items: list[dict[str, Any]], ticker: str) -> dict[str, Any] | None:
+        if not ticker:
+            return None
+
+        ticker_upper = ticker.upper()
+        for item in reversed(items):
+            candidate_text = " ".join(
+                [
+                    str(item.get("ticker") or ""),
+                    " ".join([str(value) for value in item.get("detected_tickers", [])]),
+                    str(item.get("title") or ""),
+                    str(item.get("summary") or ""),
+                ]
+            ).upper()
+            if ticker_upper in candidate_text:
+                return item
+
+        return None
+
+    def _ai_risk_label(self, news_ai: dict[str, Any] | None, kap_ai: dict[str, Any] | None) -> str | None:
+        if not isinstance(news_ai, dict) and not isinstance(kap_ai, dict):
+            return None
+
+        sentiment_rank = {"NEGATIVE": 0, "NEUTRAL": 1, "POSITIVE": 2}
+        impact_rank = {"LOW": 0, "MEDIUM": 1, "HIGH": 2}
+
+        sentiment_values: list[int] = []
+        impact_values: list[int] = []
+
+        for payload in [news_ai, kap_ai]:
+            if not isinstance(payload, dict):
+                continue
+            sentiment = str(payload.get("sentiment") or "NEUTRAL").upper()
+            sentiment_values.append(sentiment_rank.get(sentiment, 1))
+
+            impact = str(payload.get("impact") or "MEDIUM").upper()
+            impact_values.append(impact_rank.get(impact, 1))
+
+        if not sentiment_values:
+            return None
+
+        sentiment_avg = sum(sentiment_values) / len(sentiment_values)
+        impact_avg = sum(impact_values) / len(impact_values) if impact_values else 1.0
+
+        if sentiment_avg <= 0.6 or impact_avg >= 1.6:
+            return "Yuksek"
+        if sentiment_avg <= 1.2:
+            return "Orta"
+        return "Dusuk"
 
     def _news_lookup(
         self,
@@ -1034,6 +1392,64 @@ class FinancePipelineService:
             if ticker and price > 0:
                 close_by_ticker[ticker] = price
         return close_by_ticker
+
+    def _market_snapshot_lookup(self) -> dict[str, dict[str, float]]:
+        market_payload = self._load_cached("market.json", default=[])
+        snapshots: dict[str, dict[str, float]] = {}
+        for item in market_payload:
+            ticker = str(item.get("symbol") or item.get("ticker") or "").strip().upper()
+            if not ticker:
+                continue
+            snapshots[ticker] = {
+                "last_price": float(item.get("last_price") or item.get("current_price") or 0.0),
+                "high": float(item.get("high") or 0.0),
+                "low": float(item.get("low") or 0.0),
+            }
+        return snapshots
+
+    def _calculate_performance(self, history: list[dict[str, Any]]) -> dict[str, Any]:
+        entries: list[dict[str, Any]] = []
+        for day in history:
+            items = day.get("recommendations", [])
+            if isinstance(items, list):
+                entries.extend(items)
+
+        total = len(entries)
+        closed_entries = [entry for entry in entries if str(entry.get("status") or "").upper() == "CLOSED"]
+        winning_entries = [entry for entry in closed_entries if str(entry.get("result") or "").upper() == "WIN"]
+        losing_entries = [entry for entry in closed_entries if str(entry.get("result") or "").upper() == "LOSE"]
+        open_entries = [entry for entry in entries if str(entry.get("status") or "").upper() != "CLOSED"]
+
+        success_rate = (len(winning_entries) / len(closed_entries) * 100.0) if closed_entries else 0.0
+        average_profit = sum(float(entry.get("profit_pct") or 0.0) for entry in winning_entries) / len(winning_entries) if winning_entries else 0.0
+        average_loss = sum(float(entry.get("profit_pct") or 0.0) for entry in losing_entries) / len(losing_entries) if losing_entries else 0.0
+        best_trade = max((float(entry.get("profit_pct") or 0.0) for entry in closed_entries), default=0.0)
+        worst_trade = min((float(entry.get("profit_pct") or 0.0) for entry in closed_entries), default=0.0)
+        average_holding = sum(float(entry.get("holding_days") or 0.0) for entry in entries) / len(entries) if entries else 0.0
+
+        return {
+            "total_signals": total,
+            "winning_signals": len(winning_entries),
+            "losing_signals": len(losing_entries),
+            "success_rate": round(success_rate, 2),
+            "average_profit": round(average_profit, 4),
+            "average_loss": round(average_loss, 4),
+            "best_trade": round(best_trade, 4),
+            "worst_trade": round(worst_trade, 4),
+            "last_updated": datetime.now(UTC).isoformat(),
+            "total_recommendations": total,
+            "successful_recommendations": len(winning_entries),
+            "failed_recommendations": len(losing_entries),
+            "win_rate": round(success_rate, 2),
+            "loss_rate": round((len(losing_entries) / len(closed_entries) * 100.0) if closed_entries else 0.0, 2),
+            "average_holding_time": round(average_holding, 2),
+            "tp1_hits": sum(1 for entry in closed_entries if str(entry.get("risk_reward_result") or "").upper() == "TP1"),
+            "tp2_hits": sum(1 for entry in closed_entries if str(entry.get("risk_reward_result") or "").upper() == "TP2"),
+            "tp3_hits": sum(1 for entry in closed_entries if str(entry.get("risk_reward_result") or "").upper() == "TP3"),
+            "stop_hits": sum(1 for entry in closed_entries if str(entry.get("risk_reward_result") or "").upper() == "STOP"),
+            "current_open_positions": len(open_entries),
+            "updated_at": datetime.now(UTC).isoformat(),
+        }
 
     def _load_cached(self, filename: str, default: Any | None = None) -> Any:
         if filename in self._runtime_cache:

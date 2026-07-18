@@ -460,5 +460,1417 @@
     "reasons": [
       "No matched keyword signal"
     ]
+  },
+  {
+    "id": "70c68d047ffd27499efe9f7453a77ac7fdc2f990c8cbb66a4017e80a7e0237a2",
+    "ticker": [
+      "ILETI",
+      "METNI",
+      "MIDAS"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): ILETI, METNI, MIDAS"
+    ]
+  },
+  {
+    "id": "6f3edec81ce61cb93f1d4ef962f33e8cd2d3bea25cfeaee1c4299e97c603af6e",
+    "ticker": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ]
+  },
+  {
+    "id": "c8e4e92b5e6c5bb72c729524a7546ea438d4417b5a98eca637811998255aac16",
+    "ticker": [
+      "VEREN"
+    ],
+    "sentiment": "Positive",
+    "score": 65,
+    "confidence": 77,
+    "importance": "Low",
+    "importance_score": 43,
+    "matched_keywords": [
+      "temettü"
+    ],
+    "reasons": [
+      "Positive keyword: temettü",
+      "Detected ticker(s): VEREN"
+    ]
+  },
+  {
+    "id": "4c77d3a174cadd268ff55d6b05551e73463cecf709a575775c5cb4b80ac27fb9",
+    "ticker": [
+      "FAIZ",
+      "ZAMAN"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FAIZ, ZAMAN"
+    ]
+  },
+  {
+    "id": "b0fc925e82ba633d06bb05ab9de32f27df38f1db89fc6b729adf86a5e55971ff",
+    "ticker": [
+      "FAIZ",
+      "OLUR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FAIZ, OLUR"
+    ]
+  },
+  {
+    "id": "4f11c8a3e20bc3ce642e9064d84cbc0f33f2192c5cc398dd00e617e0be87e0e0",
+    "ticker": [
+      "EMIR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): EMIR"
+    ]
+  },
+  {
+    "id": "c7373fb73fb980e250919cca5232760f0c0430a1fa8fc997cc51b410d24981d0",
+    "ticker": [],
+    "sentiment": "Positive",
+    "score": 85,
+    "confidence": 94,
+    "importance": "Low",
+    "importance_score": 35,
+    "matched_keywords": [
+      "bedelsiz"
+    ],
+    "reasons": [
+      "Positive keyword: bedelsiz"
+    ]
+  },
+  {
+    "id": "7676127d34b1cc16933f6c5f98139231e2e2d8089d4dc7fd0f92ae8fc51ae974",
+    "ticker": [
+      "DEMEK",
+      "IPTAL"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): DEMEK, IPTAL"
+    ]
+  },
+  {
+    "id": "eaac06a971e5b3938a6003abaceff02deb37a85bbddf63a0e25cf19c9f5f16a2",
+    "ticker": [
+      "ALIM",
+      "GERI",
+      "HISSE",
+      "NEDIR"
+    ],
+    "sentiment": "Positive",
+    "score": 75,
+    "confidence": 96,
+    "importance": "Medium",
+    "importance_score": 67,
+    "matched_keywords": [
+      "geri alım"
+    ],
+    "reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
+    ]
+  },
+  {
+    "id": "1307e0a0a32be89261fda52385e313bc6ca0c5bfba3e857e88bd8adb51a2b351",
+    "ticker": [
+      "NEDIR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): NEDIR"
+    ]
+  },
+  {
+    "id": "6f2334c78e96feca0c4722064590ea9cc41fdf5c5be666137888c2fda1668399",
+    "ticker": [
+      "ISLEM"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): ISLEM"
+    ]
+  },
+  {
+    "id": "e98d6145bfc479c56c286f9eda78f462b522ce7ad7a5607bab4157b4b14acfa2",
+    "ticker": [
+      "PARA"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): PARA"
+    ]
+  },
+  {
+    "id": "477cb2ed426379d0222824e641bc405622cce891d8bb996a2c533d89b92206f9",
+    "ticker": [
+      "NASIL"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): NASIL"
+    ]
+  },
+  {
+    "id": "b66531a5f49763cc6b6ccb2effd5fd4342b42f6c7e302c27815c5504440c537a",
+    "ticker": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ]
+  },
+  {
+    "id": "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd",
+    "ticker": [
+      "AERO",
+      "FEEDS",
+      "FIRST",
+      "LEAP",
+      "UNDER",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "AERO",
+      "FEEDS",
+      "FIRST",
+      "LEAP",
+      "UNDER",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "FIRST",
+      "LEAP",
+      "UNDER"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 73,
+    "importance": "Medium",
+    "importance_score": 73,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): AERO, FEEDS, FIRST, LEAP, UNDER, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/technology/articles/standardaero-inducts-first-sunexpress-cfm-120000974.html?.tsrc=rss",
+    "publish_date": "Thu, 16 Jul 2026 12:00:00 +0000"
+  },
+  {
+    "id": "9fbdfcc42612d714743cd692a50510d84a791b2a3ab4a8fb8ebd2211447de03b",
+    "ticker": [
+      "FEEDS",
+      "STOP",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "STOP",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "STOP"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, STOP, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/sectors/technology/articles/air-transat-launches-non-stop-171600402.html?.tsrc=rss",
+    "publish_date": "Fri, 29 May 2026 17:16:00 +0000"
+  },
+  {
+    "id": "9df36d4d851442234709ac8dc0e8fb9cdd02c6094ff057ef999fe72856e0dfc4",
+    "ticker": [
+      "FEEDS",
+      "LEASE",
+      "THYAO",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "LEASE",
+      "THYAO",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "LEASE"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 67,
+    "importance": "Medium",
+    "importance_score": 57,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, LEASE, THYAO, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/deucalion-aviation-arranges-acquisition-two-141800725.html?.tsrc=rss",
+    "publish_date": "Wed, 13 May 2026 14:18:00 +0000"
+  },
+  {
+    "id": "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+    "ticker": [
+      "AMID",
+      "CALL",
+      "FEEDS",
+      "HAVA",
+      "PRKAB",
+      "TBORG",
+      "THYAO",
+      "TKHVY",
+      "TRALT",
+      "TRILC",
+      "TTKOM",
+      "TTRAK",
+      "TURK",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "AMID",
+      "CALL",
+      "FEEDS",
+      "HAVA",
+      "PRKAB",
+      "TBORG",
+      "THYAO",
+      "TKHVY",
+      "TRALT",
+      "TRILC",
+      "TTKOM",
+      "TTRAK",
+      "TURK",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "AMID",
+      "CALL",
+      "HAVA",
+      "TKHVY",
+      "TURK"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 97,
+    "importance": "High",
+    "importance_score": 100,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/turk-hava-yollari-ao-tkhvy-010049686.html?.tsrc=rss",
+    "publish_date": "Sat, 14 Mar 2026 01:00:49 +0000"
+  },
+  {
+    "id": "70ac833c442652edcd6fded6167cb6aa0b0f745d29d91faf46dd8ab0ff8b20f1",
+    "ticker": [
+      "FEEDS",
+      "FILES",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "FILES",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "FILES"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, FILES, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://www.thestreet.com/travel/struggling-airline-files-for-chapter-11-bankruptcy?.tsrc=rss",
+    "publish_date": "Wed, 24 Dec 2025 16:25:09 +0000"
+  },
+  {
+    "id": "d55dd5647dff63164d1e8f804f867eb79b288cc64f1e7faf9d679c8acf1d127d",
+    "ticker": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://www.thestreet.com/travel/national-airline-cancels-flights-strands-passengers-no-bankruptcy?.tsrc=rss",
+    "publish_date": "Sun, 21 Dec 2025 19:17:00 +0000"
+  },
+  {
+    "id": "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751",
+    "ticker": [
+      "FEEDS",
+      "GLBMD",
+      "GLYHO",
+      "THYAO",
+      "TIES",
+      "WITH",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "GLBMD",
+      "GLYHO",
+      "THYAO",
+      "TIES",
+      "WITH",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "TIES",
+      "WITH"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 76,
+    "importance": "High",
+    "importance_score": 81,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/southwest-airlines-ties-turkish-airlines-145500205.html?.tsrc=rss",
+    "publish_date": "Thu, 18 Dec 2025 14:55:00 +0000"
+  },
+  {
+    "id": "c6d5a849e21a34ebd6c187ff7a884d5aea9773bcbd24b6ca516da9976ee32a1a",
+    "ticker": [
+      "FEEDS",
+      "THYAO",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "THYAO",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "FEEDS",
+      "THYAO",
+      "YAHOO"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, THYAO, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/southwest-airlines-turkish-airlines-partner-160000936.html?.tsrc=rss",
+    "publish_date": "Wed, 17 Dec 2025 16:00:00 +0000"
+  },
+  {
+    "id": "1d1841816989536a7465e0b445d3035ee7e979b3bbdc04efedaf427e27c2d4b9",
+    "ticker": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/air-transat-now-connects-toronto-154700298.html?.tsrc=rss",
+    "publish_date": "Wed, 17 Dec 2025 15:47:00 +0000"
+  },
+  {
+    "id": "df4fee909672ca85dd50eeb7aa4d85d3b457e278fc2ef8c9ed8a1646c837154e",
+    "ticker": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://www.thestreet.com/travel/holiday-airline-cancels-all-flights-travelers-stranded?.tsrc=rss",
+    "publish_date": "Sat, 13 Dec 2025 19:33:00 +0000"
+  },
+  {
+    "id": "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00",
+    "ticker": [
+      "FEEDS",
+      "GLBMD",
+      "GLYHO",
+      "HOTEL",
+      "NAMES",
+      "YAHOO",
+      "YEAR"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "GLBMD",
+      "GLYHO",
+      "HOTEL",
+      "NAMES",
+      "YAHOO",
+      "YEAR"
+    ],
+    "ticker_candidates": [
+      "HOTEL",
+      "NAMES",
+      "YEAR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 76,
+    "importance": "High",
+    "importance_score": 81,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/global-traveler-names-airline-hotel-140000495.html?.tsrc=rss",
+    "publish_date": "Mon, 01 Dec 2025 14:00:00 +0000"
+  },
+  {
+    "id": "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a",
+    "ticker": [
+      "CALL",
+      "FEEDS",
+      "HAVA",
+      "PRKAB",
+      "TBORG",
+      "THYAO",
+      "TKHVY",
+      "TRALT",
+      "TRILC",
+      "TTKOM",
+      "TTRAK",
+      "TURK",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "CALL",
+      "FEEDS",
+      "HAVA",
+      "PRKAB",
+      "TBORG",
+      "THYAO",
+      "TKHVY",
+      "TRALT",
+      "TRILC",
+      "TTKOM",
+      "TTRAK",
+      "TURK",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "CALL",
+      "HAVA",
+      "TKHVY",
+      "TURK"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 94,
+    "importance": "High",
+    "importance_score": 100,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/turk-hava-yollari-ao-tkhvy-070649371.html?.tsrc=rss",
+    "publish_date": "Sat, 08 Nov 2025 07:06:49 +0000"
+  },
+  {
+    "id": "c1ebcad703e02f30c712f70cbc5190aca215a64f57a9a71bf8f36c04c51f7990",
+    "ticker": [
+      "ASSET",
+      "FEEDS",
+      "SALE",
+      "YAHOO",
+      "YEAR"
+    ],
+    "detected_tickers": [
+      "ASSET",
+      "FEEDS",
+      "SALE",
+      "YAHOO",
+      "YEAR"
+    ],
+    "ticker_candidates": [
+      "ASSET",
+      "SALE",
+      "YEAR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 70,
+    "importance": "Medium",
+    "importance_score": 65,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): ASSET, FEEDS, SALE, YAHOO, YEAR"
+    ],
+    "source": "news",
+    "url": "https://www.thestreet.com/travel/33-year-old-airline-facing-bankruptcy-asset-sale?.tsrc=rss",
+    "publish_date": "Fri, 07 Nov 2025 20:13:53 +0000"
+  },
+  {
+    "id": "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6",
+    "ticker": [
+      "BEAT",
+      "BURN",
+      "CASH",
+      "CEOEM",
+      "FEEDS",
+      "FLOW",
+      "PLAN",
+      "POSTS",
+      "RATE",
+      "TAKES",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "BEAT",
+      "BURN",
+      "CASH",
+      "CEOEM",
+      "FEEDS",
+      "FLOW",
+      "PLAN",
+      "POSTS",
+      "RATE",
+      "TAKES",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "BEAT",
+      "BURN",
+      "CASH",
+      "FLOW",
+      "PLAN",
+      "POSTS",
+      "RATE",
+      "TAKES"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 88,
+    "importance": "High",
+    "importance_score": 100,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/boeing-posts-q3-revenue-beat-improving-cash-flow-burn-rate-as-ceo-ortbergs-turnaround-plan-takes-off-114417219.html?.tsrc=rss",
+    "publish_date": "Wed, 29 Oct 2025 14:42:18 +0000"
+  },
+  {
+    "id": "1cd37fdd5053c2008bcbe1c2221e2e30672c54127aaa97b43742bcd17abc20a6",
+    "ticker": [
+      "FEEDS",
+      "THIRD",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "THIRD",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "THIRD"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, THIRD, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/boeing-reports-third-quarter-results-113000609.html?.tsrc=rss",
+    "publish_date": "Wed, 29 Oct 2025 11:30:00 +0000"
+  },
+  {
+    "id": "a3008b2562f9f227285790a3628e173b848b1c8fba19399334877d89fa83a387",
+    "ticker": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "FEEDS",
+      "YAHOO"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/investors-may-respond-airbus-enxtpa-011104880.html?.tsrc=rss",
+    "publish_date": "Fri, 10 Oct 2025 01:11:04 +0000"
+  },
+  {
+    "id": "f26ebcff70eaf088c522ac0f23cc75d04fdc3008a4bb15d3210419cf3dd197c2",
+    "ticker": [
+      "FEEDS",
+      "MAJOR",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "MAJOR",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "MAJOR"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, MAJOR, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/investors-may-respond-boeing-ba-131942470.html?.tsrc=rss",
+    "publish_date": "Tue, 07 Oct 2025 13:19:42 +0000"
+  },
+  {
+    "id": "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3",
+    "ticker": [
+      "CEOEM",
+      "FEEDS",
+      "ISFIN",
+      "ISGYO",
+      "ISMEN",
+      "MOST",
+      "SAYS",
+      "THIS",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "CEOEM",
+      "FEEDS",
+      "ISFIN",
+      "ISGYO",
+      "ISMEN",
+      "MOST",
+      "SAYS",
+      "THIS",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "MOST",
+      "SAYS",
+      "THIS"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 82,
+    "importance": "High",
+    "importance_score": 97,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/why-jim-cramer-says-this-is-the-most-underrated-ceo-in-america-160040868.html?.tsrc=rss",
+    "publish_date": "Mon, 06 Oct 2025 16:00:40 +0000"
+  },
+  {
+    "id": "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0",
+    "ticker": [
+      "FEEDS",
+      "HERE",
+      "ISFIN",
+      "ISGYO",
+      "ISMEN",
+      "THIS",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "FEEDS",
+      "HERE",
+      "ISFIN",
+      "ISGYO",
+      "ISMEN",
+      "THIS",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "HERE",
+      "THIS"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 76,
+    "importance": "High",
+    "importance_score": 81,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/analyst-bullish-boeing-ba-why-133643535.html?.tsrc=rss",
+    "publish_date": "Fri, 03 Oct 2025 13:36:43 +0000"
+  },
+  {
+    "id": "a28d2d8ca6ca61aaecbaadc5a2bab0a34ae50e1fd560dd748f5263e7c4be9607",
+    "ticker": [
+      "AHEAD",
+      "BOOST",
+      "FEEDS",
+      "GAINS",
+      "YAHOO"
+    ],
+    "detected_tickers": [
+      "AHEAD",
+      "BOOST",
+      "FEEDS",
+      "GAINS",
+      "YAHOO"
+    ],
+    "ticker_candidates": [
+      "AHEAD",
+      "BOOST",
+      "GAINS"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 70,
+    "importance": "Medium",
+    "importance_score": 65,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): AHEAD, BOOST, FEEDS, GAINS, YAHOO"
+    ],
+    "source": "news",
+    "url": "https://finance.yahoo.com/news/boeing-company-ba-gains-faa-225306609.html?.tsrc=rss",
+    "publish_date": "Sun, 28 Sep 2025 22:53:06 +0000"
+  },
+  {
+    "id": "5c5626be6624e7b77426d100dca8a1cfdd0ec7ad396649923bc30d33118bdb05",
+    "ticker": [
+      "BRKVY"
+    ],
+    "detected_tickers": [
+      "BRKVY"
+    ],
+    "ticker_candidates": [
+      "BRKVY"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): BRKVY"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/bes-havuzundaki-birikim-2-4-trilyon-lirayi-asti-3782452",
+    "publish_date": "Thu, 09 Jul 2026 08:48:51 +0000"
+  },
+  {
+    "id": "ecb11a44bbe2a4db655e43b7299270b347bdcd53aaa4175897724d7a44d364fb",
+    "ticker": [],
+    "detected_tickers": [],
+    "ticker_candidates": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/almanya-abd-den-tomahawk-fuzeleri-satin-alacak-3782451",
+    "publish_date": "Thu, 09 Jul 2026 08:19:53 +0000"
+  },
+  {
+    "id": "72861e1a69ed679ecae89c6afab9e207046e020af09ab64728ea3d4836093df4",
+    "ticker": [
+      "NDAKI"
+    ],
+    "detected_tickers": [
+      "NDAKI"
+    ],
+    "ticker_candidates": [
+      "NDAKI"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): NDAKI"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/qnb-altinin-dususu-turkiye-de-tuketici-talebini-etkiliyor-3782450",
+    "publish_date": "Thu, 09 Jul 2026 08:11:26 +0000"
+  },
+  {
+    "id": "9de14a14c16153457760272b981679b4f5bd9bffa147a64f841c4ee523c40565",
+    "ticker": [
+      "TALEP"
+    ],
+    "detected_tickers": [
+      "TALEP"
+    ],
+    "ticker_candidates": [
+      "TALEP"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): TALEP"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/porscheye-kuresel-talep-soku-ilk-yari-satislari-6-yilin-dibinde-3782449",
+    "publish_date": "Thu, 09 Jul 2026 08:01:00 +0000"
+  },
+  {
+    "id": "0a916d433770bcc0c69b3901b28cf79a1fa081b1be3315003fcd039385f215a0",
+    "ticker": [
+      "ETTI",
+      "TEMIN"
+    ],
+    "detected_tickers": [
+      "ETTI",
+      "TEMIN"
+    ],
+    "ticker_candidates": [
+      "ETTI",
+      "TEMIN"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): ETTI, TEMIN"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/ing-turkiye-sendikasyon-temin-etti-3782447",
+    "publish_date": "Thu, 09 Jul 2026 07:25:26 +0000"
+  },
+  {
+    "id": "6cd59bd24c4543979e86ba2ae6f983971090a1929b03bf57c1a175d05a7f8576",
+    "ticker": [
+      "EYREK"
+    ],
+    "detected_tickers": [
+      "EYREK"
+    ],
+    "ticker_candidates": [
+      "EYREK"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): EYREK"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/3-ceyrek-ihracat-beklenti-endeksi-artti-3782446",
+    "publish_date": "Thu, 09 Jul 2026 07:26:06 +0000"
+  },
+  {
+    "id": "8399a33c80a1cb9428dd7a8d2249ce8fcf61cbf2b61ec966320850ccdd1ca1f1",
+    "ticker": [],
+    "detected_tickers": [],
+    "ticker_candidates": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/insaat-maliyet-endeksi-mayis-ta-artti-3782445",
+    "publish_date": "Thu, 09 Jul 2026 07:11:50 +0000"
+  },
+  {
+    "id": "7ba186d627e600452e61117d06f6db6bda3f5ddec875919ebaa69943f49f0449",
+    "ticker": [
+      "RADA"
+    ],
+    "detected_tickers": [
+      "RADA"
+    ],
+    "ticker_candidates": [
+      "RADA"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): RADA"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/turkiye-nufus-buyuklugune-gore-194-ulke-arasinda-18-sirada-3782444",
+    "publish_date": "Thu, 09 Jul 2026 07:11:41 +0000"
+  },
+  {
+    "id": "21afed8a167765e9ed678c1b3abefbcd2870b85e89877d7e6d4c15f00f565b1b",
+    "ticker": [
+      "IZIN"
+    ],
+    "detected_tickers": [
+      "IZIN"
+    ],
+    "ticker_candidates": [
+      "IZIN"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): IZIN"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/cin-nvidia-h200-cipi-icin-izin-verecek-3782438",
+    "publish_date": "Thu, 09 Jul 2026 07:00:19 +0000"
+  },
+  {
+    "id": "879d16a4e0a8c0271e33c1722a16b74281a3e64e6ec02dc480fbec9f6fc47b96",
+    "ticker": [],
+    "detected_tickers": [],
+    "ticker_candidates": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/kuresel-piyasalarda-yeniden-jeopolitik-tansiyon-3782431",
+    "publish_date": "Thu, 09 Jul 2026 06:05:22 +0000"
+  },
+  {
+    "id": "d0d6dc33e7343b07c20e34ac650e1144b14d718121b374ff7686406081e7b0f8",
+    "ticker": [
+      "BIRKA",
+      "FAIZ"
+    ],
+    "detected_tickers": [
+      "BIRKA",
+      "FAIZ"
+    ],
+    "ticker_candidates": [
+      "FAIZ"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): BIRKA, FAIZ"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/birkac-fed-uyesi-faiz-artisi-icin-gerekce-gordugunu-belirtti-3782430",
+    "publish_date": "Thu, 09 Jul 2026 06:00:41 +0000"
+  },
+  {
+    "id": "d41e2eabd86b0db3212c23a6ac76cc24e494028c509d54c97ef413ccf8e8b8f4",
+    "ticker": [],
+    "detected_tickers": [],
+    "ticker_candidates": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/bakir-jeopolitik-gerilime-ragmen-yukselise-gecti-3782429",
+    "publish_date": "Thu, 09 Jul 2026 05:34:27 +0000"
+  },
+  {
+    "id": "402051e27740bb3a8cf968ef745ccf73a255e11ccc9bd645d2731bd704cf30e4",
+    "ticker": [
+      "VURDU"
+    ],
+    "detected_tickers": [
+      "VURDU"
+    ],
+    "ticker_candidates": [
+      "VURDU"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): VURDU"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/abd-iranda-ait-yaklasik-90-askeri-hedef-vurdu-3782428",
+    "publish_date": "Thu, 09 Jul 2026 05:19:59 +0000"
+  },
+  {
+    "id": "2e926f3049795228a3769c66f61829151c16441e42921d7baefdb9809df3ca93",
+    "ticker": [
+      "TRUMP"
+    ],
+    "detected_tickers": [
+      "TRUMP"
+    ],
+    "ticker_candidates": [
+      "TRUMP"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): TRUMP"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/trump-iran-bir-anlasma-yapmayi-cok-istiyor-3782427",
+    "publish_date": "Thu, 09 Jul 2026 05:15:48 +0000"
+  },
+  {
+    "id": "8853bd0babb7dbb81bb5686d189f387abcaab8d4c6895fd2e4e223a0918a8a8e",
+    "ticker": [
+      "SACHS"
+    ],
+    "detected_tickers": [
+      "SACHS"
+    ],
+    "ticker_candidates": [
+      "SACHS"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 58,
+    "importance": "Low",
+    "importance_score": 33,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): SACHS"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/goldman-sachs-hurmuz-bogazi-icin-petrol-arzi-uyarisi-yapti-3782426",
+    "publish_date": "Thu, 09 Jul 2026 05:12:15 +0000"
+  },
+  {
+    "id": "95c9934c5bf82e3dd9a298dfb5232d4e461060b407828d2e0c3465bb087bd160",
+    "ticker": [
+      "DURDU",
+      "GEMI"
+    ],
+    "detected_tickers": [
+      "DURDU",
+      "GEMI"
+    ],
+    "ticker_candidates": [
+      "DURDU",
+      "GEMI"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): DURDU, GEMI"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/hurmuz-bogazinda-gemi-trafigi-neredeyse-durdu-3782425",
+    "publish_date": "Thu, 09 Jul 2026 05:03:11 +0000"
+  },
+  {
+    "id": "efb59ab6b2bc2ddd2598a4b2fd36ecc3488c828bd0bb031fa6e6b2f9b5e7b8f4",
+    "ticker": [],
+    "detected_tickers": [],
+    "ticker_candidates": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/cinde-tuketici-enflasyonu-beklentilerin-altinda-kaldi-3782417",
+    "publish_date": "Thu, 09 Jul 2026 04:11:22 +0000"
+  },
+  {
+    "id": "f3f85ba76a2254687fa88845ae6681393c1bd427243ce5ba39d967a14e6e1470",
+    "ticker": [
+      "FAIZ",
+      "GERI"
+    ],
+    "detected_tickers": [
+      "FAIZ",
+      "GERI"
+    ],
+    "ticker_candidates": [
+      "FAIZ",
+      "GERI"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): FAIZ, GERI"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/altin-enflasyon-ve-faiz-endiselerinin-geri-donmesiyle-geriledi-3782416",
+    "publish_date": "Thu, 09 Jul 2026 03:47:57 +0000"
+  },
+  {
+    "id": "a954cd3a098e733a999d29a8b31e5c4f307c86d02cad5f5253e3555159b3c62e",
+    "ticker": [],
+    "detected_tickers": [],
+    "ticker_candidates": [],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 55,
+    "importance": "Low",
+    "importance_score": 25,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "No matched keyword signal"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/petrol-abd-iran-gerilimiyle-yeniden-yukseldi-3782415",
+    "publish_date": "Thu, 09 Jul 2026 03:38:49 +0000"
+  },
+  {
+    "id": "70f1d1fa3730eae7b3681434addd6df78a07169ed5f92dc83525a64dd51e26b8",
+    "ticker": [
+      "IHLAL",
+      "LARLA"
+    ],
+    "detected_tickers": [
+      "IHLAL",
+      "LARLA"
+    ],
+    "ticker_candidates": [
+      "IHLAL",
+      "LARLA"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 61,
+    "importance": "Low",
+    "importance_score": 41,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): IHLAL, LARLA"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/iran-abd-nin-saldirilarla-mutabakati-ihlal-ettigini-bm-guvenlik-konseyi-ne-bildirdi-3782414",
+    "publish_date": "Thu, 09 Jul 2026 03:24:39 +0000"
   }
 ]

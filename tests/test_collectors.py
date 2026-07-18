@@ -34,8 +34,8 @@ def test_news_collector_parses_anchor_tags() -> None:
         """
         <html>
           <body>
-            <a href="/news/1">Company reports strong quarterly profit growth</a>
-            <a href="https://example.com/news/2">Another positive contract announcement</a>
+            <a href="/midasin-kulaklari/sirket-guclu-kar-acikladi">Company reports strong quarterly profit growth</a>
+            <a href="/borsa-haberleri/yeni-sozlesme-aciklandi-kamu-ile-anlasma">Another positive contract announcement</a>
           </body>
         </html>
         """,

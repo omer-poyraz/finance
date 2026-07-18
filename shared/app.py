@@ -35,26 +35,26 @@ def create_app() -> FastAPI:
     @app.on_event("startup")
     async def on_startup() -> None:
         logger.info("Application starting with timezone=%s", settings.timezone)
-        register_weekday_job(
-            scheduler,
-            pipeline_service.collect_all,
-            hour=8,
-            minute=30,
-            job_id="collect_and_analyze",
+        pipeline_service.update_history_performance()
+        gemini = pipeline_service.gemini_health()
+        logger.info(
+            "Gemini status on startup: enabled=%s healthy=%s",
+            gemini["enabled"],
+            gemini["healthy"],
         )
         register_weekday_job(
             scheduler,
             pipeline_service.send_daily_recommendations,
             hour=9,
             minute=55,
-            job_id="send_daily_whatsapp",
+            job_id="weekday_daily_pipeline",
         )
         register_weekday_job(
             scheduler,
-            pipeline_service.archive_today,
-            hour=17,
-            minute=0,
-            job_id="archive_daily_recommendations",
+            pipeline_service.finalize_day_performance,
+            hour=18,
+            minute=10,
+            job_id="weekday_end_of_day_performance",
         )
         start_scheduler(scheduler)
 
@@ -65,10 +65,15 @@ def create_app() -> FastAPI:
         return {"status": "ok", "service": "Finance Intelligence Engine"}
 
     @app.get("/health", tags=["health"])
-    async def health_check() -> dict[str, str]:
+    async def health_check() -> dict[str, object]:
         """Return a health-check payload for orchestration tools."""
 
-        return {"status": "healthy"}
+        gemini = pipeline_service.gemini_health()
+        return {
+            "status": "healthy",
+            "gemini_enabled": bool(gemini["enabled"]),
+            "gemini_healthy": bool(gemini["healthy"]),
+        }
 
     @app.get("/collect/news", tags=["collectors"])
     async def collect_news() -> dict[str, object]:
@@ -150,5 +155,11 @@ def create_app() -> FastAPI:
         """Return recommendation archive history."""
 
         return pipeline_service.get_history()
+
+    @app.get("/performance", tags=["history"])
+    async def performance() -> dict[str, object]:
+        """Return paper trading performance statistics."""
+
+        return pipeline_service.get_performance()
 
     return app

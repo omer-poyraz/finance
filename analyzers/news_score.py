@@ -125,6 +125,8 @@ class NewsAnalyzer(BaseAnalyzer):
 			title = normalize_text(str(record.get("title") or ""))
 			url = normalize_text(str(record.get("url") or ""))
 			summary = normalize_text(str(record.get("summary") or ""))
+			source = normalize_text(str(record.get("source") or "news"))
+			publish_date = normalize_text(str(record.get("publish_date") or record.get("published_at") or record.get("collected_at") or ""))
 			if not title or not url:
 				continue
 
@@ -164,13 +166,19 @@ class NewsAnalyzer(BaseAnalyzer):
 				{
 					"id": item_id,
 					"ticker": tickers,
+					"detected_tickers": tickers,
+					"ticker_candidates": list(record.get("ticker_candidates") or tickers),
 					"sentiment": sentiment,
 					"score": sentiment_score,
 					"confidence": confidence,
 					"importance": self._importance_label(importance_score),
 					"importance_score": importance_score,
+					"keywords": matched_keywords,
 					"matched_keywords": matched_keywords,
 					"reasons": reasons,
+					"source": source,
+					"url": url,
+					"publish_date": publish_date,
 				}
 			)
 			seen_ids.add(item_id)

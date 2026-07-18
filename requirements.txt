@@ -8,3 +8,4 @@ pandas
 numpy
 apscheduler
 pytest
+google-generativeai

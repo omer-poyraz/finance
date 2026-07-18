@@ -1,0 +1,23 @@
+{
+  "total_signals": 40,
+  "winning_signals": 39,
+  "losing_signals": 1,
+  "success_rate": 97.5,
+  "average_profit": 2.16,
+  "average_loss": -0.2233,
+  "best_trade": 5.9829,
+  "worst_trade": -0.2233,
+  "last_updated": "2026-07-18T21:40:21.934544+00:00",
+  "total_recommendations": 40,
+  "successful_recommendations": 39,
+  "failed_recommendations": 1,
+  "win_rate": 97.5,
+  "loss_rate": 2.5,
+  "average_holding_time": 0.0,
+  "tp1_hits": 35,
+  "tp2_hits": 0,
+  "tp3_hits": 0,
+  "stop_hits": 0,
+  "current_open_positions": 0,
+  "updated_at": "2026-07-18T21:40:21.934544+00:00"
+}

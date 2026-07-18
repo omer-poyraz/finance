@@ -1,14 +1,56 @@
 [
   {
+    "id": "aa1607924b12bf75bc9d357c4d7a760d2fa0ad23628b6ee84b9fef3be212ae82",
+    "ticker": "AERO",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 16 Jul 2026 12:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 73,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AERO, FEEDS, FIRST, LEAP, UNDER, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd"
+    ]
+  },
+  {
+    "id": "be5fb1cd9bba2cf40fe1ea7b3ec27287510f90d5c21ee9d04ef773d682166a78",
+    "ticker": "AHEAD",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sun, 28 Sep 2025 22:53:06 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 70,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AHEAD, BOOST, FEEDS, GAINS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a28d2d8ca6ca61aaecbaadc5a2bab0a34ae50e1fd560dd748f5263e7c4be9607"
+    ]
+  },
+  {
     "id": "bac195bc3113bf1ee3f54a52acdaf70330d4be2c038285d2993e2b650e2549f9",
     "ticker": "ALIM",
-    "news_count": 1,
-    "positive_count": 1,
+    "news_count": 2,
+    "positive_count": 2,
     "negative_count": 0,
     "neutral_count": 0,
     "average_news_score": 75.0,
     "highest_news_score": 75.0,
-    "latest_news_date": "2026-07-17T14:57:42.497141+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Positive",
     "confidence": 96,
     "top_keywords": [
@@ -19,22 +61,237 @@
       "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
     ],
     "keyword_counts": {
-      "geri alım": 1
+      "geri alım": 2
     },
     "processed_news_ids": [
-      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e"
+      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e",
+      "eaac06a971e5b3938a6003abaceff02deb37a85bbddf63a0e25cf19c9f5f16a2"
     ]
   },
   {
-    "id": "0c9790c4784b45f523caa896080e0dcf35971f35ae97ecf562e296abcfae9912",
-    "ticker": "DEMEK",
+    "id": "2501e016ba780a1851e8f1f4ff8a79c4fb639f90678c5199215704aa3d52a269",
+    "ticker": "AMID",
     "news_count": 1,
     "positive_count": 0,
     "negative_count": 0,
     "neutral_count": 1,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.497095+00:00",
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 97,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2"
+    ]
+  },
+  {
+    "id": "83c76bf59c397dbc6aa5b3e1c94ac829caeea63ff714cb0b5ececacd012aa00e",
+    "ticker": "ASSET",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Fri, 07 Nov 2025 20:13:53 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 70,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ASSET, FEEDS, SALE, YAHOO, YEAR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "c1ebcad703e02f30c712f70cbc5190aca215a64f57a9a71bf8f36c04c51f7990"
+    ]
+  },
+  {
+    "id": "7f3da8a69a85d3b05aadbba3c7ab9157a3916b6f9c8ec1949aec451e9f5cfd39",
+    "ticker": "BEAT",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "9a12fe8e1a08f9af3c934c93ec81a24e7189e686468af25013399c6dc4379b3b",
+    "ticker": "BIRKA",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 06:00:41 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BIRKA, FAIZ"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "d0d6dc33e7343b07c20e34ac650e1144b14d718121b374ff7686406081e7b0f8"
+    ]
+  },
+  {
+    "id": "497a1673b83b2ebecb0bba44117a27749bedd79d0cc1cd48625483fbd3c7387c",
+    "ticker": "BOOST",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sun, 28 Sep 2025 22:53:06 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 70,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AHEAD, BOOST, FEEDS, GAINS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a28d2d8ca6ca61aaecbaadc5a2bab0a34ae50e1fd560dd748f5263e7c4be9607"
+    ]
+  },
+  {
+    "id": "c6bd990f51ae005b08d35b4af884c255635c9a3a15da8146d1d074ef697e424d",
+    "ticker": "BRKVY",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 08:48:51 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BRKVY"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5626be6624e7b77426d100dca8a1cfdd0ec7ad396649923bc30d33118bdb05"
+    ]
+  },
+  {
+    "id": "609fbee8da6f486d0b509c7c3cf241477b8027387636203c2da79f75946c9ccb",
+    "ticker": "BURN",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "0a40e7e1a2f413c0d72da4e6f5924f135436d18e2ad9f2e73e9df559679ac6e0",
+    "ticker": "CALL",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "2073164480de7c103d04b677493c3d19b757ef792d84c6fdb32ff3e8e5540e55",
+    "ticker": "CASH",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "dc84372e078da8d9481b7b28750bb59ef8731d1a9a68dcf019cf0a934987c63a",
+    "ticker": "CEOEM",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 85,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO",
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6",
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3"
+    ]
+  },
+  {
+    "id": "0c9790c4784b45f523caa896080e0dcf35971f35ae97ecf562e296abcfae9912",
+    "ticker": "DEMEK",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 61,
     "top_keywords": [],
@@ -43,19 +300,41 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17"
+      "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17",
+      "7676127d34b1cc16933f6c5f98139231e2e2d8089d4dc7fd0f92ae8fc51ae974"
     ]
   },
   {
-    "id": "b44f529e5522c7d0dd700606cc1c16f9c43993075f27c220eab92335300c7b9e",
-    "ticker": "EMIR",
+    "id": "098cae3dcc3185e470f60c9889bb227a192f434e86bb83f2c073eeb0d6b04379",
+    "ticker": "DURDU",
     "news_count": 1,
     "positive_count": 0,
     "negative_count": 0,
     "neutral_count": 1,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.496991+00:00",
+    "latest_news_date": "Thu, 09 Jul 2026 05:03:11 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): DURDU, GEMI"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "95c9934c5bf82e3dd9a298dfb5232d4e461060b407828d2e0c3465bb087bd160"
+    ]
+  },
+  {
+    "id": "b44f529e5522c7d0dd700606cc1c16f9c43993075f27c220eab92335300c7b9e",
+    "ticker": "EMIR",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 58,
     "top_keywords": [],
@@ -64,94 +343,440 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "e3f36c10ec9919f21cf130f7b7a9fba93d3ba55117bff7a2071d96287180457e"
+      "e3f36c10ec9919f21cf130f7b7a9fba93d3ba55117bff7a2071d96287180457e",
+      "4f11c8a3e20bc3ce642e9064d84cbc0f33f2192c5cc398dd00e617e0be87e0e0"
     ]
   },
   {
-    "id": "29c5122eee3e571650291027267f5b2b49eca805bcfeb37450ecc169210353db",
-    "ticker": "FAIZ",
-    "news_count": 2,
-    "positive_count": 0,
-    "negative_count": 0,
-    "neutral_count": 2,
-    "average_news_score": 50.0,
-    "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.496943+00:00",
-    "overall_news_sentiment": "Neutral",
-    "confidence": 61,
-    "top_keywords": [],
-    "all_reasons": [
-      "Detected ticker(s): FAIZ, ZAMAN",
-      "Detected ticker(s): FAIZ, OLUR"
-    ],
-    "keyword_counts": {},
-    "processed_news_ids": [
-      "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0",
-      "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6"
-    ]
-  },
-  {
-    "id": "8e6de497d898605b1d30f98b0873ae6c78b7bb63a95f81128aa9c81bad808650",
-    "ticker": "GERI",
-    "news_count": 1,
-    "positive_count": 1,
-    "negative_count": 0,
-    "neutral_count": 0,
-    "average_news_score": 75.0,
-    "highest_news_score": 75.0,
-    "latest_news_date": "2026-07-17T14:57:42.497141+00:00",
-    "overall_news_sentiment": "Positive",
-    "confidence": 96,
-    "top_keywords": [
-      "geri alım"
-    ],
-    "all_reasons": [
-      "Positive keyword: geri alım",
-      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
-    ],
-    "keyword_counts": {
-      "geri alım": 1
-    },
-    "processed_news_ids": [
-      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e"
-    ]
-  },
-  {
-    "id": "17e3c504b03b0372f91afc116942741bcacdab283ede14b5c2d6a9524982dc5e",
-    "ticker": "HISSE",
-    "news_count": 1,
-    "positive_count": 1,
-    "negative_count": 0,
-    "neutral_count": 0,
-    "average_news_score": 75.0,
-    "highest_news_score": 75.0,
-    "latest_news_date": "2026-07-17T14:57:42.497141+00:00",
-    "overall_news_sentiment": "Positive",
-    "confidence": 96,
-    "top_keywords": [
-      "geri alım"
-    ],
-    "all_reasons": [
-      "Positive keyword: geri alım",
-      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
-    ],
-    "keyword_counts": {
-      "geri alım": 1
-    },
-    "processed_news_ids": [
-      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e"
-    ]
-  },
-  {
-    "id": "7c5a2fbb156cef08c2d757e038021881696c9896bcf621f080722256c9b0d459",
-    "ticker": "ILETI",
+    "id": "47039d065989bfa8f6b6fed346051e1742d6e395da7599696cf5ff136c5ddefb",
+    "ticker": "ETTI",
     "news_count": 1,
     "positive_count": 0,
     "negative_count": 0,
     "neutral_count": 1,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.496667+00:00",
+    "latest_news_date": "Thu, 09 Jul 2026 07:25:26 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ETTI, TEMIN"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "0a916d433770bcc0c69b3901b28cf79a1fa081b1be3315003fcd039385f215a0"
+    ]
+  },
+  {
+    "id": "40a5a2bbfef6e58c31e5b0b18040a12bbb91397ed585c6e07bd89b444af47326",
+    "ticker": "EYREK",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 07:26:06 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): EYREK"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "6cd59bd24c4543979e86ba2ae6f983971090a1929b03bf57c1a175d05a7f8576"
+    ]
+  },
+  {
+    "id": "29c5122eee3e571650291027267f5b2b49eca805bcfeb37450ecc169210353db",
+    "ticker": "FAIZ",
+    "news_count": 6,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 6,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 06:00:41 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FAIZ, ZAMAN",
+      "Detected ticker(s): FAIZ, OLUR",
+      "Detected ticker(s): BIRKA, FAIZ",
+      "Detected ticker(s): FAIZ, GERI"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0",
+      "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6",
+      "4c77d3a174cadd268ff55d6b05551e73463cecf709a575775c5cb4b80ac27fb9",
+      "b0fc925e82ba633d06bb05ab9de32f27df38f1db89fc6b729adf86a5e55971ff",
+      "d0d6dc33e7343b07c20e34ac650e1144b14d718121b374ff7686406081e7b0f8",
+      "f3f85ba76a2254687fa88845ae6681393c1bd427243ce5ba39d967a14e6e1470"
+    ]
+  },
+  {
+    "id": "f9953c0867c394dc96e6fe07f205c5c1a4253d2f3253f7a31f05ddd4f8136872",
+    "ticker": "FEEDS",
+    "news_count": 20,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 20,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 72,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AERO, FEEDS, FIRST, LEAP, UNDER, YAHOO",
+      "Detected ticker(s): FEEDS, STOP, YAHOO",
+      "Detected ticker(s): FEEDS, LEASE, THYAO, YAHOO",
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): FEEDS, FILES, YAHOO",
+      "Detected ticker(s): FEEDS, YAHOO",
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO",
+      "Detected ticker(s): FEEDS, THYAO, YAHOO",
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): ASSET, FEEDS, SALE, YAHOO, YEAR",
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO",
+      "Detected ticker(s): FEEDS, THIRD, YAHOO",
+      "Detected ticker(s): FEEDS, MAJOR, YAHOO",
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO",
+      "Detected ticker(s): AHEAD, BOOST, FEEDS, GAINS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd",
+      "9fbdfcc42612d714743cd692a50510d84a791b2a3ab4a8fb8ebd2211447de03b",
+      "9df36d4d851442234709ac8dc0e8fb9cdd02c6094ff057ef999fe72856e0dfc4",
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "70ac833c442652edcd6fded6167cb6aa0b0f745d29d91faf46dd8ab0ff8b20f1",
+      "d55dd5647dff63164d1e8f804f867eb79b288cc64f1e7faf9d679c8acf1d127d",
+      "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751",
+      "c6d5a849e21a34ebd6c187ff7a884d5aea9773bcbd24b6ca516da9976ee32a1a",
+      "1d1841816989536a7465e0b445d3035ee7e979b3bbdc04efedaf427e27c2d4b9",
+      "df4fee909672ca85dd50eeb7aa4d85d3b457e278fc2ef8c9ed8a1646c837154e",
+      "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a",
+      "c1ebcad703e02f30c712f70cbc5190aca215a64f57a9a71bf8f36c04c51f7990",
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6",
+      "1cd37fdd5053c2008bcbe1c2221e2e30672c54127aaa97b43742bcd17abc20a6",
+      "a3008b2562f9f227285790a3628e173b848b1c8fba19399334877d89fa83a387",
+      "f26ebcff70eaf088c522ac0f23cc75d04fdc3008a4bb15d3210419cf3dd197c2",
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3",
+      "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0",
+      "a28d2d8ca6ca61aaecbaadc5a2bab0a34ae50e1fd560dd748f5263e7c4be9607"
+    ]
+  },
+  {
+    "id": "57494c70428b154f650118a16ee2a493f1aee75773cde4c45c8ba20c55b7a2ca",
+    "ticker": "FILES",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 24 Dec 2025 16:25:09 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 64,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, FILES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "70ac833c442652edcd6fded6167cb6aa0b0f745d29d91faf46dd8ab0ff8b20f1"
+    ]
+  },
+  {
+    "id": "1b52ce7e7614d3f99c4ef6c387abbd35cfb331b61c80ffcd894e35ff8c1e79d6",
+    "ticker": "FIRST",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 16 Jul 2026 12:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 73,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AERO, FEEDS, FIRST, LEAP, UNDER, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd"
+    ]
+  },
+  {
+    "id": "cb4d9f74a9c4383b9b6f4ed7473b87d71eb31f43fee2fec1db58df8d47e3806d",
+    "ticker": "FLOW",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "1ae3d4edbff4b41dd247094ffaca135975350a4742504e78803efb90e5764cd0",
+    "ticker": "GAINS",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sun, 28 Sep 2025 22:53:06 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 70,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AHEAD, BOOST, FEEDS, GAINS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a28d2d8ca6ca61aaecbaadc5a2bab0a34ae50e1fd560dd748f5263e7c4be9607"
+    ]
+  },
+  {
+    "id": "adbf320ae99ee7e1eacd79dab39a39a70b33cf4691002b2090100fdc09bc098b",
+    "ticker": "GEMI",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 05:03:11 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): DURDU, GEMI"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "95c9934c5bf82e3dd9a298dfb5232d4e461060b407828d2e0c3465bb087bd160"
+    ]
+  },
+  {
+    "id": "8e6de497d898605b1d30f98b0873ae6c78b7bb63a95f81128aa9c81bad808650",
+    "ticker": "GERI",
+    "news_count": 3,
+    "positive_count": 2,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 66.67,
+    "highest_news_score": 75.0,
+    "latest_news_date": "Thu, 09 Jul 2026 03:47:57 +0000",
+    "overall_news_sentiment": "Positive",
+    "confidence": 84,
+    "top_keywords": [
+      "geri alım"
+    ],
+    "all_reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR",
+      "Detected ticker(s): FAIZ, GERI"
+    ],
+    "keyword_counts": {
+      "geri alım": 2
+    },
+    "processed_news_ids": [
+      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e",
+      "eaac06a971e5b3938a6003abaceff02deb37a85bbddf63a0e25cf19c9f5f16a2",
+      "f3f85ba76a2254687fa88845ae6681393c1bd427243ce5ba39d967a14e6e1470"
+    ]
+  },
+  {
+    "id": "767824db3220da9c93744b4be3d3d895df1a4251316d3f77787619bad8a416b2",
+    "ticker": "GLBMD",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 18 Dec 2025 14:55:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 76,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO",
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751",
+      "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00"
+    ]
+  },
+  {
+    "id": "8b4d3b8ffb9584945e932a480e62bcdb7aafd2f0304cf506c0eebd5f4f336b5b",
+    "ticker": "GLYHO",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 18 Dec 2025 14:55:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 76,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO",
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751",
+      "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00"
+    ]
+  },
+  {
+    "id": "27fdb9a899615324467380dfaaa47c8ce4ef7069bc283926d1c5397171d902d2",
+    "ticker": "HAVA",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "eec2d5f77e289caa032a4ea993dc338bc7f5b8dec8c46972b0f2f979ddf98c4d",
+    "ticker": "HERE",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Fri, 03 Oct 2025 13:36:43 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 76,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0"
+    ]
+  },
+  {
+    "id": "17e3c504b03b0372f91afc116942741bcacdab283ede14b5c2d6a9524982dc5e",
+    "ticker": "HISSE",
+    "news_count": 2,
+    "positive_count": 2,
+    "negative_count": 0,
+    "neutral_count": 0,
+    "average_news_score": 75.0,
+    "highest_news_score": 75.0,
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
+    "overall_news_sentiment": "Positive",
+    "confidence": 96,
+    "top_keywords": [
+      "geri alım"
+    ],
+    "all_reasons": [
+      "Positive keyword: geri alım",
+      "Detected ticker(s): ALIM, GERI, HISSE, NEDIR"
+    ],
+    "keyword_counts": {
+      "geri alım": 2
+    },
+    "processed_news_ids": [
+      "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e",
+      "eaac06a971e5b3938a6003abaceff02deb37a85bbddf63a0e25cf19c9f5f16a2"
+    ]
+  },
+  {
+    "id": "53b1a443f1f8c69356a46fbd0499184ec3baae1c7b18a78045bccdbdc062f44c",
+    "ticker": "HOTEL",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 01 Dec 2025 14:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 76,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00"
+    ]
+  },
+  {
+    "id": "bbb49027a9d48ee58a4b1871c895367a4bfa2f2e9e424d7b830832a8becf2548",
+    "ticker": "IHLAL",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 03:24:39 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): IHLAL, LARLA"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "70f1d1fa3730eae7b3681434addd6df78a07169ed5f92dc83525a64dd51e26b8"
+    ]
+  },
+  {
+    "id": "7c5a2fbb156cef08c2d757e038021881696c9896bcf621f080722256c9b0d459",
+    "ticker": "ILETI",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 64,
     "top_keywords": [],
@@ -160,19 +785,20 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6"
+      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6",
+      "70c68d047ffd27499efe9f7453a77ac7fdc2f990c8cbb66a4017e80a7e0237a2"
     ]
   },
   {
     "id": "186b841a43605d900af0ecb2c54443629a563b91336261cebf4a2a11ac7671a5",
     "ticker": "IPTAL",
-    "news_count": 1,
+    "news_count": 2,
     "positive_count": 0,
     "negative_count": 0,
-    "neutral_count": 1,
+    "neutral_count": 2,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.497095+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 61,
     "top_keywords": [],
@@ -181,19 +807,66 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17"
+      "4dcf7055d726616419fbd99b63197d6881ad32c33def0da282cd06acdf651b17",
+      "7676127d34b1cc16933f6c5f98139231e2e2d8089d4dc7fd0f92ae8fc51ae974"
+    ]
+  },
+  {
+    "id": "38dbdcf282f32582ef79ab14c396b4894b3fcab2f2377b94fcb1af62d99081bf",
+    "ticker": "ISFIN",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 79,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3",
+      "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0"
+    ]
+  },
+  {
+    "id": "eccd1c694aaa17525bdaec044275a25913ba69da47efc1933b864976791c28d2",
+    "ticker": "ISGYO",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 79,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3",
+      "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0"
     ]
   },
   {
     "id": "b0a18465cde24d3c145414033a3113190857fd59011c31bcf065a4a399d85a6d",
     "ticker": "ISLEM",
-    "news_count": 1,
+    "news_count": 2,
     "positive_count": 0,
     "negative_count": 0,
-    "neutral_count": 1,
+    "neutral_count": 2,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.497233+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 58,
     "top_keywords": [],
@@ -202,7 +875,52 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "1b947b6430e7d2f617dc9271fdace3f3cb86184b249b2e06b2749d98e631f31e"
+      "1b947b6430e7d2f617dc9271fdace3f3cb86184b249b2e06b2749d98e631f31e",
+      "6f2334c78e96feca0c4722064590ea9cc41fdf5c5be666137888c2fda1668399"
+    ]
+  },
+  {
+    "id": "beda47a0ec605fea15501a7f292ac10a8c49243523c1b1e16abd44309f4fc5aa",
+    "ticker": "ISMEN",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 79,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3",
+      "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0"
+    ]
+  },
+  {
+    "id": "5589b77636dc309882a2e75e0d3ee538b31e3f8fff39926037dfe2867df5b5d7",
+    "ticker": "IZIN",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 07:00:19 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): IZIN"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "21afed8a167765e9ed678c1b3abefbcd2870b85e89877d7e6d4c15f00f565b1b"
     ]
   },
   {
@@ -227,15 +945,99 @@
     ]
   },
   {
-    "id": "2c985a45a55ada3c36fe9bf3c682d6beccadb57d023a7898cbf12a374d8b8b57",
-    "ticker": "METNI",
+    "id": "fbe2158671ec2bc238958d8ecb3bcef1e72e79646db51dc54a53bab69525e8db",
+    "ticker": "LARLA",
     "news_count": 1,
     "positive_count": 0,
     "negative_count": 0,
     "neutral_count": 1,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.496667+00:00",
+    "latest_news_date": "Thu, 09 Jul 2026 03:24:39 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): IHLAL, LARLA"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "70f1d1fa3730eae7b3681434addd6df78a07169ed5f92dc83525a64dd51e26b8"
+    ]
+  },
+  {
+    "id": "2d24f966d6c3f370a22d18da79f8cbee5eb5dc1883b0686fe95ed9ea54600c03",
+    "ticker": "LEAP",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 16 Jul 2026 12:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 73,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AERO, FEEDS, FIRST, LEAP, UNDER, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd"
+    ]
+  },
+  {
+    "id": "1eabbda6413b5f39a48c79e2130a75a0284c5bd1be8f279a32d2a5c234a24238",
+    "ticker": "LEASE",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 13 May 2026 14:18:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 67,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, LEASE, THYAO, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "9df36d4d851442234709ac8dc0e8fb9cdd02c6094ff057ef999fe72856e0dfc4"
+    ]
+  },
+  {
+    "id": "f581e6576147453711e930d0ce3f31899b8ce22e9ff1d0483548e4647276e114",
+    "ticker": "MAJOR",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Tue, 07 Oct 2025 13:19:42 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 64,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, MAJOR, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "f26ebcff70eaf088c522ac0f23cc75d04fdc3008a4bb15d3210419cf3dd197c2"
+    ]
+  },
+  {
+    "id": "2c985a45a55ada3c36fe9bf3c682d6beccadb57d023a7898cbf12a374d8b8b57",
+    "ticker": "METNI",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 64,
     "top_keywords": [],
@@ -244,19 +1046,20 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6"
+      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6",
+      "70c68d047ffd27499efe9f7453a77ac7fdc2f990c8cbb66a4017e80a7e0237a2"
     ]
   },
   {
     "id": "7b870089575776dbe62648abc6461e5fb932cd3d218b27e2260bafd531044c74",
     "ticker": "MIDAS",
-    "news_count": 1,
+    "news_count": 2,
     "positive_count": 0,
     "negative_count": 0,
-    "neutral_count": 1,
+    "neutral_count": 2,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.496667+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 64,
     "top_keywords": [],
@@ -265,19 +1068,62 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6"
+      "1435d325088be20a4bc06b2f37d13a708859cf961681c79aadbf807bbb1ba7c6",
+      "70c68d047ffd27499efe9f7453a77ac7fdc2f990c8cbb66a4017e80a7e0237a2"
     ]
   },
   {
-    "id": "8b430feaca13480f7deb7d41c3da772b290a2908c6fc42ecedb1fd98611aaded",
-    "ticker": "NASIL",
+    "id": "3a29e666b5ceff9be73b05b743f95af2b102cd3c60d6c4479b986ce9c86423f4",
+    "ticker": "MOST",
     "news_count": 1,
     "positive_count": 0,
     "negative_count": 0,
     "neutral_count": 1,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.497318+00:00",
+    "latest_news_date": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 82,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3"
+    ]
+  },
+  {
+    "id": "b8b4d4ce63cf0ed89054f837e53dd6872c0d6970ddbdbdc958c2c341d4d45847",
+    "ticker": "NAMES",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 01 Dec 2025 14:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 76,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00"
+    ]
+  },
+  {
+    "id": "8b430feaca13480f7deb7d41c3da772b290a2908c6fc42ecedb1fd98611aaded",
+    "ticker": "NASIL",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 58,
     "top_keywords": [],
@@ -286,19 +1132,41 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "01be699ad5a86328e77adea57a4ac1bd403d6858751caf8f228dce5f390a0139"
+      "01be699ad5a86328e77adea57a4ac1bd403d6858751caf8f228dce5f390a0139",
+      "477cb2ed426379d0222824e641bc405622cce891d8bb996a2c533d89b92206f9"
+    ]
+  },
+  {
+    "id": "51a40a38e87a0a974e36b1da7a5a5cc2c41309ceea997cc0e2a8ce63ed81cc96",
+    "ticker": "NDAKI",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 08:11:26 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): NDAKI"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "72861e1a69ed679ecae89c6afab9e207046e020af09ab64728ea3d4836093df4"
     ]
   },
   {
     "id": "b2c6334060bd934911f4db470fb3be6345683a197c856c335eeed6aadd3e0832",
     "ticker": "NEDIR",
-    "news_count": 2,
-    "positive_count": 1,
+    "news_count": 4,
+    "positive_count": 2,
     "negative_count": 0,
-    "neutral_count": 1,
+    "neutral_count": 2,
     "average_news_score": 62.5,
     "highest_news_score": 75.0,
-    "latest_news_date": "2026-07-17T14:57:42.497184+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Positive",
     "confidence": 77,
     "top_keywords": [
@@ -310,23 +1178,25 @@
       "Detected ticker(s): NEDIR"
     ],
     "keyword_counts": {
-      "geri alım": 1
+      "geri alım": 2
     },
     "processed_news_ids": [
       "69647738ec220c1ce36b4c61ec536ca5b1baed1ca71a20597f523f2cf0f74e5e",
-      "64d49e352e4beab8bb4af945f5bc83743dcb975afaac1dfe76e8199e59a3f8b3"
+      "64d49e352e4beab8bb4af945f5bc83743dcb975afaac1dfe76e8199e59a3f8b3",
+      "eaac06a971e5b3938a6003abaceff02deb37a85bbddf63a0e25cf19c9f5f16a2",
+      "1307e0a0a32be89261fda52385e313bc6ca0c5bfba3e857e88bd8adb51a2b351"
     ]
   },
   {
     "id": "daf8cf5117c24637dfbe8fd2c7d203c69a4a1b8fcc531c402635480a2d3d18eb",
     "ticker": "OLUR",
-    "news_count": 1,
+    "news_count": 2,
     "positive_count": 0,
     "negative_count": 0,
-    "neutral_count": 1,
+    "neutral_count": 2,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.496943+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 61,
     "top_keywords": [],
@@ -335,19 +1205,20 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6"
+      "747b6684757cc694569e964b548ad65eb2c3de8122606ee1584bc9858c5934a6",
+      "b0fc925e82ba633d06bb05ab9de32f27df38f1db89fc6b729adf86a5e55971ff"
     ]
   },
   {
     "id": "24b5a84261f83d9f294ee492d36bdb2312b53166f30fc472024faf1bc879e65a",
     "ticker": "PARA",
-    "news_count": 1,
+    "news_count": 2,
     "positive_count": 0,
     "negative_count": 0,
-    "neutral_count": 1,
+    "neutral_count": 2,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.497275+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 58,
     "top_keywords": [],
@@ -356,19 +1227,571 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "efd6e785bc11066666f361a63b075f03893d42cc21c11b670a1ab3cee9a606a7"
+      "efd6e785bc11066666f361a63b075f03893d42cc21c11b670a1ab3cee9a606a7",
+      "e98d6145bfc479c56c286f9eda78f462b522ce7ad7a5607bab4157b4b14acfa2"
+    ]
+  },
+  {
+    "id": "3b4c55e704ca82e1d166e6183585668703ab3d06ebd32c5cbc4cac864f409f71",
+    "ticker": "PLAN",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "ba84deb049d25bcdd75308bb2839b2d0c6a7e5fddc6e75b24ca88ce7f57c284f",
+    "ticker": "POSTS",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "35c76524cc49b655d473315c17e2943ab2caf81c25ec897c5f46909fc9f0e90d",
+    "ticker": "PRKAB",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "22e6a443e92c784a50b463f5f9d51745d6620b9ae4f1d04cc97156d4f6b2c08c",
+    "ticker": "RADA",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 07:11:41 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): RADA"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "7ba186d627e600452e61117d06f6db6bda3f5ddec875919ebaa69943f49f0449"
+    ]
+  },
+  {
+    "id": "f337aaef52e1d3e824d73dfb6f192d590757bf3ec37e3353b2c340bcd3d0a0dc",
+    "ticker": "RATE",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "5f3daacaf388aac964c1f932eee90b35d4e649e2b5d682929ca2ea9ca138e9aa",
+    "ticker": "SACHS",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 05:12:15 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): SACHS"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "8853bd0babb7dbb81bb5686d189f387abcaab8d4c6895fd2e4e223a0918a8a8e"
+    ]
+  },
+  {
+    "id": "fcd98c587fb15df59c51d7253eab19ab8e2800040455e4e1cae77bfd052ca257",
+    "ticker": "SALE",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Fri, 07 Nov 2025 20:13:53 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 70,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ASSET, FEEDS, SALE, YAHOO, YEAR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "c1ebcad703e02f30c712f70cbc5190aca215a64f57a9a71bf8f36c04c51f7990"
+    ]
+  },
+  {
+    "id": "09d0e840c987855affd4a4e4cee95161b5f7f1cef9bae69023a2d797efc90137",
+    "ticker": "SAYS",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 82,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3"
+    ]
+  },
+  {
+    "id": "f8b2833edf8fd645ccb24cdc6c8ed3b7994d2590eb2705f854724878e9bc6535",
+    "ticker": "STOP",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Fri, 29 May 2026 17:16:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 64,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, STOP, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "9fbdfcc42612d714743cd692a50510d84a791b2a3ab4a8fb8ebd2211447de03b"
+    ]
+  },
+  {
+    "id": "fd6cf9edd96257c9407b589eb913450e692beacf749e830efd3a92868e14952e",
+    "ticker": "TAKES",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 88,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6"
+    ]
+  },
+  {
+    "id": "3d52b320f7046f36b53a291790b2d4e44fab30d6eb6177183ce27f230df5cbff",
+    "ticker": "TALEP",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 08:01:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): TALEP"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "9de14a14c16153457760272b981679b4f5bd9bffa147a64f841c4ee523c40565"
+    ]
+  },
+  {
+    "id": "fd1b310cfc055abb8820f9a1cf989b680c9ddcdd68bfbbbf426ff43a71439bd6",
+    "ticker": "TBORG",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "6b5aac512ae3b0e1fc9d765589630b19774ad71b39ce24ef40d8ea99ed9e2ad2",
+    "ticker": "TEMIN",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 07:25:26 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 61,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): ETTI, TEMIN"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "0a916d433770bcc0c69b3901b28cf79a1fa081b1be3315003fcd039385f215a0"
+    ]
+  },
+  {
+    "id": "08529eb96c4ce6043ffafd9fad57002077be526cba9f17c90b85f208061a9d6d",
+    "ticker": "THIRD",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 11:30:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 64,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, THIRD, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "1cd37fdd5053c2008bcbe1c2221e2e30672c54127aaa97b43742bcd17abc20a6"
+    ]
+  },
+  {
+    "id": "d22fb58ef949728df04235d0c239e821b75e72fbb986deb90e66603cc254d043",
+    "ticker": "THIS",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 06 Oct 2025 16:00:40 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 79,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3",
+      "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0"
+    ]
+  },
+  {
+    "id": "67fa35e3d3f99571a9ecea730069fb793a7128b2f56f4a7a8aeb6ef4b4b9ebaf",
+    "ticker": "THYAO",
+    "news_count": 5,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 5,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 17 Dec 2025 16:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 80,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, LEASE, THYAO, YAHOO",
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO",
+      "Detected ticker(s): FEEDS, THYAO, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "9df36d4d851442234709ac8dc0e8fb9cdd02c6094ff057ef999fe72856e0dfc4",
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751",
+      "c6d5a849e21a34ebd6c187ff7a884d5aea9773bcbd24b6ca516da9976ee32a1a",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "f21d9525386001c96772fff652824af23fec4a0704106b6e4b3a2f3a3335af19",
+    "ticker": "TIES",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 18 Dec 2025 14:55:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 76,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751"
+    ]
+  },
+  {
+    "id": "9a5402044ec498170af676935a29c7c17244ef9ca9712af8fd617fc9182c0e88",
+    "ticker": "TKHVY",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "62043cba34bb93631a8dbe36f689f1ad8de0dd469f836658103180672dfbc07d",
+    "ticker": "TRALT",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "f901ff5522d67bcf1fd4e56d5a378466b9c756e7a76330a755d224c65d3024f7",
+    "ticker": "TRILC",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "455ef6b94031128cc1bf85aebb0e045694f6a39c7dd6108daf2903754f95ab6a",
+    "ticker": "TRUMP",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 09 Jul 2026 05:15:48 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): TRUMP"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "2e926f3049795228a3769c66f61829151c16441e42921d7baefdb9809df3ca93"
+    ]
+  },
+  {
+    "id": "9275dce0cd70c48b0fea78abe198e7d08dd226d34a572115f6b86578c2f4f084",
+    "ticker": "TTKOM",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "88c330737f8a269d5771a1805d2879b5ae2220f40af5b4102c0ac7ef81a25f21",
+    "ticker": "TTRAK",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "4319a765689ea1ed409c4bfc708bb0f57b727bec46848ec7829574bb8f0ddfb9",
+    "ticker": "TURK",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 14 Mar 2026 01:00:49 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 96,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a"
+    ]
+  },
+  {
+    "id": "b9ec70981813eab7c901dcc7b5eb376b48d522b125ae6caea80aad2f71ff2ce4",
+    "ticker": "UNDER",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 16 Jul 2026 12:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 73,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AERO, FEEDS, FIRST, LEAP, UNDER, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd"
     ]
   },
   {
     "id": "c492bdb96041c055910be1a24ed6f0215c55d079dd4856b01042f3f4a8114293",
     "ticker": "VEREN",
-    "news_count": 1,
-    "positive_count": 1,
+    "news_count": 2,
+    "positive_count": 2,
     "negative_count": 0,
     "neutral_count": 0,
     "average_news_score": 65.0,
     "highest_news_score": 65.0,
-    "latest_news_date": "2026-07-17T14:57:42.496835+00:00",
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Positive",
     "confidence": 77,
     "top_keywords": [
@@ -379,22 +1802,144 @@
       "Detected ticker(s): VEREN"
     ],
     "keyword_counts": {
-      "temettü": 1
+      "temettü": 2
     },
     "processed_news_ids": [
-      "1d206a412f9e00320e000cb6af7289afaf09321d93407c2c56c06326687b00e5"
+      "1d206a412f9e00320e000cb6af7289afaf09321d93407c2c56c06326687b00e5",
+      "c8e4e92b5e6c5bb72c729524a7546ea438d4417b5a98eca637811998255aac16"
     ]
   },
   {
-    "id": "d0b03244044abe773e890172c7deb371a0ea77967cab0855485209cab9771270",
-    "ticker": "ZAMAN",
+    "id": "c8f9fff65e46f2412fc7562a30db91ea895b36c305e33823593d43727cca3ebc",
+    "ticker": "VURDU",
     "news_count": 1,
     "positive_count": 0,
     "negative_count": 0,
     "neutral_count": 1,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
-    "latest_news_date": "2026-07-17T14:57:42.496889+00:00",
+    "latest_news_date": "Thu, 09 Jul 2026 05:19:59 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 58,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): VURDU"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "402051e27740bb3a8cf968ef745ccf73a255e11ccc9bd645d2731bd704cf30e4"
+    ]
+  },
+  {
+    "id": "e923d598e2f6104be5a40a10bea0fe71e3edc4c65ae888f4cb19b5ed9fbf19dc",
+    "ticker": "WITH",
+    "news_count": 1,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 1,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Thu, 18 Dec 2025 14:55:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 76,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751"
+    ]
+  },
+  {
+    "id": "bb0389a54180f4469e331e3d3da747320b4fce9c46b60b84323c66b6758574c2",
+    "ticker": "YAHOO",
+    "news_count": 20,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 20,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Wed, 29 Oct 2025 14:42:18 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 72,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): AERO, FEEDS, FIRST, LEAP, UNDER, YAHOO",
+      "Detected ticker(s): FEEDS, STOP, YAHOO",
+      "Detected ticker(s): FEEDS, LEASE, THYAO, YAHOO",
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): FEEDS, FILES, YAHOO",
+      "Detected ticker(s): FEEDS, YAHOO",
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO",
+      "Detected ticker(s): FEEDS, THYAO, YAHOO",
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): ASSET, FEEDS, SALE, YAHOO, YEAR",
+      "Detected ticker(s): BEAT, BURN, CASH, CEOEM, FEEDS, FLOW, PLAN, POSTS, RATE, TAKES, YAHOO",
+      "Detected ticker(s): FEEDS, THIRD, YAHOO",
+      "Detected ticker(s): FEEDS, MAJOR, YAHOO",
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO",
+      "Detected ticker(s): AHEAD, BOOST, FEEDS, GAINS, YAHOO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "3ca5e16639d4fa431c6207b348c3a910d9793e7cf845025b7d206dfc8d5254cd",
+      "9fbdfcc42612d714743cd692a50510d84a791b2a3ab4a8fb8ebd2211447de03b",
+      "9df36d4d851442234709ac8dc0e8fb9cdd02c6094ff057ef999fe72856e0dfc4",
+      "414082458676195c6b93d27300b52fa2be4932c19ad004b5aa1abc6549797ee2",
+      "70ac833c442652edcd6fded6167cb6aa0b0f745d29d91faf46dd8ab0ff8b20f1",
+      "d55dd5647dff63164d1e8f804f867eb79b288cc64f1e7faf9d679c8acf1d127d",
+      "c695678e91c7211c0b97be29014f42d258f99e2c26353ba5d94b7ffb4277c751",
+      "c6d5a849e21a34ebd6c187ff7a884d5aea9773bcbd24b6ca516da9976ee32a1a",
+      "1d1841816989536a7465e0b445d3035ee7e979b3bbdc04efedaf427e27c2d4b9",
+      "df4fee909672ca85dd50eeb7aa4d85d3b457e278fc2ef8c9ed8a1646c837154e",
+      "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00",
+      "e4540d40008af2dbcfae715e08016861972574763b676b8510b1f571c3fbd61a",
+      "c1ebcad703e02f30c712f70cbc5190aca215a64f57a9a71bf8f36c04c51f7990",
+      "5c5a27df3876781561f2d7ee40472bf62718af5be0cb8d9aa77b4ae70497cab6",
+      "1cd37fdd5053c2008bcbe1c2221e2e30672c54127aaa97b43742bcd17abc20a6",
+      "a3008b2562f9f227285790a3628e173b848b1c8fba19399334877d89fa83a387",
+      "f26ebcff70eaf088c522ac0f23cc75d04fdc3008a4bb15d3210419cf3dd197c2",
+      "a610eebe5335ed3b70dc29804881650c04559e202e1b71f1fe5fea5c01bfa9c3",
+      "e40e65af2ac600f179ed9e7bbfdbc083250714322dbfd5d5d6c84094d805e5f0",
+      "a28d2d8ca6ca61aaecbaadc5a2bab0a34ae50e1fd560dd748f5263e7c4be9607"
+    ]
+  },
+  {
+    "id": "fb43a412061d3830d916f65a07f2016f5ee0d797c7683b9d88b10624b26322ad",
+    "ticker": "YEAR",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Mon, 01 Dec 2025 14:00:00 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 73,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR",
+      "Detected ticker(s): ASSET, FEEDS, SALE, YAHOO, YEAR"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "e0f3371edeb39c10624bb9d030e2136bdb70316a8504446dab6f2e9b89fd4f00",
+      "c1ebcad703e02f30c712f70cbc5190aca215a64f57a9a71bf8f36c04c51f7990"
+    ]
+  },
+  {
+    "id": "d0b03244044abe773e890172c7deb371a0ea77967cab0855485209cab9771270",
+    "ticker": "ZAMAN",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "2026-07-18T20:32:55.246061+00:00",
     "overall_news_sentiment": "Neutral",
     "confidence": 61,
     "top_keywords": [],
@@ -403,7 +1948,8 @@
     ],
     "keyword_counts": {},
     "processed_news_ids": [
-      "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0"
+      "ed2fcfe150159685970397f6271924fed5dea379c8f7501ea074aa49d45897b0",
+      "4c77d3a174cadd268ff55d6b05551e73463cecf709a575775c5cb4b80ac27fb9"
     ]
   }
 ]

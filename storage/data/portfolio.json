@@ -1,0 +1,10 @@
+[
+    {
+        "ticker": "ASELS",
+        "average_price": 190.0,
+        "quantity": 10,
+        "current_profit": 0.0,
+        "current_stop": 180.0,
+        "current_decision": "HOLD"
+    }
+]

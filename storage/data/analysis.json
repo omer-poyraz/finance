@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-18T20:44:32.370283+00:00",
+  "timestamp": "2026-07-19T13:34:46.705692+00:00",
   "scores": {
     "news": 54.891304347826086,
     "technical": 5.0,
@@ -25,5 +25,9 @@
     "financial": [
       "Financial score is moderate (62.0)"
     ]
+  },
+  "capital_allocation": {
+    "allocations": [],
+    "cash": 10000.0
   }
 }

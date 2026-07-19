@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from dataclasses import field
-from typing import Any
 
 from shared.exceptions import DecisionEngineError
 
@@ -23,15 +22,22 @@ class DecisionResult:
 	"""Final recommendation payload for downstream notification."""
 
 	ticker: str
+	decision: str
 	entry_price: float
+	entry_range_low: float
+	entry_range_high: float
 	stop_loss: float
-	take_profit_1: float
-	take_profit_2: float
+	current_target: float
 	risk_reward_ratio: float
+	recommended_amount: float
 	news_score: float
 	technical_score: float
+	fundamental_score: float
+	market_intelligence_score: float
 	overall_score: float
 	confidence: float
+	trend_strength: int
+	estimated_trend_duration: str
 	reasons: list[str] = field(default_factory=list)
 	trend: str = "Neutral"
 	relative_volume: float = 0.0
@@ -46,15 +52,11 @@ class DecisionEngine:
 	def __init__(
 		self,
 		*,
-		risk_reward_ratio: float = 2.0,
 		stop_loss_atr_multiplier: float = 1.5,
 	) -> None:
-		if risk_reward_ratio <= 0:
-			raise DecisionEngineError("risk_reward_ratio must be greater than zero")
 		if stop_loss_atr_multiplier <= 0:
 			raise DecisionEngineError("stop_loss_atr_multiplier must be greater than zero")
 
-		self._risk_reward_ratio = risk_reward_ratio
 		self._stop_loss_atr_multiplier = stop_loss_atr_multiplier
 
 	def decide(
@@ -68,13 +70,18 @@ class DecisionEngine:
 		atr_value: float,
 		technical_score: float,
 		news_score: float,
+		fundamental_score: float,
+		market_intelligence_score: float,
 		trend: str,
+		trend_strength: int,
+		estimated_trend_duration: str,
 		relative_volume: float,
 		gap_up: bool,
 		gap_down: bool,
 		rsi14: float,
 		macd_state: str,
 		ema50: float,
+		recommended_amount: float = 0.0,
 		reasons: list[str] | None = None,
 	) -> DecisionResult:
 		"""Produce a deterministic recommendation from technical and news context."""
@@ -90,6 +97,8 @@ class DecisionEngine:
 
 		clamped_news = self._clamp_score(news_score)
 		clamped_technical = self._clamp_score(technical_score)
+		clamped_fundamental = self._clamp_score(fundamental_score)
+		clamped_market_intel = self._clamp_score(market_intelligence_score)
 		reject_reasons = self._hard_filters(
 			news_score=clamped_news,
 			trend=trend,
@@ -102,6 +111,8 @@ class DecisionEngine:
 		confidence = self._calculate_confidence(
 			news_score=clamped_news,
 			technical_score=clamped_technical,
+			fundamental_score=clamped_fundamental,
+			market_intelligence_score=clamped_market_intel,
 			trend=trend,
 			relative_volume=relative_volume,
 			has_gap=gap_up or gap_down,
@@ -113,6 +124,8 @@ class DecisionEngine:
 		overall_score = self._calculate_overall_score(
 			news_score=clamped_news,
 			technical_score=clamped_technical,
+			fundamental_score=clamped_fundamental,
+			market_intelligence_score=clamped_market_intel,
 			confidence=confidence,
 		)
 
@@ -127,14 +140,24 @@ class DecisionEngine:
 			support=support,
 			atr_value=atr_value,
 		)
-		take_profit_1, take_profit_2, risk_reward_ratio = self._calculate_targets(
+		decision = self._determine_decision(
+			overall_score=overall_score,
+			trend=trend,
+			trend_strength=trend_strength,
+			rsi14=rsi14,
+		)
+		if decision in {"EXIT", "WAIT IN CASH"}:
+			reject_reasons.append("Quality threshold not satisfied")
+
+		current_target, risk_reward_ratio = self._calculate_target_and_rr(
 			entry_price=entry_price,
 			stop_loss=stop_loss,
 			resistance=resistance,
+			trend_strength=trend_strength,
 		)
 
-		if risk_reward_ratio < 2.0:
-			reject_reasons.append("Risk/Reward below 1:2 requirement")
+		entry_range_low = max(0.01, entry_price - max(atr_value * 0.25, entry_price * 0.002))
+		entry_range_high = entry_price + max(atr_value * 0.25, entry_price * 0.002)
 
 		merged_reasons = self._quality_reasons(
 			base_reasons=reasons,
@@ -151,21 +174,28 @@ class DecisionEngine:
 			[
 				f"Entry near pullback zone ({entry_price:.2f})",
 				f"Stop below support ({support:.2f})",
-				f"Risk/Reward {risk_reward_ratio:.2f}",
+				f"Trend strength {trend_strength}/100",
 			]
 		)
 
 		return DecisionResult(
 			ticker=ticker,
+			decision=decision,
 			entry_price=round(entry_price, 4),
+			entry_range_low=round(entry_range_low, 4),
+			entry_range_high=round(entry_range_high, 4),
 			stop_loss=round(stop_loss, 4),
-			take_profit_1=round(take_profit_1, 4),
-			take_profit_2=round(take_profit_2, 4),
+			current_target=round(current_target, 4),
 			risk_reward_ratio=round(risk_reward_ratio, 4),
+			recommended_amount=round(max(0.0, recommended_amount), 2),
 			news_score=round(clamped_news, 2),
 			technical_score=round(clamped_technical, 2),
+			fundamental_score=round(clamped_fundamental, 2),
+			market_intelligence_score=round(clamped_market_intel, 2),
 			overall_score=round(overall_score, 2),
 			confidence=round(confidence, 2),
+			trend_strength=max(0, min(100, int(trend_strength))),
+			estimated_trend_duration=str(estimated_trend_duration or "1-2 islem gunu"),
 			reasons=merged_reasons,
 			trend=trend,
 			relative_volume=round(max(0.0, relative_volume), 4),
@@ -215,36 +245,13 @@ class DecisionEngine:
 
 		return stop_loss
 
-	def _calculate_targets(
-		self,
-		entry_price: float,
-		stop_loss: float,
-		resistance: float | None,
-	) -> tuple[float, float, float]:
-		risk_amount = entry_price - stop_loss
-		if risk_amount <= 0:
-			raise DecisionEngineError("Risk amount must be positive")
-
-		target_1 = resistance if resistance > entry_price else entry_price + risk_amount
-		target_2 = entry_price + (risk_amount * max(2.0, self._risk_reward_ratio))
-
-		if target_1 <= entry_price:
-			target_1 = entry_price + risk_amount
-		if target_2 <= target_1:
-			target_2 = target_1 + risk_amount
-
-		risk_reward_ratio = (target_2 - entry_price) / risk_amount
-		if risk_reward_ratio < 2.0:
-			target_2 = entry_price + (risk_amount * 2.0)
-			risk_reward_ratio = 2.0
-
-		return target_1, target_2, risk_reward_ratio
-
 	def _calculate_confidence(
 		self,
 		*,
 		news_score: float,
 		technical_score: float,
+		fundamental_score: float,
+		market_intelligence_score: float,
 		trend: str,
 		relative_volume: float,
 		has_gap: bool,
@@ -261,14 +268,16 @@ class DecisionEngine:
 		ema_score = 75.0 if ema20 > ema50 else 40.0
 
 		confidence = (
-			news_score * 0.20
-			+ technical_score * 0.25
+			news_score * 0.18
+			+ technical_score * 0.24
+			+ fundamental_score * 0.16
+			+ market_intelligence_score * 0.12
 			+ trend_score * 0.15
 			+ volume_score * 0.10
 			+ gap_score * 0.08
-			+ rsi_score * 0.08
-			+ macd_score * 0.07
-			+ ema_score * 0.07
+			+ rsi_score * 0.04
+			+ macd_score * 0.02
+			+ ema_score * 0.01
 		)
 		return self._clamp_score(confidence)
 
@@ -333,10 +342,52 @@ class DecisionEngine:
 		*,
 		news_score: float,
 		technical_score: float,
+		fundamental_score: float,
+		market_intelligence_score: float,
 		confidence: float,
 	) -> float:
-		overall = (news_score * 0.35) + (technical_score * 0.45) + (confidence * 0.20)
+		overall = (
+			(news_score * 0.18)
+			+ (technical_score * 0.34)
+			+ (fundamental_score * 0.18)
+			+ (market_intelligence_score * 0.12)
+			+ (confidence * 0.18)
+		)
 		return self._clamp_score(overall)
+
+	def _determine_decision(
+		self,
+		*,
+		overall_score: float,
+		trend: str,
+		trend_strength: int,
+		rsi14: float,
+	) -> str:
+		if trend == "Bearish" or overall_score < 40.0:
+			return "EXIT"
+		if overall_score < 52.0:
+			return "WAIT IN CASH"
+		if overall_score >= 72.0 and trend_strength >= 70 and 35.0 <= rsi14 <= 68.0:
+			return "BUY"
+		if overall_score >= 65.0 and trend_strength >= 72:
+			return "RAISE STOP"
+		if overall_score >= 58.0 and trend_strength < 70:
+			return "PARTIAL TAKE PROFIT"
+		return "HOLD"
+
+	def _calculate_target_and_rr(
+		self,
+		*,
+		entry_price: float,
+		stop_loss: float,
+		resistance: float,
+		trend_strength: int,
+	) -> tuple[float, float]:
+		risk_amount = max(0.01, entry_price - stop_loss)
+		strength_factor = 1.0 + max(0.0, min(1.0, trend_strength / 100.0))
+		target = max(resistance, entry_price + (risk_amount * strength_factor))
+		rr = (target - entry_price) / risk_amount if risk_amount > 0 else 0.0
+		return target, max(0.0, rr)
 
 	def _clamp_score(self, score: float) -> float:
 		return max(0.0, min(100.0, float(score)))

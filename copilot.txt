@@ -21,7 +21,7 @@ Gürültü linkleri (app store, destek, javascript vb.) dışlandı.
 Dosya: news.py
 Ticker tespit kalitesi yükseltildi (sembol yoksa da tespit).
 Şirket adı ve alias tabanlı ticker eşlemesi eklendi.
-Örnek eşleşmeler: THYAO, SISE, ASELS, KCHOL, FROTO, EREGL, AKBNK, GARAN, TUPRS, SAHOL vb.
+Örnek eşleşmeler: THYAO, SISE, KCHOL, FROTO, EREGL, AKBNK, GARAN, TUPRS, SAHOL vb.
 Piyasadan gelen şirket adlarından dinamik alias map üretimi eklendi.
 Dosyalar: news_score.py, pipeline.py
 Duplicate detection güçlendirildi.

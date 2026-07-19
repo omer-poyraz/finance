@@ -349,7 +349,7 @@ class MarketCollector(BaseCollector[MarketQuote]):
 		for table in tables:
 			normalized = table.copy()
 			normalized.columns = [str(column).strip() for column in normalized.columns]
-			for _, row in normalized.head(25).iterrows():
+			for _, row in normalized.iterrows():
 				row_data = {str(key): self._normalize_value(value) for key, value in row.items()}
 				quote = self._build_quote_from_row(row_data)
 				if quote is not None:

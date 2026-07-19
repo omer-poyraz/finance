@@ -1,0 +1,34 @@
+[
+  {
+    "ticker": "CASH",
+    "company_name": "Cash Position",
+    "market": "US",
+    "decision": "WAIT IN CASH",
+    "entry_price": 0.0,
+    "entry_range_low": 0.0,
+    "entry_range_high": 0.0,
+    "stop_loss": 0.0,
+    "current_target": 0.0,
+    "risk_reward_ratio": 0.0,
+    "news_score": 50.0,
+    "technical_score": 0.0,
+    "fundamental_score": 0.0,
+    "market_intelligence_score": 0.0,
+    "overall_score": 45.0,
+    "confidence": 40.0,
+    "trend_strength": 0,
+    "estimated_trend_duration": "1-2 islem gunu",
+    "recommended_amount": 10000.0,
+    "reasons": [
+      "Yeterli kalite firsati bulunamadi, nakitte bekleme onerildi."
+    ],
+    "trend": "Neutral",
+    "relative_volume": 0.0,
+    "gap": false,
+    "rejected": false,
+    "reject_reasons": [],
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null
+  }
+]

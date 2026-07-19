@@ -1,0 +1,14 @@
+[
+  {
+    "ticker": "ASELS",
+    "average_price": 190.0,
+    "quantity": 10.0,
+    "current_price": 351.5,
+    "current_profit_pct": 85.0,
+    "trend": "Bearish",
+    "trend_strength": 30,
+    "new_stop": 180.0,
+    "decision": "EXIT",
+    "estimated_trend_duration": "1-2 islem gunu"
+  }
+]

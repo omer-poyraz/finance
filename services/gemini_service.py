@@ -27,19 +27,27 @@ class GeminiService:
         timeout_seconds: int = 12,
         max_retries: int = 2,
     ) -> None:
-        self._api_key = (api_key if api_key is not None else settings.gemini_api_key).strip()
+        key_pool = list(settings.gemini_api_keys)
+        if api_key is not None:
+            chosen = api_key.strip()
+            key_pool = [chosen] if chosen else []
+
+        self._api_keys = [key for key in key_pool if key]
         self._model_name = (model_name if model_name is not None else settings.gemini_model).strip()
         self._timeout_seconds = max(3, int(timeout_seconds))
         self._max_retries = max(0, int(max_retries))
 
-        self._model: Any | None = None
-        self._sdk_ready = False
+        self._models_by_key: dict[str, Any] = {}
+        self._sdk: Any | None = None
+        self._active_key_index = 0
+        self._last_used_key_index = 0
+        self._request_count = 0
         self._health_cache: bool | None = None
         self._cache: dict[str, Any] = {}
 
     @property
     def enabled(self) -> bool:
-        if not self._api_key:
+        if not self._api_keys:
             return False
         if not self._model_name or self._model_name.upper() == "XXXX":
             return False
@@ -59,7 +67,16 @@ class GeminiService:
         if self._health_cache is not None and not force:
             return self._health_cache
 
-        if not self._ensure_model():
+        if not self._api_keys:
+            self._health_cache = False
+            return False
+
+        healthy_model_found = False
+        for api_key in self._api_keys:
+            if self._model_for_key(api_key) is not None:
+                healthy_model_found = True
+                break
+        if not healthy_model_found:
             self._health_cache = False
             return False
 
@@ -136,7 +153,7 @@ class GeminiService:
                     "confidence": float(item.get("confidence") or 0.0),
                     "ai_reason": str(item.get("ai_reason") or "").strip(),
                 }
-                for item in recommendations[:10]
+                for item in recommendations
             ],
         }
 
@@ -231,7 +248,7 @@ class GeminiService:
             return None
 
         compact: list[dict[str, Any]] = []
-        for item in recommendations[:10]:
+        for item in recommendations:
             compact.append(
                 {
                     "ticker": str(item.get("ticker") or "").strip().upper(),
@@ -257,35 +274,40 @@ class GeminiService:
 
         return text.strip()
 
-    def _ensure_model(self) -> bool:
-        if self._model is not None:
+    def _ensure_sdk(self) -> bool:
+        if self._sdk is not None:
             return True
 
-        if not self.enabled:
+        try:
+            self._sdk = importlib.import_module("google.generativeai")
+            return True
+        except ModuleNotFoundError:
+            logger.warning("Gemini SDK is not installed; AI enrichment disabled")
             return False
 
-        if self._sdk_ready is False:
-            try:
-                genai = importlib.import_module("google.generativeai")
-            except ModuleNotFoundError:
-                logger.warning("Gemini SDK is not installed; AI enrichment disabled")
-                return False
+    def _model_for_key(self, api_key: str) -> Any | None:
+        model = self._models_by_key.get(api_key)
+        if model is not None:
+            return model
 
-            try:
-                configure = getattr(genai, "configure", None)
-                model_cls = getattr(genai, "GenerativeModel", None)
-                if not callable(configure) or model_cls is None:
-                    logger.warning("Gemini SDK exports are unavailable; AI enrichment disabled")
-                    return False
+        if not self._ensure_sdk():
+            return None
 
-                configure(api_key=self._api_key)
-                self._model = model_cls(self._model_name)
-                self._sdk_ready = True
-            except Exception as exc:  # pragma: no cover - SDK-specific initialization failure
-                logger.warning("Gemini client initialization failed: %s", exc)
-                return False
+        assert self._sdk is not None
+        configure = getattr(self._sdk, "configure", None)
+        model_cls = getattr(self._sdk, "GenerativeModel", None)
+        if not callable(configure) or model_cls is None:
+            logger.warning("Gemini SDK exports are unavailable; AI enrichment disabled")
+            return None
 
-        return self._model is not None
+        try:
+            configure(api_key=api_key)
+            model = model_cls(self._model_name)
+            self._models_by_key[api_key] = model
+            return model
+        except Exception as exc:  # pragma: no cover - SDK-specific initialization failure
+            logger.warning("Gemini client initialization failed for key index %s: %s", self._safe_key_index(api_key), exc)
+            return None
 
     def _request_json(self, *, prompt: str, cache_key: str, retries: int | None = None) -> dict[str, Any] | None:
         cached = self._cache.get(cache_key)
@@ -309,15 +331,22 @@ class GeminiService:
         if isinstance(cached, str):
             return cached
 
-        if not self._ensure_model():
-            return None
-
-        model = self._model
-        if model is None:
+        if not self.enabled:
             return None
 
         max_retry = self._max_retries if retries is None else max(0, int(retries))
-        for attempt in range(max_retry + 1):
+        attempts_per_key = max_retry + 1
+        key_count = len(self._api_keys)
+        total_attempts = max(1, key_count * attempts_per_key)
+
+        for global_attempt in range(total_attempts):
+            key_offset = global_attempt % key_count
+            key_index = (self._active_key_index + key_offset) % key_count
+            api_key = self._api_keys[key_index]
+            model = self._model_for_key(api_key)
+            if model is None:
+                continue
+
             try:
                 response = model.generate_content(
                     prompt,
@@ -328,22 +357,48 @@ class GeminiService:
                 if not text:
                     raise ValueError("empty response text")
 
+                self._active_key_index = key_index
+                self._last_used_key_index = key_index + 1
+                self._request_count += 1
+                logger.info("Gemini request succeeded with key index %s", self._safe_key_index(api_key))
                 self._cache[cache_key] = text
                 return text
             except Exception as exc:  # pragma: no cover - external SDK errors vary by runtime
                 retryable = self._is_retryable_error(exc)
                 logger.warning(
-                    "Gemini request failed (attempt %s/%s, retryable=%s): %s",
-                    attempt + 1,
-                    max_retry + 1,
+                    "Gemini request failed with key index %s (attempt %s/%s, retryable=%s): %s",
+                    self._safe_key_index(api_key),
+                    global_attempt + 1,
+                    total_attempts,
                     retryable,
                     exc,
                 )
-                if attempt >= max_retry or not retryable:
-                    return None
-                time.sleep(min(1.5, 0.4 * (attempt + 1)))
+                if not retryable:
+                    continue
+                time.sleep(min(1.5, 0.35 * ((global_attempt % attempts_per_key) + 1)))
 
         return None
+
+    def _safe_key_index(self, api_key: str) -> int:
+        for idx, value in enumerate(self._api_keys, start=1):
+            if value == api_key:
+                return idx
+        return -1
+
+    def diagnostics_snapshot(self) -> dict[str, Any]:
+        """Return lightweight runtime diagnostics for logging/reporting."""
+
+        key_label = "N/A"
+        if self._last_used_key_index > 0:
+            if self._last_used_key_index == 1:
+                key_label = "GEMINI_API_KEY"
+            else:
+                key_label = f"GEMINI_API_KEY_{self._last_used_key_index - 1}"
+
+        return {
+            "total_requests": int(self._request_count),
+            "last_key_label": key_label,
+        }
 
     def _cache_key(self, prefix: str, payload: Any) -> str:
         raw = json.dumps(payload, ensure_ascii=False, sort_keys=True)

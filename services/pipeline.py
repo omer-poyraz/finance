@@ -8,6 +8,7 @@ from datetime import UTC
 from datetime import datetime
 import json
 import logging
+import time
 from typing import Any
 
 import pandas as pd
@@ -20,9 +21,17 @@ from collectors import CollectorManager
 from collectors import KapCollector
 from collectors import MarketCollector
 from collectors import NewsCollector
+from collectors import UsMarketCollector
 from collectors.models import NewsItem
 from config import settings
 from decision import DecisionEngine
+from engines import CapitalAllocationEngine
+from engines import FundamentalEngine
+from engines import HalalFilterEngine
+from engines import MarketIntelligenceEngine
+from engines import PortfolioEngine
+from engines import TechnicalEngine
+from engines import TrendEngine
 from indicators import atr
 from indicators import bollinger_bands
 from indicators import ema
@@ -52,6 +61,10 @@ REQUIRED_STORAGE_FILES = [
     "recommendations.json",
     "history.json",
     "performance.json",
+    "portfolio.json",
+    "portfolio_analysis.json",
+    "bist_recommendations.json",
+    "us_recommendations.json",
 ]
 
 
@@ -108,6 +121,44 @@ DEFAULT_TECHNICAL_SCORING: dict[str, int] = {
 }
 
 
+DEFAULT_HALAL_FILTER: dict[str, list[str]] = {
+    "blocked_tickers": [
+        "AKBNK",
+        "GARAN",
+        "ISCTR",
+        "HALKB",
+        "VAKBN",
+        "YKBNK",
+        "TSKB",
+        "ALBRK",
+        "QNBFB",
+        "SKBNK",
+        "JPM",
+        "BAC",
+        "WFC",
+        "C",
+        "GS",
+        "MS",
+    ],
+    "blocked_keywords": [
+        "bank",
+        "finance",
+        "financial",
+        "alcohol",
+        "beer",
+        "casino",
+        "gambling",
+        "bet",
+    ],
+    "blocked_sectors": [
+        "banking",
+        "financial services",
+        "alcoholic beverages",
+        "gambling",
+    ],
+}
+
+
 class FinancePipelineService:
     """Run the complete local data-to-recommendation pipeline."""
 
@@ -118,11 +169,14 @@ class FinancePipelineService:
         self._runtime_cache: dict[str, Any] = {}
         self._ensure_news_keyword_config()
         self._ensure_technical_scoring_config()
+        self._ensure_halal_filter_config()
+        self._ensure_portfolio_file()
 
         self.collector_manager = CollectorManager()
         self.collector_manager.register(NewsCollector())
         self.collector_manager.register(KapCollector())
         self.collector_manager.register(MarketCollector())
+        self.collector_manager.register(UsMarketCollector())
 
         self.news_analyzer = NewsAnalyzer(self._load_news_keyword_config())
         self.technical_analyzer = TechnicalAnalyzer()
@@ -130,6 +184,14 @@ class FinancePipelineService:
         self.financial_analyzer = FinancialAnalyzer()
         self.decision_engine = DecisionEngine()
         self.gemini_service = GeminiService()
+
+        self.halal_filter_engine = HalalFilterEngine(self._load_halal_filter_config())
+        self.technical_engine = TechnicalEngine()
+        self.fundamental_engine = FundamentalEngine()
+        self.market_intelligence_engine = MarketIntelligenceEngine()
+        self.trend_engine = TrendEngine()
+        self.capital_allocation_engine = CapitalAllocationEngine()
+        self.portfolio_engine = PortfolioEngine()
 
         self.telegram_notifier = TelegramNotifier()
 
@@ -186,15 +248,56 @@ class FinancePipelineService:
             self._save_if_changed("kap.json", existing)
             return existing
 
-    def collect_market(self) -> list[dict[str, Any]]:
+    def collect_market(self, *, markets: list[str] | None = None) -> list[dict[str, Any]]:
         """Collect and persist normalized market records."""
 
         try:
-            result = self.collector_manager.collect_one("market")
-            payload = [asdict(item) for item in result.items]
+            selected_markets = {self._normalize_market_name(item) for item in (markets or settings.market_list)}
+            payload: list[dict[str, Any]] = []
+
+            if "BIST" in selected_markets:
+                result = self.collector_manager.collect_one("market")
+                payload.extend(asdict(item) for item in result.items)
+
+            if "US" in selected_markets:
+                us_result = self.collector_manager.collect_one("us_market")
+                payload.extend(asdict(item) for item in us_result.items)
+
+            for row in payload:
+                metadata = dict(row.get("metadata") or {})
+                if not metadata.get("market"):
+                    metadata["market"] = "BIST"
+                row["metadata"] = metadata
+
             normalized = normalize_records(payload, required_keys=["symbol", "name"], source="market")
-            self._save_if_changed("market.json", normalized)
-            return normalized
+
+            halal_result = self.halal_filter_engine.filter_market_items(normalized)
+            allowed = halal_result.allowed_items
+
+            raw_market_counts = self._count_items_by_market(normalized)
+            halal_market_counts = self._count_items_by_market(allowed)
+            market_scan_stats = self._runtime_cache.setdefault("market_scan_stats", {})
+            for market_name in selected_markets:
+                if not market_name:
+                    continue
+                market_scan_stats[market_name] = {
+                    "analyzed_total": int(raw_market_counts.get(market_name, 0)),
+                    "halal_passed": int(halal_market_counts.get(market_name, 0)),
+                }
+
+            configured_markets = {self._normalize_market_name(item) for item in settings.market_list}
+            if selected_markets and selected_markets != configured_markets:
+                existing_market = self._load_cached("market.json", default=[])
+                preserved = [
+                    item
+                    for item in existing_market
+                    if self._normalize_market_name((item.get("metadata") or {}).get("market") or item.get("source"))
+                    not in selected_markets
+                ]
+                allowed = [*preserved, *allowed]
+
+            self._save_if_changed("market.json", allowed)
+            return allowed
         except Exception as exc:
             logger.exception("Market collection failed: %s", exc)
             existing = self._load_cached("market.json", default=[])
@@ -250,7 +353,7 @@ class FinancePipelineService:
         self.storage.save("analysis.json", analysis)
         return analysis
 
-    def analyze_market(self) -> dict[str, int]:
+    def analyze_market(self, *, market: str | None = None) -> dict[str, int]:
         """Build technical intelligence profile for each collected market stock."""
 
         market_payload = self.storage.load("market.json", default=[])
@@ -259,19 +362,68 @@ class FinancePipelineService:
 
         grouped: dict[str, list[dict[str, Any]]] = {}
         for item in market_payload:
+            if market:
+                item_market = self._normalize_market_name((item.get("metadata") or {}).get("market") or item.get("source"))
+                if item_market != self._normalize_market_name(market):
+                    continue
             ticker = str(item.get("symbol") or "").strip().upper()
             if not ticker:
                 continue
             grouped.setdefault(ticker, []).append(item)
 
-        scoring = self._load_technical_scoring_config()
+        ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
+        news_lookup = {
+            str(item.get("ticker") or "").strip().upper(): float(item.get("average_news_score") or 50.0)
+            for item in ticker_news_summary
+            if isinstance(item, dict)
+        }
         analysis_items: list[dict[str, Any]] = []
 
         for ticker, rows in grouped.items():
             frame = self._market_history_frame(rows)
-            analysis_items.append(self._build_market_profile(ticker, frame, scoring))
+            technical = self.technical_engine.analyze(ticker, frame)
+            market_name = str((rows[-1].get("metadata") or {}).get("market") or rows[-1].get("source") or "BIST")
+            company_name = str(rows[-1].get("name") or rows[-1].get("company_name") or ticker)
+            fundamental = self.fundamental_engine.analyze(
+                frame,
+                market_cap=float(rows[-1].get("market_cap") or 0.0) or None,
+            )
+            market_intel = self.market_intelligence_engine.analyze(frame, market_name=market_name)
+            trend = self.trend_engine.analyze(
+                technical_score=float(technical.get("technical_score") or 0.0),
+                market_intelligence_score=float(market_intel.get("market_intelligence_score") or 0.0),
+                news_score=float(news_lookup.get(ticker, 50.0)),
+                volatility_pct=float(market_intel.get("volatility_pct") or 0.0),
+                relative_volume=float(technical.get("relative_volume") or 1.0),
+                trend_label=str(technical.get("trend") or "Neutral"),
+            )
 
-        self._save_if_changed("market_analysis.json", analysis_items)
+            merged = {
+                **technical,
+                **fundamental,
+                **market_intel,
+                **trend,
+                "market": market_name,
+                "company_name": company_name,
+                "news_score": round(float(news_lookup.get(ticker, 50.0)), 2),
+            }
+            analysis_items.append(merged)
+        if market is None:
+            self._save_if_changed("market_analysis.json", analysis_items)
+        else:
+            normalized_market = self._normalize_market_name(market)
+            existing_analysis = self._load_cached("market_analysis.json", default=[])
+            merged_analysis = [
+                item
+                for item in existing_analysis
+                if self._normalize_market_name(item.get("market") or "") != normalized_market
+            ]
+            merged_analysis.extend(analysis_items)
+            self._save_if_changed("market_analysis.json", merged_analysis)
+            if normalized_market == "BIST":
+                self._save_if_changed("bist_market_analysis.json", analysis_items)
+            elif normalized_market == "US":
+                self._save_if_changed("us_market_analysis.json", analysis_items)
 
         bullish = sum(1 for item in analysis_items if item.get("trend") == "Bullish")
         bearish = sum(1 for item in analysis_items if item.get("trend") == "Bearish")
@@ -301,8 +453,27 @@ class FinancePipelineService:
         }
 
         new_items = self.news_analyzer.analyze(news_payload, already_analyzed_ids=analyzed_ids)
+        market_payload = self._load_cached("market.json", default=[])
+        allowed_tickers = {
+            str(item.get("symbol") or item.get("ticker") or "").strip().upper()
+            for item in market_payload
+            if isinstance(item, dict)
+        }
+        filtered_new_items: list[dict[str, Any]] = []
+        for item in new_items:
+            tickers = [
+                str(value).strip().upper()
+                for value in item.get("ticker", [])
+                if str(value).strip().upper() in allowed_tickers
+            ]
+            if not tickers:
+                continue
+            item["ticker"] = tickers
+            item["detected_tickers"] = tickers
+            filtered_new_items.append(item)
+
         if new_items:
-            combined = [*existing_analysis, *new_items]
+            combined = [*existing_analysis, *filtered_new_items]
             self._save_if_changed("news_analysis.json", combined)
         else:
             combined = existing_analysis
@@ -316,6 +487,12 @@ class FinancePipelineService:
 
         news_analysis = self.storage.load("news_analysis.json", default=[])
         news_items = self.storage.load("news.json", default=[])
+        market_payload = self.storage.load("market.json", default=[])
+        allowed_tickers = {
+            str(item.get("symbol") or item.get("ticker") or "").strip().upper()
+            for item in market_payload
+            if isinstance(item, dict)
+        }
         published_at_by_id = {
             str(item.get("id")): str(item.get("published_at") or item.get("collected_at") or "")
             for item in news_items
@@ -374,6 +551,8 @@ class FinancePipelineService:
             for raw_ticker in tickers:
                 ticker = str(raw_ticker or "").strip().upper()
                 if not ticker:
+                    continue
+                if allowed_tickers and ticker not in allowed_tickers:
                     continue
 
                 summary = summary_by_ticker.setdefault(
@@ -477,18 +656,28 @@ class FinancePipelineService:
             "neutral": neutral,
         }
 
-    def generate_recommendations(self) -> list[dict[str, Any]]:
+    def generate_recommendations(self, *, market: str | None = None) -> list[dict[str, Any]]:
         """Build recommendation list and persist to JSON storage."""
 
+        started_at = time.perf_counter()
         self.analyze_news()
-        self.analyze_market()
+        self.analyze_market(market=market)
         self.analyze_tickers()
 
+        normalized_market = self._normalize_market_name(market or "")
         market_analysis = self._load_cached("market_analysis.json", default=[])
+        if market:
+            market_analysis = [
+                item
+                for item in market_analysis
+                if self._normalize_market_name(item.get("market") or "") == normalized_market
+            ]
         ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
-        news_by_ticker, default_news_score, news_reasons_by_ticker = self._news_lookup(ticker_news_summary)
+        news_by_ticker, default_news_score, news_reasons_by_ticker, news_sentiment_by_ticker = self._news_lookup(
+            ticker_news_summary
+        )
 
-        recommendations: list[dict[str, Any]] = []
+        prequalified_candidates: list[dict[str, Any]] = []
 
         for market_item in market_analysis:
             ticker = str(market_item.get("ticker") or "").strip().upper()
@@ -501,72 +690,227 @@ class FinancePipelineService:
             ema20_value = float(market_item.get("ema20") or current_price)
             atr_value = float(market_item.get("atr") or 0.0)
             technical_score = float(market_item.get("technical_score") or 0.0)
+            fundamental_score = float(market_item.get("fundamental_score") or 50.0)
+            market_intelligence_score = float(market_item.get("market_intelligence_score") or 50.0)
             trend = str(market_item.get("trend") or "Neutral")
+            trend_strength = int(market_item.get("trend_strength") or 0)
+            estimated_trend_duration = str(market_item.get("estimated_trend_duration") or "1-2 islem gunu")
             relative_volume = float(market_item.get("relative_volume") or 0.0)
             gap_up = bool(market_item.get("gap_up", False))
             gap_down = bool(market_item.get("gap_down", False))
             rsi14 = float(market_item.get("rsi14") or 50.0)
             macd_state = str(market_item.get("macd") or "Neutral")
             ema50_value = float(market_item.get("ema50") or ema20_value)
+            news_sentiment = str(news_sentiment_by_ticker.get(ticker, "Neutral") or "Neutral")
 
             if current_price <= 0 or support <= 0 or atr_value <= 0:
                 continue
 
             news_score = float(news_by_ticker.get(ticker, default_news_score))
+            if news_sentiment == "Negative":
+                continue
+            if technical_score < settings.min_technical_score:
+                continue
+            if trend_strength < settings.min_trend_strength:
+                continue
+            if relative_volume < settings.min_relative_volume:
+                continue
+            if fundamental_score < settings.min_fundamental_score:
+                continue
+            if market_intelligence_score < settings.min_market_intelligence_score:
+                continue
+            if news_score < settings.min_news_score:
+                continue
+
             reasons = list(market_item.get("reasons", []))
             reasons.extend(news_reasons_by_ticker.get(ticker, []))
+            prequalified_candidates.append(
+                {
+                    "market_item": market_item,
+                    "ticker": ticker,
+                    "current_price": current_price,
+                    "support": support,
+                    "resistance": resistance,
+                    "ema20_value": ema20_value,
+                    "atr_value": atr_value,
+                    "technical_score": technical_score,
+                    "fundamental_score": fundamental_score,
+                    "market_intelligence_score": market_intelligence_score,
+                    "trend": trend,
+                    "trend_strength": trend_strength,
+                    "estimated_trend_duration": estimated_trend_duration,
+                    "relative_volume": relative_volume,
+                    "gap_up": gap_up,
+                    "gap_down": gap_down,
+                    "rsi14": rsi14,
+                    "macd_state": macd_state,
+                    "ema50_value": ema50_value,
+                    "news_score": news_score,
+                    "reasons": reasons,
+                }
+            )
+
+        ai_candidate_count = len(prequalified_candidates)
+        allowed_decisions = set(settings.recommendation_decision_list or ["BUY", "HOLD"])
+        recommendations: list[dict[str, Any]] = []
+
+        for candidate in prequalified_candidates:
+            market_item = dict(candidate["market_item"])
 
             decision = self.decision_engine.decide(
-                ticker=ticker,
-                current_price=current_price,
-                support=support,
-                resistance=resistance,
-                ema20=ema20_value,
-                atr_value=atr_value,
-                technical_score=technical_score,
-                news_score=news_score,
-                trend=trend,
-                relative_volume=relative_volume,
-                gap_up=gap_up,
-                gap_down=gap_down,
-                rsi14=rsi14,
-                macd_state=macd_state,
-                ema50=ema50_value,
-                reasons=reasons,
+                ticker=str(candidate["ticker"]),
+                current_price=float(candidate["current_price"]),
+                support=float(candidate["support"]),
+                resistance=float(candidate["resistance"]),
+                ema20=float(candidate["ema20_value"]),
+                atr_value=float(candidate["atr_value"]),
+                technical_score=float(candidate["technical_score"]),
+                news_score=float(candidate["news_score"]),
+                fundamental_score=float(candidate["fundamental_score"]),
+                market_intelligence_score=float(candidate["market_intelligence_score"]),
+                trend=str(candidate["trend"]),
+                trend_strength=int(candidate["trend_strength"]),
+                estimated_trend_duration=str(candidate["estimated_trend_duration"]),
+                relative_volume=float(candidate["relative_volume"]),
+                gap_up=bool(candidate["gap_up"]),
+                gap_down=bool(candidate["gap_down"]),
+                rsi14=float(candidate["rsi14"]),
+                macd_state=str(candidate["macd_state"]),
+                ema50=float(candidate["ema50_value"]),
+                reasons=list(candidate["reasons"]),
             )
             payload = asdict(decision)
             if payload.get("rejected"):
                 continue
 
-            if float(payload["risk_reward_ratio"]) < 2.0:
+            decision_name = str(payload.get("decision") or "").upper()
+            if decision_name not in allowed_decisions:
+                continue
+            if float(payload.get("confidence") or 0.0) < settings.min_confidence_score:
+                continue
+            if float(payload.get("risk_reward_ratio") or 0.0) < settings.min_risk_reward_ratio:
                 continue
 
-            if float(payload["overall_score"]) >= 70.0:
-                recommendations.append(payload)
-
-            if len(recommendations) >= 30:
-                continue
+            payload["market"] = str(market_item.get("market") or "BIST")
+            payload["company_name"] = str(market_item.get("company_name") or payload.get("ticker") or "")
+            recommendations.append(payload)
 
         recommendations.sort(
             key=lambda item: (
                 float(item.get("confidence", 0.0)),
                 float(item.get("overall_score", 0.0)),
-                float(item.get("risk_reward_ratio", 0.0)),
+                float(item.get("trend_strength", 0.0)),
             ),
             reverse=True,
         )
-        top_recommendations = recommendations[:10]
-        self._save_if_changed("recommendations.json", top_recommendations)
-        enriched_recommendations = self._enrich_recommendations_with_ai(top_recommendations)
-        self._save_if_changed("recommendations.json", enriched_recommendations)
+
+        if not recommendations:
+            recommendations = [
+                {
+                    "ticker": "CASH",
+                    "company_name": "Cash Position",
+                    "market": normalized_market or "BIST",
+                    "decision": "WAIT IN CASH",
+                    "entry_price": 0.0,
+                    "entry_range_low": 0.0,
+                    "entry_range_high": 0.0,
+                    "stop_loss": 0.0,
+                    "current_target": 0.0,
+                    "risk_reward_ratio": 0.0,
+                    "news_score": 50.0,
+                    "technical_score": 0.0,
+                    "fundamental_score": 0.0,
+                    "market_intelligence_score": 0.0,
+                    "overall_score": 45.0,
+                    "confidence": 40.0,
+                    "trend_strength": 0,
+                    "estimated_trend_duration": "1-2 islem gunu",
+                    "recommended_amount": round(settings.total_capital, 2),
+                    "reasons": ["Yeterli kalite firsati bulunamadi, nakitte bekleme onerildi."],
+                    "trend": "Neutral",
+                    "relative_volume": 0.0,
+                    "gap": False,
+                    "rejected": False,
+                    "reject_reasons": [],
+                    "ai_summary": None,
+                    "ai_reason": None,
+                    "ai_risk": None,
+                }
+            ]
+
+        allocation = self.capital_allocation_engine.allocate(recommendations, settings.total_capital)
+        allocation_by_ticker = {
+            str(item.get("ticker") or "").upper(): float(item.get("recommended_amount") or 0.0)
+            for item in allocation.get("allocations", [])
+        }
+        for item in recommendations:
+            ticker_key = str(item.get("ticker") or "").upper()
+            if ticker_key == "CASH":
+                item["recommended_amount"] = round(float(allocation.get("cash") or settings.total_capital), 2)
+                continue
+            item["recommended_amount"] = round(allocation_by_ticker.get(ticker_key, 0.0), 2)
+
+        analysis_payload = dict(self._load_cached("analysis.json", default={}))
+        analysis_payload["capital_allocation"] = allocation
+        analysis_payload["timestamp"] = datetime.now(UTC).isoformat()
+        self._save_if_changed("analysis.json", analysis_payload)
+
+        storage_file = "recommendations.json"
+        if normalized_market == "BIST":
+            storage_file = "bist_recommendations.json"
+        elif normalized_market == "US":
+            storage_file = "us_recommendations.json"
+
+        self._save_if_changed(storage_file, recommendations)
+        gemini_before = self.gemini_service.diagnostics_snapshot()
+        if len(recommendations) == 1 and str(recommendations[0].get("ticker") or "") == "CASH":
+            enriched_recommendations = recommendations
+        else:
+            enriched_recommendations = self._enrich_recommendations_with_ai(recommendations)
+        gemini_after = self.gemini_service.diagnostics_snapshot()
+        gemini_calls = int(gemini_after.get("total_requests", 0)) - int(gemini_before.get("total_requests", 0))
+        self._save_if_changed(storage_file, enriched_recommendations)
+
+        recommendation_count = sum(1 for item in enriched_recommendations if str(item.get("ticker") or "") != "CASH")
+        halal_passed = self._halal_passed_count_for_market(normalized_market, fallback=len(market_analysis))
+        self._set_selection_stats(
+            normalized_market,
+            {
+                "analyzed_total": len(market_analysis),
+                "halal_passed": halal_passed,
+                "ai_candidates": ai_candidate_count,
+                "recommended": recommendation_count,
+                "elapsed_seconds": round(time.perf_counter() - started_at, 3),
+                "gemini_calls": max(0, gemini_calls),
+                "gemini_last_key_label": str(gemini_after.get("last_key_label") or "N/A"),
+            },
+        )
+
+        if market is None:
+            self._save_if_changed("recommendations.json", enriched_recommendations)
         return enriched_recommendations
 
-    def notify_recommendations(self) -> dict[str, Any]:
+    def notify_recommendations(
+        self,
+        *,
+        market: str | None = None,
+        include_portfolio: bool = True,
+        report_title: str | None = None,
+    ) -> dict[str, Any]:
         """Send latest recommendations via configured notifiers."""
 
-        recommendations = self.storage.load("recommendations.json", default=[])
+        storage_file = "recommendations.json"
+        normalized_market = self._normalize_market_name(market or "")
+        if normalized_market == "BIST":
+            storage_file = "bist_recommendations.json"
+        elif normalized_market == "US":
+            storage_file = "us_recommendations.json"
+
+        recommendations = self.storage.load(storage_file, default=[])
         if not recommendations:
-            recommendations = self.generate_recommendations()
+            recommendations = self.generate_recommendations(market=market)
+        portfolio_analysis = self.analyze_portfolio_positions() if include_portfolio else []
+        selection_stats = self._get_selection_stats(normalized_market)
 
         ai_market_summary: str | None = None
         ai_recommendation_summary: str | None = None
@@ -587,7 +931,10 @@ class FinancePipelineService:
         )
         telegram_message = self._format_telegram_message(
             recommendations,
+            report_title=report_title,
+            portfolio_analysis=portfolio_analysis,
             ai_market_summary=telegram_summary or ai_market_summary,
+            selection_stats=selection_stats,
         )
 
         telegram_result = self.telegram_notifier.send(telegram_message)
@@ -595,6 +942,101 @@ class FinancePipelineService:
         return {
             "telegram": asdict(telegram_result),
         }
+
+    def send_bist_daily_report(self) -> dict[str, Any]:
+        """Run BIST-only daily flow and push Telegram report."""
+
+        started_at = time.perf_counter()
+        self.collect_market(markets=["BIST"])
+        self.analyze_news()
+        self.analyze_tickers()
+        recommendations = self.generate_recommendations(market="BIST")
+        notifications = self.notify_recommendations(
+            market="BIST",
+            include_portfolio=False,
+            report_title="📈 BIST Daily Report",
+        )
+        stats = self._get_selection_stats("BIST")
+        logger.info(
+            "BIST | Toplam Hisse=%s | Helal Filtre=%s | AI Analizi=%s | Onerilen=%s | Toplam Sure=%.2fs | Gemini Cagrisi=%s | API Key=%s",
+            stats.get("analyzed_total", 0),
+            stats.get("halal_passed", 0),
+            stats.get("ai_candidates", 0),
+            stats.get("recommended", 0),
+            float(time.perf_counter() - started_at),
+            stats.get("gemini_calls", 0),
+            stats.get("gemini_last_key_label", "N/A"),
+        )
+        return {
+            "market": "BIST",
+            "recommendations": len(recommendations),
+            "notifications": notifications,
+            "stats": stats,
+        }
+
+    def send_us_daily_report(self) -> dict[str, Any]:
+        """Run US-only daily flow and push Telegram report."""
+
+        started_at = time.perf_counter()
+        self.collect_market(markets=["US"])
+        self.analyze_news()
+        self.analyze_tickers()
+        recommendations = self.generate_recommendations(market="US")
+        notifications = self.notify_recommendations(
+            market="US",
+            include_portfolio=False,
+            report_title="🇺🇸 US Market Report",
+        )
+        stats = self._get_selection_stats("US")
+        logger.info(
+            "US | Toplam Hisse=%s | Helal Filtre=%s | AI Analizi=%s | Onerilen=%s | Toplam Sure=%.2fs | Gemini Cagrisi=%s | API Key=%s",
+            stats.get("analyzed_total", 0),
+            stats.get("halal_passed", 0),
+            stats.get("ai_candidates", 0),
+            stats.get("recommended", 0),
+            float(time.perf_counter() - started_at),
+            stats.get("gemini_calls", 0),
+            stats.get("gemini_last_key_label", "N/A"),
+        )
+        return {
+            "market": "US",
+            "recommendations": len(recommendations),
+            "notifications": notifications,
+            "stats": stats,
+        }
+
+    def send_portfolio_update(self) -> dict[str, Any]:
+        """Analyze open positions and send portfolio-only update."""
+
+        self.collect_market()
+        self.analyze_market()
+        portfolio_analysis = self.analyze_portfolio_positions()
+        message = self._format_telegram_message(
+            recommendations=[],
+            report_title="📂 Portfolio Update",
+            portfolio_analysis=portfolio_analysis,
+            ai_market_summary=None,
+        )
+        telegram_result = self.telegram_notifier.send(message)
+        return {
+            "portfolio_positions": len(portfolio_analysis),
+            "telegram": asdict(telegram_result),
+        }
+
+    def analyze_portfolio_positions(self) -> list[dict[str, Any]]:
+        """Evaluate current holdings and generate management decisions."""
+
+        positions = self._load_cached("portfolio.json", default=[])
+        market_analysis = self._load_cached("market_analysis.json", default=[])
+        analysis_by_ticker = {
+            str(item.get("ticker") or "").strip().upper(): item
+            for item in market_analysis
+            if isinstance(item, dict)
+        }
+
+        evaluated = self.portfolio_engine.evaluate_positions(positions, analysis_by_ticker)
+        self._save_if_changed("portfolio_analysis.json", evaluated)
+        return evaluated
 
     def send_daily_recommendations(self) -> dict[str, Any]:
         """Run full weekday pipeline and send top recommendations."""
@@ -604,6 +1046,7 @@ class FinancePipelineService:
         market = self.analyze_market()
         tickers = self.analyze_tickers()
         recommendations = self.generate_recommendations()
+        portfolio_analysis = self.analyze_portfolio_positions()
         notifications = self.notify_recommendations()
         history_entries = self.archive_today()
         performance = self.update_history_performance()
@@ -614,6 +1057,7 @@ class FinancePipelineService:
             "market": market,
             "tickers": tickers,
             "recommendations": len(recommendations),
+            "portfolio_positions": len(portfolio_analysis),
             "history": len(history_entries),
             "performance": performance,
             "notifications": notifications,
@@ -651,8 +1095,9 @@ class FinancePipelineService:
 
             entry = float(item.get("entry_price") or 0.0)
             stop = float(item.get("stop_loss") or 0.0)
-            tp1 = float(item.get("take_profit_1") or 0.0)
-            tp2 = float(item.get("take_profit_2") or 0.0)
+            target = float(item.get("current_target") or 0.0)
+            tp1 = float(item.get("take_profit_1") or target)
+            tp2 = float(item.get("take_profit_2") or max(target, entry))
             tp3 = float(item.get("take_profit_3") or (tp2 + max(tp2 - entry, 0.0)))
 
             generated.append(
@@ -670,6 +1115,9 @@ class FinancePipelineService:
                     "tp2": round(tp2, 4),
                     "tp3": round(tp3, 4),
                     "risk_reward": round(float(item.get("risk_reward_ratio") or 0.0), 4),
+                    "current_target": round(target, 4),
+                    "entry_range_low": round(float(item.get("entry_range_low") or entry), 4),
+                    "entry_range_high": round(float(item.get("entry_range_high") or entry), 4),
                     "confidence": round(float(item.get("confidence") or 0.0), 2),
                     "overall_score": round(float(item.get("overall_score") or 0.0), 2),
                     "technical_score": round(float(item.get("technical_score") or 0.0), 2),
@@ -1121,6 +1569,12 @@ class FinancePipelineService:
             self.config_storage.save(filename, DEFAULT_TECHNICAL_SCORING)
             logger.info("Created technical scoring config at storage/config/technical_scoring.json")
 
+    def _ensure_halal_filter_config(self) -> None:
+        filename = "halal_filter.json"
+        if not self.config_storage.exists(filename):
+            self.config_storage.save(filename, DEFAULT_HALAL_FILTER)
+            logger.info("Created halal filter config at storage/config/halal_filter.json")
+
     def _load_technical_scoring_config(self) -> dict[str, float]:
         filename = "technical_scoring.json"
         if not self.config_storage.exists(filename):
@@ -1128,6 +1582,22 @@ class FinancePipelineService:
 
         raw = self.config_storage.load(filename, default=DEFAULT_TECHNICAL_SCORING)
         return {str(key): float(value) for key, value in dict(raw).items()}
+
+    def _load_halal_filter_config(self) -> dict[str, list[str]]:
+        filename = "halal_filter.json"
+        if not self.config_storage.exists(filename):
+            self.config_storage.save(filename, DEFAULT_HALAL_FILTER)
+
+        raw = self.config_storage.load(filename, default=DEFAULT_HALAL_FILTER)
+        return {
+            "blocked_tickers": [str(value).strip().upper() for value in raw.get("blocked_tickers", [])],
+            "blocked_keywords": [str(value).strip().lower() for value in raw.get("blocked_keywords", [])],
+            "blocked_sectors": [str(value).strip().lower() for value in raw.get("blocked_sectors", [])],
+        }
+
+    def _ensure_portfolio_file(self) -> None:
+        if not self.storage.exists("portfolio.json"):
+            self.storage.save("portfolio.json", [])
 
     def _format_recommendations_message(
         self,
@@ -1139,33 +1609,12 @@ class FinancePipelineService:
         for index, item in enumerate(recommendations, start=1):
             lines.extend(
                 [
-                    "",
-                    f"{index})",
-                    str(item.get("ticker", "UNKNOWN")),
-                    f"Entry : {item.get('entry_price', 0):.2f}",
-                    f"Stop : {item.get('stop_loss', 0):.2f}",
-                    f"TP1 : {item.get('take_profit_1', item.get('target_price_1', 0)):.2f}",
-                    f"TP2 : {item.get('take_profit_2', item.get('target_price_2', 0)):.2f}",
-                    f"Confidence : {item.get('confidence', 0):.0f}%",
-                    f"Risk/Reward : {item.get('risk_reward_ratio', 0):.2f}",
-                    "Reason",
+                    f"{index}) {str(item.get('ticker') or 'UNKNOWN')}",
+                    f"Karar : {str(item.get('decision') or 'BUY')}",
+                    f"Guven : {int(round(float(item.get('confidence') or 0.0)))}",
+                    "---",
                 ]
             )
-
-            for reason in item.get("reasons", [])[:6]:
-                lines.append(str(reason))
-
-            ai_reason = str(item.get("ai_reason") or "").strip()
-            ai_risk = str(item.get("ai_risk") or "").strip()
-            ai_summary = str(item.get("ai_summary") or "").strip()
-            if ai_summary:
-                lines.append(f"AI Summary : {ai_summary}")
-            if ai_risk:
-                lines.append(f"AI Risk : {ai_risk}")
-            if ai_reason:
-                lines.append(f"AI Reason : {ai_reason}")
-
-            lines.append("--------------------------------")
 
         if ai_market_summary:
             lines.extend(["", "Today's AI Summary", str(ai_market_summary).strip()])
@@ -1176,49 +1625,89 @@ class FinancePipelineService:
         self,
         recommendations: list[dict[str, Any]],
         *,
+        report_title: str | None = None,
+        portfolio_analysis: list[dict[str, Any]] | None = None,
         ai_market_summary: str | None = None,
+        selection_stats: dict[str, Any] | None = None,
     ) -> str:
-        date_text = datetime.now(UTC).strftime("%Y-%m-%d")
+        date_text = datetime.now(UTC).strftime("%d.%m.%Y")
         lines = [
-            "📈 BIST Daily Recommendations",
-            f"Date: {date_text}",
-            "------------------------------------------------",
+            str(report_title or "📈 Daily Report"),
+            f"📅 {date_text}",
+            "",
         ]
 
-        for index, item in enumerate(recommendations[:10], start=1):
+        if selection_stats:
             lines.extend(
                 [
-                    f"#{index} {item.get('ticker', 'UNKNOWN')}",
-                    "Decision",
-                    "BUY",
-                    "Entry",
-                    f"{float(item.get('entry_price') or 0.0):.4f}",
-                    "Stop",
-                    f"{float(item.get('stop_loss') or 0.0):.4f}",
-                    "TP1",
-                    f"{float(item.get('take_profit_1') or 0.0):.4f}",
-                    "TP2",
-                    f"{float(item.get('take_profit_2') or 0.0):.4f}",
-                    "Risk Reward",
-                    f"{float(item.get('risk_reward_ratio') or 0.0):.2f}",
-                    "Confidence",
-                    f"{float(item.get('confidence') or 0.0):.2f}%",
-                    "Technical Score",
-                    f"{float(item.get('technical_score') or 0.0):.2f}",
-                    "News Score",
-                    f"{float(item.get('news_score') or 0.0):.2f}",
+                    f"Analiz Edilen : {int(selection_stats.get('analyzed_total', 0))}",
+                    f"Helal Filtre : {int(selection_stats.get('halal_passed', 0))}",
+                    f"AI Analizi : {int(selection_stats.get('ai_candidates', 0))}",
+                    f"Onerilen : {int(selection_stats.get('recommended', 0))}",
+                    "",
                 ]
             )
-            ai_summary = str(item.get("ai_summary") or "").strip()
-            lines.append("AI Summary")
-            lines.append(ai_summary or "N/A")
-            lines.append("------------------------------------------------")
+
+        lines.append("🟢 Yeni Firsatlar")
+
+        wait_only = (
+            len(recommendations) == 1
+            and str(recommendations[0].get("ticker") or "").upper() == "CASH"
+            and str(recommendations[0].get("decision") or "").upper() == "WAIT IN CASH"
+        )
+
+        if wait_only:
+            lines.extend(
+                [
+                    "",
+                    "📌 Bugun analiz edilen hisseler arasinda minimum kalite kriterlerini saglayan uygun yatirim firsati bulunamadi.",
+                    "",
+                    "Bugunku oneri:",
+                    "WAIT IN CASH",
+                ]
+            )
+        else:
+            for item in recommendations:
+                decision = str(item.get("decision") or "BUY")
+                lines.extend(
+                    [
+                        "",
+                        str(item.get("ticker") or "UNKNOWN"),
+                        f"Sirket : {str(item.get('company_name') or item.get('ticker') or 'UNKNOWN')}",
+                        f"Karar : {decision}",
+                        f"Guven : {int(round(float(item.get('confidence') or 0.0)))}",
+                        f"Trend : {int(item.get('trend_strength') or 0)}",
+                        f"Trend Suresi : {str(item.get('estimated_trend_duration') or '1-2 islem gunu')}",
+                        f"Alis Araligi : {float(item.get('entry_range_low') or 0.0):.4f} - {float(item.get('entry_range_high') or 0.0):.4f}",
+                        f"Guncel Hedef : {float(item.get('current_target') or 0.0):.4f}",
+                        f"Koruyucu Stop : {float(item.get('stop_loss') or 0.0):.4f}",
+                        f"Risk/Odul : {float(item.get('risk_reward_ratio') or 0.0):.2f}",
+                        f"Sermaye Dagilimi : {float(item.get('recommended_amount') or 0.0):.2f} TL",
+                    ]
+                )
+
+                ai_summary = str(item.get("ai_summary") or "").strip()
+                lines.append(f"AI Ozet : {ai_summary or 'Yok'}")
+                lines.append("---")
+
+        if portfolio_analysis:
+            lines.extend(["", "📂 Acik Pozisyonlar"])
+            for position in portfolio_analysis[:15]:
+                lines.extend(
+                    [
+                        str(position.get("ticker") or "UNKNOWN"),
+                        f"Kar : %{float(position.get('current_profit_pct') or 0.0):.2f}",
+                        f"Karar : {str(position.get('decision') or 'HOLD')}",
+                        f"Trend : {int(position.get('trend_strength') or 0)}",
+                        f"Yeni Stop : {float(position.get('new_stop') or 0.0):.4f}",
+                        "---",
+                    ]
+                )
 
         if ai_market_summary:
-            lines.append("Today's Overall Market Summary")
+            lines.append("AI Piyasa Ozeti")
             lines.append(str(ai_market_summary).strip())
 
-        lines.append(f"Generated Time: {datetime.now(UTC).isoformat()}")
         return "\n".join(lines)
 
     def _enrich_recommendations_with_ai(self, recommendations: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -1324,9 +1813,10 @@ class FinancePipelineService:
     def _news_lookup(
         self,
         ticker_news_summary: list[dict[str, Any]],
-    ) -> tuple[dict[str, float], float, dict[str, list[str]]]:
+    ) -> tuple[dict[str, float], float, dict[str, list[str]], dict[str, str]]:
         ticker_scores: dict[str, float] = {}
         ticker_reasons: dict[str, list[str]] = {}
+        ticker_sentiment: dict[str, str] = {}
         all_scores: list[float] = []
 
         for item in ticker_news_summary:
@@ -1337,13 +1827,14 @@ class FinancePipelineService:
             score = float(item.get("average_news_score", 50.0))
             all_scores.append(score)
             ticker_scores[ticker] = score
+            ticker_sentiment[ticker] = str(item.get("overall_news_sentiment") or self._sentiment_from_score(score))
 
             reasons = [str(reason) for reason in item.get("all_reasons", [])]
             if reasons:
                 ticker_reasons[ticker] = reasons[:3]
 
         default_score = sum(all_scores) / len(all_scores) if all_scores else 50.0
-        return ticker_scores, default_score, ticker_reasons
+        return ticker_scores, default_score, ticker_reasons, ticker_sentiment
 
     def _sentiment_from_score(self, score: float) -> str:
         if score >= 55.0:
@@ -1406,6 +1897,43 @@ class FinancePipelineService:
                 "low": float(item.get("low") or 0.0),
             }
         return snapshots
+
+    def _normalize_market_name(self, value: Any) -> str:
+        text = str(value or "").strip().upper()
+        if text in {"US", "USA", "NASDAQ", "NYSE"}:
+            return "US"
+        return "BIST" if text else ""
+
+    def _count_items_by_market(self, items: list[dict[str, Any]]) -> dict[str, int]:
+        counts: dict[str, int] = {}
+        for item in items:
+            market_name = self._normalize_market_name((item.get("metadata") or {}).get("market") or item.get("source"))
+            if not market_name:
+                continue
+            counts[market_name] = int(counts.get(market_name, 0)) + 1
+        return counts
+
+    def _halal_passed_count_for_market(self, market: str, *, fallback: int) -> int:
+        normalized_market = self._normalize_market_name(market)
+        if not normalized_market:
+            return int(fallback)
+
+        market_scan_stats = dict(self._runtime_cache.get("market_scan_stats") or {})
+        market_stats = dict(market_scan_stats.get(normalized_market) or {})
+        value = market_stats.get("halal_passed")
+        if value is None:
+            return int(fallback)
+        return int(value)
+
+    def _set_selection_stats(self, market: str, stats: dict[str, Any]) -> None:
+        key = self._normalize_market_name(market) or "ALL"
+        stats_by_market = self._runtime_cache.setdefault("selection_stats", {})
+        stats_by_market[key] = dict(stats)
+
+    def _get_selection_stats(self, market: str) -> dict[str, Any]:
+        key = self._normalize_market_name(market) or "ALL"
+        stats_by_market = dict(self._runtime_cache.get("selection_stats") or {})
+        return dict(stats_by_market.get(key) or {})
 
     def _calculate_performance(self, history: list[dict[str, Any]]) -> dict[str, Any]:
         entries: list[dict[str, Any]] = []

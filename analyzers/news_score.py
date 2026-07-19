@@ -22,7 +22,6 @@ TICKER_PATTERN = re.compile(r"\b[A-ZÇĞİÖŞÜ]{4,5}\b")
 DEFAULT_TICKER_ALIASES: dict[str, list[str]] = {
 	"THYAO": ["türk hava yolları", "thy", "thyao", "turkish airlines"],
 	"SISE": ["şişecam", "sisecam", "trakya cam", "anadolu cam", "paşabahçe"],
-	"ASELS": ["aselsan", "asels", "aseisan"],
 	"KCHOL": ["koç holding", "koc holding", "koç"],
 	"FROTO": ["ford otosan", "ford otomotiv"],
 	"EREGL": ["ereğli", "eregli", "erdemir"],

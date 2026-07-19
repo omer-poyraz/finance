@@ -10,6 +10,7 @@ from collectors.models import AnnouncementItem
 from collectors.models import MarketQuote
 from collectors.models import NewsItem
 from collectors.news import NewsCollector
+from collectors.us_market import UsMarketCollector
 
 __all__ = [
 	"AnnouncementItem",
@@ -22,4 +23,5 @@ __all__ = [
 	"MarketQuote",
 	"NewsCollector",
 	"NewsItem",
+	"UsMarketCollector",
 ]

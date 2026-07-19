@@ -11,6 +11,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
+def _env_bool(name: str, default: bool) -> bool:
+    value = str(os.getenv(name, str(default))).strip().lower()
+    return value in {"1", "true", "yes", "on"}
+
+
 @dataclass(frozen=True, slots=True)
 class Settings:
     """Container for application-wide settings."""
@@ -27,7 +32,7 @@ class Settings:
     )
     news_sources: str = os.getenv(
         "NEWS_SOURCES",
-        "https://www.getmidas.com/|https://www.getmidas.com/borsa-haberleri/|https://www.kap.org.tr/tr/rss|https://www.borsaistanbul.com/tr/rss|https://feeds.finance.yahoo.com/rss/2.0/headline?s=THYAO.IS,SISE.IS,ASELS.IS&region=TR&lang=tr-TR|https://www.bloomberght.com/rss",
+        "https://www.getmidas.com/|https://www.getmidas.com/borsa-haberleri/|https://www.kap.org.tr/tr/rss|https://www.borsaistanbul.com/tr/rss|https://www.bloomberght.com/rss",
     )
     kap_source_url: str = os.getenv(
         "KAP_SOURCE_URL",
@@ -49,6 +54,27 @@ class Settings:
     gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
     gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     storage_data_dir: str = os.getenv("STORAGE_DATA_DIR", "storage/data")
+    markets: str = os.getenv("MARKETS", "BIST,US")
+    us_market_tickers: str = os.getenv("US_MARKET_TICKERS", "GOOGL,AMZN,TSLA,META,NFLX")
+    total_capital: float = float(os.getenv("TOTAL_CAPITAL", "10000"))
+    min_confidence_score: float = float(os.getenv("MIN_CONFIDENCE_SCORE", "80"))
+    min_risk_reward_ratio: float = float(os.getenv("MIN_RISK_REWARD_RATIO", "1.2"))
+    min_trend_strength: int = int(os.getenv("MIN_TREND_STRENGTH", "60"))
+    min_relative_volume: float = float(os.getenv("MIN_RELATIVE_VOLUME", "0.9"))
+    min_fundamental_score: float = float(os.getenv("MIN_FUNDAMENTAL_SCORE", "50"))
+    min_market_intelligence_score: float = float(os.getenv("MIN_MARKET_INTELLIGENCE_SCORE", "50"))
+    min_news_score: float = float(os.getenv("MIN_NEWS_SCORE", "45"))
+    min_technical_score: float = float(os.getenv("MIN_TECHNICAL_SCORE", "50"))
+    recommendation_decisions: str = os.getenv("RECOMMENDATION_DECISIONS", "BUY,HOLD")
+    scheduler_bist_enabled: bool = _env_bool("SCHEDULER_BIST_ENABLED", True)
+    scheduler_us_enabled: bool = _env_bool("SCHEDULER_US_ENABLED", True)
+    scheduler_portfolio_enabled: bool = _env_bool("SCHEDULER_PORTFOLIO_ENABLED", False)
+    scheduler_bist_hour: int = int(os.getenv("SCHEDULER_BIST_HOUR", "9"))
+    scheduler_bist_minute: int = int(os.getenv("SCHEDULER_BIST_MINUTE", "45"))
+    scheduler_us_hour: int = int(os.getenv("SCHEDULER_US_HOUR", "16"))
+    scheduler_us_minute: int = int(os.getenv("SCHEDULER_US_MINUTE", "0"))
+    scheduler_portfolio_hour: int = int(os.getenv("SCHEDULER_PORTFOLIO_HOUR", "22"))
+    scheduler_portfolio_minute: int = int(os.getenv("SCHEDULER_PORTFOLIO_MINUTE", "30"))
 
     @property
     def database_url(self) -> str:
@@ -87,6 +113,56 @@ class Settings:
 
         values = [item.strip() for item in self.news_sources.split("|")]
         return [item for item in values if item]
+
+    @property
+    def market_list(self) -> list[str]:
+        """Return enabled market identifiers."""
+
+        values = [item.strip().upper() for item in self.markets.split(",")]
+        return [item for item in values if item]
+
+    @property
+    def us_market_ticker_list(self) -> list[str]:
+        """Return configured US symbols."""
+
+        values = [item.strip().upper() for item in self.us_market_tickers.split(",")]
+        return [item for item in values if item]
+
+    @property
+    def recommendation_decision_list(self) -> list[str]:
+        """Return allowed recommendation decisions."""
+
+        values = [item.strip().upper() for item in self.recommendation_decisions.split(",")]
+        return [item for item in values if item]
+
+    @property
+    def gemini_api_keys(self) -> list[str]:
+        """Return configured Gemini API keys from pool variables."""
+
+        keys: list[str] = []
+
+        primary = str(os.getenv("GEMINI_API_KEY", "")).strip()
+        if primary:
+            keys.append(primary)
+
+        index = 1
+        while True:
+            env_name = f"GEMINI_API_KEY_{index}"
+            value = str(os.getenv(env_name, "")).strip()
+            if not value:
+                break
+            keys.append(value)
+            index += 1
+
+        deduped: list[str] = []
+        seen: set[str] = set()
+        for key in keys:
+            if key in seen:
+                continue
+            seen.add(key)
+            deduped.append(key)
+
+        return deduped
 
 
 settings = Settings()

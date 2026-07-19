@@ -42,20 +42,33 @@ def create_app() -> FastAPI:
             gemini["enabled"],
             gemini["healthy"],
         )
-        register_weekday_job(
-            scheduler,
-            pipeline_service.send_daily_recommendations,
-            hour=9,
-            minute=55,
-            job_id="weekday_daily_pipeline",
-        )
-        register_weekday_job(
-            scheduler,
-            pipeline_service.finalize_day_performance,
-            hour=18,
-            minute=10,
-            job_id="weekday_end_of_day_performance",
-        )
+        if settings.scheduler_bist_enabled:
+            register_weekday_job(
+                scheduler,
+                pipeline_service.send_bist_daily_report,
+                hour=settings.scheduler_bist_hour,
+                minute=settings.scheduler_bist_minute,
+                job_id="weekday_bist_report",
+            )
+
+        if settings.scheduler_us_enabled:
+            register_weekday_job(
+                scheduler,
+                pipeline_service.send_us_daily_report,
+                hour=settings.scheduler_us_hour,
+                minute=settings.scheduler_us_minute,
+                job_id="weekday_us_report",
+            )
+
+        if settings.scheduler_portfolio_enabled:
+            register_weekday_job(
+                scheduler,
+                pipeline_service.send_portfolio_update,
+                hour=settings.scheduler_portfolio_hour,
+                minute=settings.scheduler_portfolio_minute,
+                job_id="weekday_portfolio_update",
+            )
+
         start_scheduler(scheduler)
 
     @app.get("/", tags=["health"])
@@ -161,5 +174,47 @@ def create_app() -> FastAPI:
         """Return paper trading performance statistics."""
 
         return pipeline_service.get_performance()
+
+    @app.get("/portfolio", tags=["portfolio"])
+    async def portfolio() -> list[dict[str, object]]:
+        """Return current portfolio positions."""
+
+        return pipeline_service.storage.load("portfolio.json", default=[])
+
+    @app.get("/portfolio/analyze", tags=["portfolio"])
+    async def portfolio_analyze() -> list[dict[str, object]]:
+        """Re-evaluate open portfolio positions with V2 decision set."""
+
+        try:
+            return pipeline_service.analyze_portfolio_positions()
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+    @app.post("/run/bist", tags=["scheduler"])
+    async def run_bist_now() -> dict[str, object]:
+        """Manually trigger BIST report flow."""
+
+        try:
+            return pipeline_service.send_bist_daily_report()
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+    @app.post("/run/us", tags=["scheduler"])
+    async def run_us_now() -> dict[str, object]:
+        """Manually trigger US report flow."""
+
+        try:
+            return pipeline_service.send_us_daily_report()
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+    @app.post("/run/portfolio", tags=["scheduler"])
+    async def run_portfolio_now() -> dict[str, object]:
+        """Manually trigger portfolio update flow."""
+
+        try:
+            return pipeline_service.send_portfolio_update()
+        except Exception as exc:
+            raise HTTPException(status_code=500, detail=str(exc)) from exc
 
     return app

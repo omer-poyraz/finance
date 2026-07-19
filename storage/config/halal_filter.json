@@ -1,0 +1,36 @@
+{
+    "blocked_tickers": [
+        "AKBNK",
+        "GARAN",
+        "ISCTR",
+        "HALKB",
+        "VAKBN",
+        "YKBNK",
+        "TSKB",
+        "ALBRK",
+        "QNBFB",
+        "SKBNK",
+        "JPM",
+        "BAC",
+        "WFC",
+        "C",
+        "GS",
+        "MS"
+    ],
+    "blocked_keywords": [
+        "bank",
+        "finance",
+        "financial",
+        "alcohol",
+        "beer",
+        "casino",
+        "gambling",
+        "bet"
+    ],
+    "blocked_sectors": [
+        "banking",
+        "financial services",
+        "alcoholic beverages",
+        "gambling"
+    ]
+}

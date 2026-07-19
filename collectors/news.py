@@ -196,5 +196,5 @@ class NewsCollector(BaseCollector[NewsItem]):
 
 	def _guess_company_names(self, title: str) -> list[str]:
 		candidates = re.findall(r"[A-ZÇĞİÖŞÜ][a-zçğıöşü]+(?:\s+[A-ZÇĞİÖŞÜ][a-zçğıöşü]+){0,2}", title)
-		return [normalize_text(item) for item in candidates[:5] if len(normalize_text(item)) >= 4]
+		return [normalize_text(item) for item in candidates if len(normalize_text(item)) >= 4]
 

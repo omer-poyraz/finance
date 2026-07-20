@@ -1,0 +1,471 @@
+[
+  {
+    "signature": "TBORG:NEW:77.6:1.68:124.5916:130.1036",
+    "ticker": "TBORG",
+    "state": "NEW",
+    "notified_at": "2026-07-20T10:19:42.661927+00:00",
+    "score": 77.61
+  },
+  {
+    "signature": "PRKAB:NEW:77.6:1.68:33.7121:35.3041",
+    "ticker": "PRKAB",
+    "state": "NEW",
+    "notified_at": "2026-07-20T10:19:42.661927+00:00",
+    "score": 77.61
+  },
+  {
+    "signature": "TRALT:NEW:77.1:1.66:49.485:51.5755",
+    "ticker": "TRALT",
+    "state": "NEW",
+    "notified_at": "2026-07-20T10:19:42.661927+00:00",
+    "score": 77.11
+  },
+  {
+    "signature": "TTKOM:NEW:75.6:1.68:56.8876:60.1327",
+    "ticker": "TTKOM",
+    "state": "NEW",
+    "notified_at": "2026-07-20T10:19:42.661927+00:00",
+    "score": 75.61
+  },
+  {
+    "signature": "GLYHO:NEW:75.6:1.68:16.9633:17.6689",
+    "ticker": "GLYHO",
+    "state": "NEW",
+    "notified_at": "2026-07-20T10:19:42.661927+00:00",
+    "score": 75.61
+  },
+  {
+    "signature": "TBORG:STRENGTHENED:83.0:1.68:124.247:129.4092",
+    "ticker": "TBORG",
+    "state": "STRENGTHENED",
+    "notified_at": "2026-07-20T10:57:56.680170+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "PRKAB:STRENGTHENED:83.0:1.68:33.6098:35.0969",
+    "ticker": "PRKAB",
+    "state": "STRENGTHENED",
+    "notified_at": "2026-07-20T10:57:56.680170+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "GLBMD:NEW:82.0:2.0:13.3065:13.97",
+    "ticker": "GLBMD",
+    "state": "NEW",
+    "notified_at": "2026-07-20T10:57:56.680170+00:00",
+    "score": 82.0
+  },
+  {
+    "signature": "GLYHO:STRENGTHENED:82.0:1.68:16.9085:17.5966",
+    "ticker": "GLYHO",
+    "state": "STRENGTHENED",
+    "notified_at": "2026-07-20T10:57:56.680170+00:00",
+    "score": 82.0
+  },
+  {
+    "signature": "YGGYO:NEW:81.5:1.68:211.2268:222.4937",
+    "ticker": "YGGYO",
+    "state": "NEW",
+    "notified_at": "2026-07-20T10:57:56.680170+00:00",
+    "score": 81.55
+  },
+  {
+    "signature": "TRALT:EXIT:77.1:1.66:49.485:51.5755",
+    "ticker": "TRALT",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T10:57:56.680170+00:00",
+    "score": 77.11
+  },
+  {
+    "signature": "TTKOM:EXIT:75.6:1.68:56.8876:60.1327",
+    "ticker": "TTKOM",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T10:57:56.680170+00:00",
+    "score": 75.61
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.6016:35.1061",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:00:52.583383+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "YGGYO:WEAKENED:81.5:1.68:211.1449:222.5888",
+    "ticker": "YGGYO",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:00:52.583383+00:00",
+    "score": 81.55
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5855:35.1249",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:03:53.216260+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "TBORG:WEAKENED:83.0:1.68:124.4083:129.2224",
+    "ticker": "TBORG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:06:52.845679+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "BRKVY:NEW:81.1:1.68:80.1618:83.6453",
+    "ticker": "BRKVY",
+    "state": "NEW",
+    "notified_at": "2026-07-20T11:06:52.845679+00:00",
+    "score": 81.1
+  },
+  {
+    "signature": "GLBMD:EXIT:82.0:2.0:13.3065:13.97",
+    "ticker": "GLBMD",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:06:52.845679+00:00",
+    "score": 82.0
+  },
+  {
+    "signature": "GLYHO:WEAKENED:82.0:1.68:16.9165:17.5873",
+    "ticker": "GLYHO",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:12:53.647029+00:00",
+    "score": 82.0
+  },
+  {
+    "signature": "BRKVY:WEAKENED:81.1:1.68:80.1415:83.6688",
+    "ticker": "BRKVY",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:12:53.647029+00:00",
+    "score": 81.1
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5774:35.1344",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:15:54.480374+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "TBORG:WEAKENED:83.0:1.68:124.368:129.269",
+    "ticker": "TBORG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:18:53.249846+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "GLYHO:WEAKENED:82.0:1.68:16.9125:17.5919",
+    "ticker": "GLYHO",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:21:54.845746+00:00",
+    "score": 82.0
+  },
+  {
+    "signature": "BRKVY:WEAKENED:81.1:1.68:80.1009:83.7159",
+    "ticker": "BRKVY",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:21:54.845746+00:00",
+    "score": 81.1
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5936:35.1155",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:30:53.786057+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "YGGYO:WEAKENED:81.5:1.68:211.1859:222.5413",
+    "ticker": "YGGYO",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:33:54.470617+00:00",
+    "score": 81.55
+  },
+  {
+    "signature": "ULUSE:NEW:80.8:2.05:304.3061:319.75",
+    "ticker": "ULUSE",
+    "state": "NEW",
+    "notified_at": "2026-07-20T11:33:54.470617+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "GLYHO:EXIT:82.0:1.68:16.9165:17.5873",
+    "ticker": "GLYHO",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:33:54.470617+00:00",
+    "score": 82.0
+  },
+  {
+    "signature": "ETILR:NEW:80.8:1.93:6.5661:6.91",
+    "ticker": "ETILR",
+    "state": "NEW",
+    "notified_at": "2026-07-20T11:36:53.535351+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "ULUSE:EXIT:80.8:2.05:304.3061:319.75",
+    "ticker": "ULUSE",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:36:53.535351+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "TBORG:WEAKENED:83.0:1.68:124.3277:129.3157",
+    "ticker": "TBORG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:39:55.276947+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "TBORG:WEAKENED:83.0:1.68:124.2875:129.3624",
+    "ticker": "TBORG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:42:54.665878+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5693:35.1438",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:42:54.665878+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5612:35.1532",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:45:53.765894+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "BRKVY:WEAKENED:81.1:1.68:80.1213:83.6924",
+    "ticker": "BRKVY",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:45:53.765894+00:00",
+    "score": 81.1
+  },
+  {
+    "signature": "UFUK:NEW:80.8:1.95:1649.3682:1729.0",
+    "ticker": "UFUK",
+    "state": "NEW",
+    "notified_at": "2026-07-20T11:45:53.765894+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "ETILR:EXIT:80.8:1.93:6.5661:6.91",
+    "ticker": "ETILR",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:45:53.765894+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "TBORG:WEAKENED:83.0:1.68:124.1661:129.503",
+    "ticker": "TBORG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:48:53.588703+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5531:35.1627",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:48:53.588703+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "CWENE:NEW:80.8:1.87:38.7933:40.94",
+    "ticker": "CWENE",
+    "state": "NEW",
+    "notified_at": "2026-07-20T11:48:53.588703+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "UFUK:EXIT:80.8:1.95:1649.3682:1729.0",
+    "ticker": "UFUK",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:48:53.588703+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5286:35.191",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:51:54.657646+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "CWENE:EXIT:80.8:1.87:38.7933:40.94",
+    "ticker": "CWENE",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:51:54.657646+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5205:35.2004",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:54:54.137397+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "ALCAR:NEW:80.8:2.19:881.2005:929.5",
+    "ticker": "ALCAR",
+    "state": "NEW",
+    "notified_at": "2026-07-20T11:54:54.137397+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "YGGYO:EXIT:81.5:1.68:211.1859:222.5413",
+    "ticker": "YGGYO",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:54:54.137397+00:00",
+    "score": 81.55
+  },
+  {
+    "signature": "TBORG:WEAKENED:83.0:1.68:124.1256:129.5499",
+    "ticker": "TBORG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:57:55.198937+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.5041:35.2194",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:57:55.198937+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "BRKVY:WEAKENED:81.1:1.68:80.0806:83.7396",
+    "ticker": "BRKVY",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:57:55.198937+00:00",
+    "score": 81.1
+  },
+  {
+    "signature": "ULUSE:WEAKENED:80.8:1.89:303.9031:319.75",
+    "ticker": "ULUSE",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T11:57:55.198937+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "GLYHO:EXIT:82.0:1.68:16.9205:17.5826",
+    "ticker": "GLYHO",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:57:55.198937+00:00",
+    "score": 82.0
+  },
+  {
+    "signature": "ALCAR:EXIT:80.8:2.19:881.2005:929.5",
+    "ticker": "ALCAR",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T11:57:55.198937+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "BRISA:NEW:80.8:1.87:79.8436:84.65",
+    "ticker": "BRISA",
+    "state": "NEW",
+    "notified_at": "2026-07-20T12:00:53.625364+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "ULUSE:EXIT:80.8:1.89:303.9031:319.75",
+    "ticker": "ULUSE",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T12:00:53.625364+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "ISFIN:NEW:82.2:1.68:19.3066:20.0625",
+    "ticker": "ISFIN",
+    "state": "NEW",
+    "notified_at": "2026-07-20T12:03:55.876880+00:00",
+    "score": 82.15
+  },
+  {
+    "signature": "BRISA:EXIT:80.8:1.87:79.8436:84.65",
+    "ticker": "BRISA",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T12:03:55.876880+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "CWENE:EXIT:80.8:1.92:38.8128:40.94",
+    "ticker": "CWENE",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T12:06:53.749620+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.4959:35.2289",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:09:55.903687+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "ULUSE:EXIT:80.8:2.01:304.2257:319.75",
+    "ticker": "ULUSE",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T12:09:55.903687+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "PRKAB:WEAKENED:83.0:1.68:33.4878:35.2384",
+    "ticker": "PRKAB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:12:55.308491+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "ULUSE:WEAKENED:80.8:1.98:304.1452:319.75",
+    "ticker": "ULUSE",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:12:55.308491+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "CWENE:EXIT:80.8:1.96:38.8258:40.94",
+    "ticker": "CWENE",
+    "state": "EXIT",
+    "notified_at": "2026-07-20T12:12:55.308491+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "ULUSE:WEAKENED:80.8:1.92:303.9839:319.75",
+    "ticker": "ULUSE",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:15:54.912595+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "TBORG:WEAKENED:83.0:1.68:123.8525:129.8819",
+    "ticker": "TBORG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:18:53.853789+00:00",
+    "score": 83.0
+  },
+  {
+    "signature": "ISFIN:WEAKENED:82.2:1.68:19.3106:20.0579",
+    "ticker": "ISFIN",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:18:53.853789+00:00",
+    "score": 82.15
+  },
+  {
+    "signature": "ULUSE:WEAKENED:80.8:1.95:304.0646:319.75",
+    "ticker": "ULUSE",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:24:58.463312+00:00",
+    "score": 80.76
+  },
+  {
+    "signature": "ISFIN:WEAKENED:82.2:1.68:19.3066:20.0625",
+    "ticker": "ISFIN",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-20T12:27:53.982171+00:00",
+    "score": 82.15
+  }
+]

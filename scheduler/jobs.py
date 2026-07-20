@@ -8,6 +8,7 @@ from collections.abc import Callable
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
+from apscheduler.triggers.interval import IntervalTrigger
 
 from config import settings
 
@@ -37,6 +38,20 @@ def register_weekday_job(
 		minute=minute,
 		timezone=settings.timezone,
 	)
+	scheduler.add_job(job, trigger=trigger, id=job_id, replace_existing=True)
+	logger.info("Registered scheduler job %s", job_id)
+
+
+def register_interval_job(
+	scheduler: BackgroundScheduler,
+	job: Callable[[], None],
+	*,
+	minutes: int = 3,
+	job_id: str = "interval_bist_monitor",
+) -> None:
+	"""Register a recurring interval job for live monitoring."""
+
+	trigger = IntervalTrigger(minutes=max(1, int(minutes)), timezone=settings.timezone)
 	scheduler.add_job(job, trigger=trigger, id=job_id, replace_existing=True)
 	logger.info("Registered scheduler job %s", job_id)
 

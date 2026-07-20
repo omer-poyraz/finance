@@ -1,34 +1,734 @@
 [
   {
-    "ticker": "CASH",
-    "company_name": "Cash Position",
+    "ticker": "TBORG",
+    "company_name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş.",
     "market": "BIST",
-    "decision": "WAIT IN CASH",
-    "entry_price": 0.0,
-    "entry_range_low": 0.0,
-    "entry_range_high": 0.0,
-    "stop_loss": 0.0,
-    "current_target": 0.0,
-    "risk_reward_ratio": 0.0,
-    "news_score": 50.0,
-    "technical_score": 0.0,
-    "fundamental_score": 0.0,
-    "market_intelligence_score": 0.0,
-    "overall_score": 45.0,
-    "confidence": 40.0,
-    "trend_strength": 0,
-    "estimated_trend_duration": "1-2 islem gunu",
-    "recommended_amount": 10000.0,
-    "reasons": [
-      "Yeterli kalite firsati bulunamadi, nakitte bekleme onerildi."
+    "total_score": 83.0,
+    "decision": "BUY",
+    "component_scores": {
+      "graph_structure": 45.0,
+      "trend": 14.98,
+      "volume": 6.94,
+      "momentum": 8.78,
+      "news": 2.5,
+      "ai_confidence": 4.8
+    },
+    "score_lines": [
+      "Grafik +45",
+      "Trend +15",
+      "Hacim +7",
+      "Momentum +9",
+      "News +2",
+      "AI +5"
     ],
-    "trend": "Neutral",
-    "relative_volume": 0.0,
-    "gap": false,
-    "rejected": false,
-    "reject_reasons": [],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 73,
+        "reason": "Destekten kulp benzeri toparlanma"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 70,
+        "reason": "W benzeri dipten donus"
+      },
+      {
+        "name": "Channel Breakout",
+        "confidence": 70,
+        "reason": "Kanal ustu kirilim"
+      },
+      {
+        "name": "Falling Wedge",
+        "confidence": 69,
+        "reason": "Dusen takoz yukari kirilim adayi"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 68,
+        "reason": "Yukselen dipler ve yatay direnc"
+      },
+      {
+        "name": "Bull Flag",
+        "confidence": 67,
+        "reason": "Trend icinde bayrak konsolidasyonu"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 66,
+        "reason": "Boyun cizgisi ustunde tutunma"
+      },
+      {
+        "name": "Pennant",
+        "confidence": 64,
+        "reason": "Daralan fiyat salinimi"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Higher Low",
+      "Destekten Tepki",
+      "Swing Low",
+      "Retest",
+      "Swing High"
+    ],
+    "indicator_confirmations": [
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "RSI dengeli"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "EMA20 EMA50 ustunde",
+      "EMA50 EMA200 ustunde",
+      "RSI dengeli",
+      "MACD pozitif",
+      "ADX trend gucunu destekliyor",
+      "Destek bolgesine yakin",
+      "Direnc testi",
+      "Formasyon: Cup and Handle (73%)",
+      "Destekten kulp benzeri toparlanma",
+      "Price Action: Higher High",
+      "Price Action: Higher Low",
+      "Price Action: Destekten Tepki",
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.1914",
+      "Pullback cap=126.1418",
+      "Entry finalized at 126.1418",
+      "Stop placed below support and ATR=124.0562"
+    ],
+    "entry_price": 126.1418,
+    "entry_range_low": 125.7556,
+    "entry_range_high": 126.528,
+    "stop_loss": 124.0562,
+    "current_target": 129.6457,
+    "take_profit_1": 128.2274,
+    "take_profit_2": 129.4788,
+    "take_profit_3": 131.1473,
+    "risk_reward_ratio": 1.68,
+    "trend": "Bullish",
+    "trend_strength": 68,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 127.6,
+    "support": 125.8866,
+    "resistance": 128.221,
+    "atr": 1.544917,
+    "volume": 85328.0,
+    "average_volume": 82981.48,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 50.0,
+    "news_sentiment": "Neutral",
+    "ai_confidence": null,
     "ai_summary": null,
     "ai_reason": null,
-    "ai_risk": null
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Elite",
+    "status": "ELIGIBLE",
+    "rank": 1,
+    "news_confidence": 96.0,
+    "market_item": {
+      "ticker": "TBORG",
+      "name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş."
+    },
+    "confidence": null,
+    "overall_score": 83.0,
+    "recommended_amount": 1800.0,
+    "rejected": false,
+    "reject_reasons": []
+  },
+  {
+    "ticker": "PRKAB",
+    "company_name": "TÜRK PRYSMİAN KABLO VE SİSTEMLERİ A.Ş.",
+    "market": "BIST",
+    "total_score": 83.0,
+    "decision": "BUY",
+    "component_scores": {
+      "graph_structure": 45.0,
+      "trend": 14.98,
+      "volume": 6.94,
+      "momentum": 8.78,
+      "news": 2.5,
+      "ai_confidence": 4.8
+    },
+    "score_lines": [
+      "Grafik +45",
+      "Trend +15",
+      "Hacim +7",
+      "Momentum +9",
+      "News +2",
+      "AI +5"
+    ],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 73,
+        "reason": "Destekten kulp benzeri toparlanma"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 70,
+        "reason": "W benzeri dipten donus"
+      },
+      {
+        "name": "Channel Breakout",
+        "confidence": 70,
+        "reason": "Kanal ustu kirilim"
+      },
+      {
+        "name": "Falling Wedge",
+        "confidence": 69,
+        "reason": "Dusen takoz yukari kirilim adayi"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 68,
+        "reason": "Yukselen dipler ve yatay direnc"
+      },
+      {
+        "name": "Bull Flag",
+        "confidence": 67,
+        "reason": "Trend icinde bayrak konsolidasyonu"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 66,
+        "reason": "Boyun cizgisi ustunde tutunma"
+      },
+      {
+        "name": "Pennant",
+        "confidence": 64,
+        "reason": "Daralan fiyat salinimi"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Higher Low",
+      "Destekten Tepki",
+      "Swing Low",
+      "Retest",
+      "Swing High"
+    ],
+    "indicator_confirmations": [
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "RSI dengeli"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "EMA20 EMA50 ustunde",
+      "EMA50 EMA200 ustunde",
+      "RSI dengeli",
+      "MACD pozitif",
+      "ADX trend gucunu destekliyor",
+      "Destek bolgesine yakin",
+      "Direnc testi",
+      "Formasyon: Cup and Handle (73%)",
+      "Destekten kulp benzeri toparlanma",
+      "Price Action: Higher High",
+      "Price Action: Higher Low",
+      "Price Action: Destekten Tepki",
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
+      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.0521",
+      "Pullback cap=34.1410",
+      "Entry finalized at 34.1410",
+      "Stop placed below support and ATR=33.4878"
+    ],
+    "entry_price": 34.141,
+    "entry_range_low": 34.02,
+    "entry_range_high": 34.2619,
+    "stop_loss": 33.4878,
+    "current_target": 35.2384,
+    "take_profit_1": 34.7942,
+    "take_profit_2": 35.1861,
+    "take_profit_3": 35.7087,
+    "risk_reward_ratio": 1.68,
+    "trend": "Bullish",
+    "trend_strength": 68,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 34.74,
+    "support": 34.0715,
+    "resistance": 35.0,
+    "atr": 0.483873,
+    "volume": 265152.0,
+    "average_volume": 257860.32,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 50.0,
+    "news_sentiment": "Neutral",
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Elite",
+    "status": "ELIGIBLE",
+    "rank": 2,
+    "news_confidence": 96.0,
+    "market_item": {
+      "ticker": "PRKAB",
+      "name": "TÜRK PRYSMİAN KABLO VE SİSTEMLERİ A.Ş."
+    },
+    "confidence": null,
+    "overall_score": 83.0,
+    "recommended_amount": 1800.0,
+    "rejected": false,
+    "reject_reasons": []
+  },
+  {
+    "ticker": "ISFIN",
+    "company_name": "İŞ FİNANSAL KİRALAMA A.Ş.",
+    "market": "BIST",
+    "total_score": 82.15,
+    "decision": "BUY",
+    "component_scores": {
+      "graph_structure": 45.0,
+      "trend": 14.98,
+      "volume": 6.94,
+      "momentum": 8.78,
+      "news": 2.5,
+      "ai_confidence": 3.95
+    },
+    "score_lines": [
+      "Grafik +45",
+      "Trend +15",
+      "Hacim +7",
+      "Momentum +9",
+      "News +2",
+      "AI +4"
+    ],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 73,
+        "reason": "Destekten kulp benzeri toparlanma"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 70,
+        "reason": "W benzeri dipten donus"
+      },
+      {
+        "name": "Channel Breakout",
+        "confidence": 70,
+        "reason": "Kanal ustu kirilim"
+      },
+      {
+        "name": "Falling Wedge",
+        "confidence": 69,
+        "reason": "Dusen takoz yukari kirilim adayi"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 68,
+        "reason": "Yukselen dipler ve yatay direnc"
+      },
+      {
+        "name": "Bull Flag",
+        "confidence": 67,
+        "reason": "Trend icinde bayrak konsolidasyonu"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 66,
+        "reason": "Boyun cizgisi ustunde tutunma"
+      },
+      {
+        "name": "Pennant",
+        "confidence": 64,
+        "reason": "Daralan fiyat salinimi"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Higher Low",
+      "Destekten Tepki",
+      "Swing Low",
+      "Retest",
+      "Swing High"
+    ],
+    "indicator_confirmations": [
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "RSI dengeli"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "EMA20 EMA50 ustunde",
+      "EMA50 EMA200 ustunde",
+      "RSI dengeli",
+      "MACD pozitif",
+      "ADX trend gucunu destekliyor",
+      "Destek bolgesine yakin",
+      "Direnc testi",
+      "Formasyon: Cup and Handle (73%)",
+      "Destekten kulp benzeri toparlanma",
+      "Price Action: Higher High",
+      "Price Action: Higher Low",
+      "Price Action: Destekten Tepki",
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
+      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.0295",
+      "Pullback cap=19.5887",
+      "Entry finalized at 19.5887",
+      "Stop placed below support and ATR=19.3066"
+    ],
+    "entry_price": 19.5887,
+    "entry_range_low": 19.5364,
+    "entry_range_high": 19.6409,
+    "stop_loss": 19.3066,
+    "current_target": 20.0625,
+    "take_profit_1": 19.8707,
+    "take_profit_2": 20.04,
+    "take_profit_3": 20.2656,
+    "risk_reward_ratio": 1.68,
+    "trend": "Bullish",
+    "trend_strength": 68,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 19.68,
+    "support": 19.5493,
+    "resistance": 19.85,
+    "atr": 0.208934,
+    "volume": 512038.0,
+    "average_volume": 497956.955,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 50.0,
+    "news_sentiment": "Neutral",
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Elite",
+    "status": "ELIGIBLE",
+    "rank": 3,
+    "news_confidence": 79.0,
+    "market_item": {
+      "ticker": "ISFIN",
+      "name": "İŞ FİNANSAL KİRALAMA A.Ş."
+    },
+    "confidence": null,
+    "overall_score": 82.15,
+    "recommended_amount": 1800.0,
+    "rejected": false,
+    "reject_reasons": []
+  },
+  {
+    "ticker": "BRKVY",
+    "company_name": "BİRİKİM VARLIK YÖNETİM A.Ş.",
+    "market": "BIST",
+    "total_score": 81.1,
+    "decision": "BUY",
+    "component_scores": {
+      "graph_structure": 45.0,
+      "trend": 14.98,
+      "volume": 6.94,
+      "momentum": 8.78,
+      "news": 2.5,
+      "ai_confidence": 2.9
+    },
+    "score_lines": [
+      "Grafik +45",
+      "Trend +15",
+      "Hacim +7",
+      "Momentum +9",
+      "News +2",
+      "AI +3"
+    ],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 73,
+        "reason": "Destekten kulp benzeri toparlanma"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 70,
+        "reason": "W benzeri dipten donus"
+      },
+      {
+        "name": "Channel Breakout",
+        "confidence": 70,
+        "reason": "Kanal ustu kirilim"
+      },
+      {
+        "name": "Falling Wedge",
+        "confidence": 69,
+        "reason": "Dusen takoz yukari kirilim adayi"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 68,
+        "reason": "Yukselen dipler ve yatay direnc"
+      },
+      {
+        "name": "Bull Flag",
+        "confidence": 67,
+        "reason": "Trend icinde bayrak konsolidasyonu"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 66,
+        "reason": "Boyun cizgisi ustunde tutunma"
+      },
+      {
+        "name": "Pennant",
+        "confidence": 64,
+        "reason": "Daralan fiyat salinimi"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Higher Low",
+      "Destekten Tepki",
+      "Swing Low",
+      "Retest",
+      "Swing High"
+    ],
+    "indicator_confirmations": [
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "RSI dengeli"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "EMA20 EMA50 ustunde",
+      "EMA50 EMA200 ustunde",
+      "RSI dengeli",
+      "MACD pozitif",
+      "ADX trend gucunu destekliyor",
+      "Destek bolgesine yakin",
+      "Direnc testi",
+      "Formasyon: Cup and Handle (73%)",
+      "Destekten kulp benzeri toparlanma",
+      "Price Action: Higher High",
+      "Price Action: Higher Low",
+      "Price Action: Destekten Tepki",
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "Detected ticker(s): BRKVY"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.1236",
+      "Pullback cap=81.4538",
+      "Entry finalized at 81.4538",
+      "Stop placed below support and ATR=80.1213"
+    ],
+    "entry_price": 81.4538,
+    "entry_range_low": 81.207,
+    "entry_range_high": 81.7006,
+    "stop_loss": 80.1213,
+    "current_target": 83.6924,
+    "take_profit_1": 82.7863,
+    "take_profit_2": 83.5858,
+    "take_profit_3": 84.6518,
+    "risk_reward_ratio": 1.68,
+    "trend": "Bullish",
+    "trend_strength": 68,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 82.4,
+    "support": 81.289,
+    "resistance": 82.8009,
+    "atr": 0.987046,
+    "volume": 112397.0,
+    "average_volume": 109306.0825,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 50.0,
+    "news_sentiment": "Neutral",
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Elite",
+    "status": "ELIGIBLE",
+    "rank": 4,
+    "news_confidence": 58.0,
+    "market_item": {
+      "ticker": "BRKVY",
+      "name": "BİRİKİM VARLIK YÖNETİM A.Ş."
+    },
+    "confidence": null,
+    "overall_score": 81.1,
+    "recommended_amount": 1800.0,
+    "rejected": false,
+    "reject_reasons": []
+  },
+  {
+    "ticker": "ULUSE",
+    "company_name": "ULUSOY ELEKTRİK İMALAT TAAHHÜT VE TİCARET A.Ş.",
+    "market": "BIST",
+    "total_score": 80.76,
+    "decision": "BUY",
+    "component_scores": {
+      "graph_structure": 45.0,
+      "trend": 14.98,
+      "volume": 6.94,
+      "momentum": 8.78,
+      "news": 2.55,
+      "ai_confidence": 2.5
+    },
+    "score_lines": [
+      "Grafik +45",
+      "Trend +15",
+      "Hacim +7",
+      "Momentum +9",
+      "News +3",
+      "AI +2"
+    ],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 73,
+        "reason": "Destekten kulp benzeri toparlanma"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 70,
+        "reason": "W benzeri dipten donus"
+      },
+      {
+        "name": "Channel Breakout",
+        "confidence": 70,
+        "reason": "Kanal ustu kirilim"
+      },
+      {
+        "name": "Falling Wedge",
+        "confidence": 69,
+        "reason": "Dusen takoz yukari kirilim adayi"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 68,
+        "reason": "Yukselen dipler ve yatay direnc"
+      },
+      {
+        "name": "Bull Flag",
+        "confidence": 67,
+        "reason": "Trend icinde bayrak konsolidasyonu"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 66,
+        "reason": "Boyun cizgisi ustunde tutunma"
+      },
+      {
+        "name": "Pennant",
+        "confidence": 64,
+        "reason": "Daralan fiyat salinimi"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Higher Low",
+      "Destekten Tepki",
+      "Swing Low",
+      "Retest",
+      "Swing High"
+    ],
+    "indicator_confirmations": [
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "RSI dengeli"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "EMA20 EMA50 ustunde",
+      "EMA50 EMA200 ustunde",
+      "RSI dengeli",
+      "MACD pozitif",
+      "ADX trend gucunu destekliyor",
+      "Destek bolgesine yakin",
+      "Direnc testi",
+      "Formasyon: Cup and Handle (73%)",
+      "Destekten kulp benzeri toparlanma",
+      "Price Action: Higher High",
+      "Price Action: Higher Low",
+      "Price Action: Destekten Tepki",
+      "EMA20 EMA50 uzerinde",
+      "MACD pozitif kesisim",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.4718",
+      "Pullback cap=309.3790",
+      "Entry finalized at 309.3790",
+      "Stop placed below support and ATR=304.0646"
+    ],
+    "entry_price": 309.379,
+    "entry_range_low": 308.3948,
+    "entry_range_high": 310.3632,
+    "stop_loss": 304.0646,
+    "current_target": 319.75,
+    "take_profit_1": 314.6934,
+    "take_profit_2": 317.8821,
+    "take_profit_3": 322.1336,
+    "risk_reward_ratio": 1.9515,
+    "trend": "Bullish",
+    "trend_strength": 68,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 314.5,
+    "support": 308.75,
+    "resistance": 319.75,
+    "atr": 3.936601,
+    "volume": 214654.0,
+    "average_volume": 208751.015,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Elite",
+    "status": "ELIGIBLE",
+    "rank": 5,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "ULUSE",
+      "name": "ULUSOY ELEKTRİK İMALAT TAAHHÜT VE TİCARET A.Ş."
+    },
+    "confidence": null,
+    "overall_score": 80.76,
+    "recommended_amount": 1800.0,
+    "rejected": false,
+    "reject_reasons": []
   }
 ]

@@ -1,0 +1,30 @@
+{
+    "top_n": 20,
+    "final_n": 5,
+    "weights": {
+        "graph_structure": 45,
+        "trend": 20,
+        "volume": 15,
+        "momentum": 10,
+        "news": 5,
+        "ai_confidence": 5
+    },
+    "hard_filters": {
+        "min_price": 0.1,
+        "min_volume": 1,
+        "min_average_volume": 1
+    },
+    "thresholds": {
+        "buy_score": 60,
+        "strengthened_score_delta": 5,
+        "strengthened_rr_delta": 0.2,
+        "weakened_score_delta": -5,
+        "exit_score": 35
+    },
+    "monitoring": {
+        "enabled": true,
+        "interval_minutes": 3,
+        "market_open": "09:55",
+        "market_close": "18:10"
+    }
+}

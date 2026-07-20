@@ -1872,5 +1872,59 @@
     "source": "news",
     "url": "https://www.bloomberght.com/iran-abd-nin-saldirilarla-mutabakati-ihlal-ettigini-bm-guvenlik-konseyi-ne-bildirdi-3782414",
     "publish_date": "Thu, 09 Jul 2026 03:24:39 +0000"
+  },
+  {
+    "id": "96e52334d6b0b976c862a96d7a672a51bbc074f18df538e3073994da1af70499",
+    "ticker": [
+      "YGGYO"
+    ],
+    "detected_tickers": [
+      "YGGYO"
+    ],
+    "ticker_candidates": [
+      "RAPOR",
+      "YENI"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): RAPOR, YENI, YGGYO"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/e-rapor-sistemi-ile-yeni-donem-basladi-3783163",
+    "publish_date": "Sat, 18 Jul 2026 14:43:03 +0000"
+  },
+  {
+    "id": "20f1e055ca8558e02295fed65a7a959bf7f28b5b7b28c370a3926d123b430a56",
+    "ticker": [
+      "YGGYO"
+    ],
+    "detected_tickers": [
+      "YGGYO"
+    ],
+    "ticker_candidates": [
+      "KARA",
+      "MASAK",
+      "PARA",
+      "YENI"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 70,
+    "importance": "Medium",
+    "importance_score": 65,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): KARA, MASAK, PARA, YENI, YGGYO"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/masak-tan-kara-para-aklamaya-ve-terorun-finansmanina-karsi-yeni-yol-haritasi-3783158",
+    "publish_date": "Sat, 18 Jul 2026 08:31:24 +0000"
   }
 ]

@@ -24,6 +24,7 @@ from collectors import NewsCollector
 from collectors import UsMarketCollector
 from collectors.models import NewsItem
 from config import settings
+from decision import BistOpportunityEngine
 from decision import DecisionEngine
 from engines import CapitalAllocationEngine
 from engines import FundamentalEngine
@@ -44,6 +45,7 @@ from notifier import TelegramNotifier
 from services.gemini_service import GeminiService
 from shared.normalization import build_item_id
 from shared.normalization import normalize_records
+from shared.time_utils import format_istanbul_datetime
 from storage import JsonStorage
 
 
@@ -64,6 +66,10 @@ REQUIRED_STORAGE_FILES = [
     "portfolio.json",
     "portfolio_analysis.json",
     "bist_recommendations.json",
+    "bist_scoring_log.json",
+    "bist_opportunity_state.json",
+    "bist_notification_history.json",
+    "bist_live_summary.json",
     "us_recommendations.json",
 ]
 
@@ -170,6 +176,7 @@ class FinancePipelineService:
         self._ensure_news_keyword_config()
         self._ensure_technical_scoring_config()
         self._ensure_halal_filter_config()
+        self._ensure_bist_scoring_config()
         self._ensure_portfolio_file()
 
         self.collector_manager = CollectorManager()
@@ -184,6 +191,8 @@ class FinancePipelineService:
         self.financial_analyzer = FinancialAnalyzer()
         self.decision_engine = DecisionEngine()
         self.gemini_service = GeminiService()
+
+        self.bist_opportunity_engine = BistOpportunityEngine(self._load_bist_scoring_config())
 
         self.halal_filter_engine = HalalFilterEngine(self._load_halal_filter_config())
         self.technical_engine = TechnicalEngine()
@@ -660,11 +669,14 @@ class FinancePipelineService:
         """Build recommendation list and persist to JSON storage."""
 
         started_at = time.perf_counter()
+        normalized_market = self._normalize_market_name(market or "")
+        if normalized_market == "BIST":
+            return self._generate_bist_recommendations(started_at=started_at)
+
         self.analyze_news()
         self.analyze_market(market=market)
         self.analyze_tickers()
 
-        normalized_market = self._normalize_market_name(market or "")
         market_analysis = self._load_cached("market_analysis.json", default=[])
         if market:
             market_analysis = [
@@ -890,6 +902,491 @@ class FinancePipelineService:
             self._save_if_changed("recommendations.json", enriched_recommendations)
         return enriched_recommendations
 
+    def _generate_bist_recommendations(self, *, started_at: float) -> list[dict[str, Any]]:
+        """Run the BIST-only scoring flow and persist ranked opportunities."""
+
+        self.collect_news()
+        self.collect_kap()
+        self.collect_market(markets=["BIST"])
+        self.analyze_news()
+        self.analyze_market(market="BIST")
+        self.analyze_tickers()
+
+        market_analysis = self._load_cached("market_analysis.json", default=[])
+        market_analysis = [
+            item
+            for item in market_analysis
+            if self._normalize_market_name(item.get("market") or "") == "BIST"
+        ]
+        ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
+        news_by_ticker, default_news_score, news_reasons_by_ticker, news_sentiment_by_ticker = self._news_lookup(
+            ticker_news_summary
+        )
+        news_confidence_by_ticker = {
+            str(item.get("ticker") or "").strip().upper(): float(item.get("confidence") or 0.0)
+            for item in ticker_news_summary
+            if isinstance(item, dict)
+        }
+
+        scored_items: list[dict[str, Any]] = []
+        for market_item in market_analysis:
+            ticker = str(market_item.get("ticker") or "").strip().upper()
+            if not ticker:
+                continue
+
+            news_score = float(news_by_ticker.get(ticker, default_news_score))
+            news_sentiment = str(news_sentiment_by_ticker.get(ticker, "Neutral") or "Neutral")
+            news_confidence = float(news_confidence_by_ticker.get(ticker, 50.0))
+            result = self.bist_opportunity_engine.score_candidate(
+                market_item,
+                news_score=news_score,
+                news_sentiment=news_sentiment,
+                news_confidence=news_confidence,
+                news_reasons=list(news_reasons_by_ticker.get(ticker, [])),
+            )
+            payload = asdict(result)
+            payload["rank"] = 0
+            payload["market"] = "BIST"
+            payload["company_name"] = str(market_item.get("company_name") or market_item.get("name") or ticker)
+            payload["news_score"] = round(news_score, 2)
+            payload["news_sentiment"] = news_sentiment
+            payload["news_confidence"] = round(news_confidence, 2)
+            payload["market_item"] = {
+                "ticker": ticker,
+                "name": payload["company_name"],
+            }
+            scored_items.append(payload)
+
+        scored_items.sort(key=self._bist_score_sort_key, reverse=True)
+        eligible_items = [item for item in scored_items if not bool(item.get("hard_filtered"))]
+        top_n = int(self.bist_opportunity_engine.config.get("top_n") or 20)
+        final_n = int(self.bist_opportunity_engine.config.get("final_n") or 5)
+
+        if eligible_items:
+            ranked_pool = eligible_items[:top_n]
+        else:
+            ranked_pool = scored_items[:top_n]
+
+        for index, item in enumerate(ranked_pool, start=1):
+            item["rank"] = index
+
+        ai_review_pool = self._enrich_recommendations_with_ai(ranked_pool)
+        top_10 = ai_review_pool[:10]
+        top_5 = ai_review_pool[:final_n]
+
+        final_recommendations = [self._finalize_bist_recommendation(item, rank=index + 1) for index, item in enumerate(top_5)]
+        for item in final_recommendations:
+            item["recommended_amount"] = 0.0
+
+        allocation = self.capital_allocation_engine.allocate(final_recommendations, settings.total_capital)
+        allocation_by_ticker = {
+            str(item.get("ticker") or "").upper(): float(item.get("recommended_amount") or 0.0)
+            for item in allocation.get("allocations", [])
+        }
+        for item in final_recommendations:
+            ticker_key = str(item.get("ticker") or "").upper()
+            item["recommended_amount"] = round(allocation_by_ticker.get(ticker_key, 0.0), 2)
+
+        summary = self._build_bist_summary(
+            started_at=started_at,
+            analyzed_total=len(market_analysis),
+            hard_filtered=sum(1 for item in scored_items if bool(item.get("hard_filtered"))),
+            scored_total=len(scored_items),
+            eligible_total=len(eligible_items),
+            top_20=ranked_pool,
+            top_10=top_10,
+            top_5=final_recommendations,
+        )
+
+        analysis_payload = dict(self._load_cached("analysis.json", default={}))
+        analysis_payload["capital_allocation"] = allocation
+        analysis_payload["bist_summary"] = summary
+        analysis_payload["timestamp"] = datetime.now(UTC).isoformat()
+        self._save_if_changed("analysis.json", analysis_payload)
+        self._save_if_changed("bist_scoring_log.json", scored_items)
+        self._save_if_changed("bist_live_summary.json", summary)
+        self._save_if_changed("bist_recommendations.json", final_recommendations)
+
+        self._set_selection_stats(
+            "BIST",
+            {
+                "analyzed_total": int(summary["analyzed_total"]),
+                "filter_rejected": int(summary["hard_filtered"]),
+                "scored_total": int(summary["scored_total"]),
+                "top_20": int(len(ranked_pool)),
+                "top_10": int(len(top_10)),
+                "top_5": int(len(final_recommendations)),
+                "top_20_tickers": [str(item.get("ticker") or "") for item in ranked_pool],
+                "top_10_tickers": [str(item.get("ticker") or "") for item in top_10],
+                "top_5_tickers": [str(item.get("ticker") or "") for item in final_recommendations],
+                "best_opportunity": summary["best_opportunity"],
+                "riskiest_opportunity": summary["riskiest_opportunity"],
+                "strongest_news": summary["strongest_news"],
+                "strongest_technical": summary["strongest_technical"],
+                "highest_volume_growth": summary["highest_volume_growth"],
+                "elapsed_seconds": summary["elapsed_seconds"],
+            },
+        )
+
+        logger.info(
+            "BIST scoring completed | analyzed=%s filtered=%s scored=%s top20=%s top10=%s top5=%s elapsed=%.2fs",
+            summary["analyzed_total"],
+            summary["hard_filtered"],
+            summary["scored_total"],
+            len(ranked_pool),
+            len(top_10),
+            len(final_recommendations),
+            float(summary["elapsed_seconds"]),
+        )
+        for item in final_recommendations:
+            logger.info(self._format_bist_recommendation_log(item))
+
+        return final_recommendations
+
+    def _finalize_bist_recommendation(self, item: dict[str, Any], *, rank: int) -> dict[str, Any]:
+        final_item = dict(item)
+        final_item["rank"] = rank
+        final_item["market"] = "BIST"
+        final_item["decision"] = "BUY"
+        final_item["confidence"] = None
+        final_item["overall_score"] = round(float(final_item.get("total_score") or 0.0), 2)
+        final_item["recommended_amount"] = round(float(final_item.get("recommended_amount") or 0.0), 2)
+        final_item["rejected"] = False
+        final_item["reject_reasons"] = []
+        final_item["company_name"] = str(final_item.get("company_name") or final_item.get("ticker") or "UNKNOWN")
+        final_item["ai_summary"] = final_item.get("ai_summary")
+        final_item["ai_reason"] = final_item.get("ai_reason")
+        final_item["ai_risk"] = final_item.get("ai_risk")
+        return final_item
+
+    def _format_bist_recommendation_log(self, item: dict[str, Any]) -> str:
+        component_scores = dict(item.get("component_scores") or {})
+        return (
+            f"BIST RECOMMENDATION | {format_istanbul_datetime(pattern='%H:%M')} | {item.get('ticker')} | "
+            f"Current={float(item.get('current_price') or 0.0):.4f} | "
+            f"Entry={float(item.get('entry_price') or 0.0):.4f} | "
+            f"Stop={float(item.get('stop_loss') or 0.0):.4f} | "
+            f"TP1={float(item.get('take_profit_1') or 0.0):.4f} | "
+            f"TP2={float(item.get('take_profit_2') or 0.0):.4f} | "
+            f"TP3={float(item.get('take_profit_3') or 0.0):.4f} | "
+            f"RR={float(item.get('risk_reward_ratio') or 0.0):.2f} | "
+            f"Score={float(item.get('overall_score') or 0.0):.2f} | "
+            f"Confidence={self._format_confidence(item.get('confidence'))} | "
+            f"Rules={'; '.join(str(line) for line in item.get('score_lines') or [])} | "
+            f"PriceRule={'; '.join(str(note) for note in item.get('price_plan_notes') or [])} | "
+            f"Components={component_scores}"
+        )
+
+    def _format_confidence(self, value: Any) -> str:
+        if value is None:
+            return "N/A"
+        try:
+            return str(int(round(float(value))))
+        except (TypeError, ValueError):
+            return "N/A"
+
+    def _build_bist_summary(
+        self,
+        *,
+        started_at: float,
+        analyzed_total: int,
+        hard_filtered: int,
+        scored_total: int,
+        eligible_total: int,
+        top_20: list[dict[str, Any]],
+        top_10: list[dict[str, Any]],
+        top_5: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        def _pick_best(items: list[dict[str, Any]], key_fn) -> dict[str, Any] | None:
+            if not items:
+                return None
+            return dict(max(items, key=key_fn))
+
+        best_opportunity = _pick_best(top_20, lambda item: float(item.get("total_score") or 0.0))
+        riskiest_opportunity = _pick_best(top_20, lambda item: -float(item.get("risk_reward_ratio") or 0.0))
+        strongest_news = _pick_best(top_20, lambda item: float(item.get("news_score") or 0.0))
+        strongest_technical = _pick_best(
+            top_20,
+            lambda item: float(item.get("component_scores", {}).get("graph_structure", 0.0)) + float(item.get("component_scores", {}).get("trend", 0.0)),
+        )
+        highest_volume_growth = _pick_best(top_20, lambda item: float(item.get("relative_volume") or 0.0))
+
+        return {
+            "market": "BIST",
+            "analyzed_total": int(analyzed_total),
+            "hard_filtered": int(hard_filtered),
+            "scored_total": int(scored_total),
+            "eligible_total": int(eligible_total),
+            "top_20": [
+                {
+                    "rank": int(item.get("rank") or index + 1),
+                    "ticker": str(item.get("ticker") or ""),
+                    "company_name": str(item.get("company_name") or ""),
+                    "total_score": round(float(item.get("total_score") or 0.0), 2),
+                    "decision": str(item.get("decision") or "WATCH"),
+                    "risk_reward_ratio": round(float(item.get("risk_reward_ratio") or 0.0), 2),
+                    "component_scores": dict(item.get("component_scores") or {}),
+                    "score_lines": list(item.get("score_lines") or []),
+                    "reasons": list(item.get("reasons") or []),
+                }
+                for index, item in enumerate(top_20)
+            ],
+            "top_10": [str(item.get("ticker") or "") for item in top_10],
+            "top_5": [str(item.get("ticker") or "") for item in top_5],
+            "best_opportunity": best_opportunity,
+            "riskiest_opportunity": riskiest_opportunity,
+            "strongest_news": strongest_news,
+            "strongest_technical": strongest_technical,
+            "highest_volume_growth": highest_volume_growth,
+            "elapsed_seconds": round(time.perf_counter() - started_at, 3),
+            "generated_at": datetime.now(UTC).isoformat(),
+        }
+
+    def _bist_score_sort_key(self, item: dict[str, Any]) -> tuple[float, float, float, float, str]:
+        component_scores = dict(item.get("component_scores") or {})
+        graph_score = float(component_scores.get("graph_structure", 0.0))
+        trend_score = float(component_scores.get("trend", 0.0))
+        momentum_score = float(component_scores.get("momentum", 0.0))
+        volume_score = float(component_scores.get("volume", 0.0))
+        risk_reward = float(item.get("risk_reward_ratio") or 0.0)
+        total_score = float(item.get("total_score") or 0.0)
+        return (
+            total_score,
+            graph_score + trend_score,
+            volume_score,
+            momentum_score,
+            risk_reward,
+            str(item.get("ticker") or ""),
+        )
+
+    def run_bist_live_monitoring(self) -> dict[str, Any]:
+        """Run the recurring BIST monitoring cycle and emit only new state changes."""
+
+        if not self._bist_monitoring_window_open():
+            logger.info("BIST live monitoring skipped outside configured market window")
+            return {
+                "market": "BIST",
+                "skipped": True,
+                "reason": "outside_market_window",
+            }
+
+        recommendations = self.generate_recommendations(market="BIST")
+        summary = self._load_cached("bist_live_summary.json", default={})
+        events = self._update_bist_opportunity_state(recommendations)
+
+        telegram_result = None
+        if events:
+            telegram_result = self.telegram_notifier.send(self._format_bist_change_message(summary, events))
+
+        return {
+            "market": "BIST",
+            "recommendations": len(recommendations),
+            "events": len(events),
+            "telegram": asdict(telegram_result) if telegram_result else None,
+            "summary": summary,
+        }
+
+    def _update_bist_opportunity_state(self, recommendations: list[dict[str, Any]]) -> list[dict[str, Any]]:
+        state = self._load_bist_state()
+        active_by_ticker = self._ensure_state_mapping(state.get("active_opportunities"))
+        sent_history = self._ensure_history_list(state.get("notification_history"))
+        history_index = {str(entry.get("signature") or "") for entry in sent_history if isinstance(entry, dict)}
+
+        current_tick = datetime.now(UTC).isoformat()
+        current_by_ticker = {
+            str(item.get("ticker") or "").strip().upper(): dict(item)
+            for item in recommendations
+            if str(item.get("ticker") or "").strip().upper()
+        }
+
+        events: list[dict[str, Any]] = []
+        thresholds = dict(self.bist_opportunity_engine.config.get("thresholds") or {})
+        strengthened_score_delta = float(thresholds.get("strengthened_score_delta", 5))
+        strengthened_rr_delta = float(thresholds.get("strengthened_rr_delta", 0.2))
+        weakened_score_delta = float(thresholds.get("weakened_score_delta", -5))
+        exit_score = float(thresholds.get("exit_score", 35))
+
+        for ticker, item in current_by_ticker.items():
+            previous = dict(active_by_ticker.get(ticker) or {})
+            current_score = float(item.get("total_score") or item.get("confidence") or 0.0)
+            current_rr = float(item.get("risk_reward_ratio") or 0.0)
+            current_stop = float(item.get("stop_loss") or 0.0)
+            current_target = float(item.get("current_target") or 0.0)
+            current_price = float(item.get("current_price") or 0.0)
+            current_state = "ACTIVE"
+
+            if previous:
+                previous_score = float(previous.get("total_score") or previous.get("confidence") or 0.0)
+                previous_rr = float(previous.get("risk_reward_ratio") or 0.0)
+                previous_stop = float(previous.get("stop_loss") or 0.0)
+                previous_target = float(previous.get("current_target") or 0.0)
+
+                if current_price > 0 and current_stop > 0 and current_price <= current_stop:
+                    current_state = "EXIT"
+                elif current_price > 0 and current_target > 0 and current_price >= current_target:
+                    current_state = "CLOSED"
+                elif current_score - previous_score >= strengthened_score_delta or current_rr - previous_rr >= strengthened_rr_delta:
+                    current_state = "STRENGTHENED"
+                elif current_score - previous_score <= weakened_score_delta or (previous_stop > 0 and current_stop > 0 and current_stop < previous_stop):
+                    current_state = "WEAKENED"
+                elif current_score < exit_score:
+                    current_state = "EXIT"
+            else:
+                current_state = "NEW"
+
+            item["status"] = current_state
+            item["updated_at"] = current_tick
+            item["last_notified_state"] = current_state
+            active_by_ticker[ticker] = item
+
+            if current_state == "ACTIVE":
+                continue
+
+            signature = self._bist_event_signature(ticker, current_state, item)
+            if signature in history_index:
+                continue
+
+            event = {
+                "ticker": ticker,
+                "state": current_state,
+                "signature": signature,
+                "score": round(current_score, 2),
+                "risk_reward_ratio": round(current_rr, 2),
+                "price": round(current_price, 4),
+                "stop_loss": round(current_stop, 4),
+                "current_target": round(current_target, 4),
+                "company_name": str(item.get("company_name") or ticker),
+                "summary": list(item.get("reasons") or [])[:4],
+                "ai_summary": str(item.get("ai_summary") or "").strip(),
+            }
+            events.append(event)
+            sent_history.append({
+                "signature": signature,
+                "ticker": ticker,
+                "state": current_state,
+                "notified_at": current_tick,
+                "score": round(current_score, 2),
+            })
+
+        for ticker, previous in list(active_by_ticker.items()):
+            if ticker in current_by_ticker:
+                continue
+
+            previous_score = float(previous.get("total_score") or previous.get("confidence") or 0.0)
+            current_state = "EXIT" if previous_score >= exit_score else "WEAKENED"
+            signature = self._bist_event_signature(ticker, current_state, previous)
+            if signature in history_index:
+                continue
+
+            event = {
+                "ticker": ticker,
+                "state": current_state,
+                "signature": signature,
+                "score": round(previous_score, 2),
+                "risk_reward_ratio": round(float(previous.get("risk_reward_ratio") or 0.0), 2),
+                "price": round(float(previous.get("current_price") or 0.0), 4),
+                "stop_loss": round(float(previous.get("stop_loss") or 0.0), 4),
+                "current_target": round(float(previous.get("current_target") or 0.0), 4),
+                "company_name": str(previous.get("company_name") or ticker),
+                "summary": list(previous.get("reasons") or [])[:4],
+                "ai_summary": str(previous.get("ai_summary") or "").strip(),
+            }
+            events.append(event)
+            sent_history.append({
+                "signature": signature,
+                "ticker": ticker,
+                "state": current_state,
+                "notified_at": current_tick,
+                "score": round(previous_score, 2),
+            })
+
+        state["active_opportunities"] = active_by_ticker
+        state["notification_history"] = sent_history
+        state["updated_at"] = current_tick
+        self._save_if_changed("bist_opportunity_state.json", state)
+        self._save_if_changed("bist_notification_history.json", sent_history)
+        return events
+
+    def _format_bist_change_message(self, summary: dict[str, Any], events: list[dict[str, Any]]) -> str:
+        date_text = format_istanbul_datetime(pattern="%d.%m.%Y %H:%M")
+        lines = ["📡 BIST Canli Izleme", f"📅 {date_text}", ""]
+
+        if isinstance(summary, dict) and summary:
+            lines.extend(
+                [
+                    f"Analiz Edilen : {int(summary.get('analyzed_total', 0))}",
+                    f"Elenen : {int(summary.get('hard_filtered', 0))}",
+                    f"Skorlanan : {int(summary.get('scored_total', 0))}",
+                    f"Top 20 : {len(summary.get('top_20', []))}",
+                    f"Top 10 : {len(summary.get('top_10', []))}",
+                    f"Top 5 : {len(summary.get('top_5', []))}",
+                    "",
+                ]
+            )
+
+        for event in events[:10]:
+            lines.extend(
+                [
+                    f"{event['ticker']} - {event['state']}",
+                    f"Skor : {event['score']:.2f}",
+                    f"Risk/Odul : {event['risk_reward_ratio']:.2f}",
+                    f"Fiyat : {event['price']:.4f}",
+                    f"Stop : {event['stop_loss']:.4f}",
+                    f"TP : {event['current_target']:.4f}",
+                ]
+            )
+            if event.get("summary"):
+                lines.append(f"Sebep : {', '.join(str(item) for item in event['summary'])}")
+            if event.get("ai_summary"):
+                lines.append(f"AI : {str(event['ai_summary'])}")
+            lines.append("---")
+
+        return "\n".join(lines)
+
+    def _bist_event_signature(self, ticker: str, state: str, item: dict[str, Any]) -> str:
+        score_bucket = round(float(item.get("total_score") or item.get("confidence") or 0.0), 1)
+        rr_bucket = round(float(item.get("risk_reward_ratio") or 0.0), 2)
+        stop_bucket = round(float(item.get("stop_loss") or 0.0), 4)
+        target_bucket = round(float(item.get("current_target") or 0.0), 4)
+        return f"{ticker}:{state}:{score_bucket}:{rr_bucket}:{stop_bucket}:{target_bucket}"
+
+    def _load_bist_state(self) -> dict[str, Any]:
+        state = self._load_cached("bist_opportunity_state.json", default={})
+        if not isinstance(state, dict):
+            return {}
+        return state
+
+    def _ensure_state_mapping(self, value: Any) -> dict[str, dict[str, Any]]:
+        if not isinstance(value, dict):
+            return {}
+        return {
+            str(key).strip().upper(): dict(item)
+            for key, item in value.items()
+            if str(key).strip().upper() and isinstance(item, dict)
+        }
+
+    def _ensure_history_list(self, value: Any) -> list[dict[str, Any]]:
+        if not isinstance(value, list):
+            return []
+        return [dict(item) for item in value if isinstance(item, dict)]
+
+    def _bist_monitoring_window_open(self) -> bool:
+        try:
+            from datetime import time as time_type
+            from zoneinfo import ZoneInfo
+
+            open_hour = int(settings.scheduler_bist_live_start_hour)
+            open_minute = int(settings.scheduler_bist_live_start_minute)
+            close_hour = int(settings.scheduler_bist_live_end_hour)
+            close_minute = int(settings.scheduler_bist_live_end_minute)
+            now_local = datetime.now(UTC).astimezone(ZoneInfo(settings.timezone))
+            start = time_type(open_hour, open_minute)
+            end = time_type(close_hour, close_minute)
+            now_time = now_local.time()
+            return start <= now_time <= end
+        except Exception:
+            return True
+
     def notify_recommendations(
         self,
         *,
@@ -947,9 +1444,6 @@ class FinancePipelineService:
         """Run BIST-only daily flow and push Telegram report."""
 
         started_at = time.perf_counter()
-        self.collect_market(markets=["BIST"])
-        self.analyze_news()
-        self.analyze_tickers()
         recommendations = self.generate_recommendations(market="BIST")
         notifications = self.notify_recommendations(
             market="BIST",
@@ -958,11 +1452,13 @@ class FinancePipelineService:
         )
         stats = self._get_selection_stats("BIST")
         logger.info(
-            "BIST | Toplam Hisse=%s | Helal Filtre=%s | AI Analizi=%s | Onerilen=%s | Toplam Sure=%.2fs | Gemini Cagrisi=%s | API Key=%s",
+            "BIST | Toplam Hisse=%s | Elenen=%s | Skorlanan=%s | Top20=%s | Top10=%s | Top5=%s | Toplam Sure=%.2fs | Gemini Cagrisi=%s | API Key=%s",
             stats.get("analyzed_total", 0),
-            stats.get("halal_passed", 0),
-            stats.get("ai_candidates", 0),
-            stats.get("recommended", 0),
+            stats.get("filter_rejected", 0),
+            stats.get("scored_total", 0),
+            stats.get("top_20", 0),
+            stats.get("top_10", 0),
+            stats.get("top_5", 0),
             float(time.perf_counter() - started_at),
             stats.get("gemini_calls", 0),
             stats.get("gemini_last_key_label", "N/A"),
@@ -1575,6 +2071,22 @@ class FinancePipelineService:
             self.config_storage.save(filename, DEFAULT_HALAL_FILTER)
             logger.info("Created halal filter config at storage/config/halal_filter.json")
 
+    def _ensure_bist_scoring_config(self) -> None:
+        filename = "bist_scoring.json"
+        if not self.config_storage.exists(filename):
+            self.config_storage.save(filename, {})
+            logger.info("Created BIST scoring config at storage/config/bist_scoring.json")
+
+    def _load_bist_scoring_config(self) -> dict[str, Any]:
+        filename = "bist_scoring.json"
+        if not self.config_storage.exists(filename):
+            self.config_storage.save(filename, {})
+
+        raw = self.config_storage.load(filename, default={})
+        if not isinstance(raw, dict):
+            return {}
+        return raw
+
     def _load_technical_scoring_config(self) -> dict[str, float]:
         filename = "technical_scoring.json"
         if not self.config_storage.exists(filename):
@@ -1605,13 +2117,13 @@ class FinancePipelineService:
         *,
         ai_market_summary: str | None = None,
     ) -> str:
-        lines = ["📈 Gunun En Guclu Firsatlari", "", datetime.now(UTC).date().strftime("%d.%m.%Y"), ""]
+        lines = ["📈 Gunun En Guclu Firsatlari", "", format_istanbul_datetime(pattern="%d.%m.%Y"), ""]
         for index, item in enumerate(recommendations, start=1):
             lines.extend(
                 [
                     f"{index}) {str(item.get('ticker') or 'UNKNOWN')}",
                     f"Karar : {str(item.get('decision') or 'BUY')}",
-                    f"Guven : {int(round(float(item.get('confidence') or 0.0)))}",
+                    f"Guven : {self._format_confidence(item.get('confidence'))}",
                     "---",
                 ]
             )
@@ -1630,7 +2142,7 @@ class FinancePipelineService:
         ai_market_summary: str | None = None,
         selection_stats: dict[str, Any] | None = None,
     ) -> str:
-        date_text = datetime.now(UTC).strftime("%d.%m.%Y")
+        date_text = format_istanbul_datetime(pattern="%d.%m.%Y")
         lines = [
             str(report_title or "📈 Daily Report"),
             f"📅 {date_text}",
@@ -1641,12 +2153,22 @@ class FinancePipelineService:
             lines.extend(
                 [
                     f"Analiz Edilen : {int(selection_stats.get('analyzed_total', 0))}",
-                    f"Helal Filtre : {int(selection_stats.get('halal_passed', 0))}",
-                    f"AI Analizi : {int(selection_stats.get('ai_candidates', 0))}",
-                    f"Onerilen : {int(selection_stats.get('recommended', 0))}",
+                    f"Elenen : {int(selection_stats.get('filter_rejected', selection_stats.get('halal_passed', 0)))}",
+                    f"Skorlanan : {int(selection_stats.get('scored_total', selection_stats.get('ai_candidates', 0)))}",
+                    f"Top 20 : {int(selection_stats.get('top_20', 0))}",
+                    f"Top 10 : {int(selection_stats.get('top_10', 0))}",
+                    f"Top 5 : {int(selection_stats.get('top_5', selection_stats.get('recommended', 0)))}",
                     "",
                 ]
             )
+
+            if selection_stats.get("top_20_tickers"):
+                lines.append(f"Ilk 20 : {', '.join(str(item) for item in selection_stats.get('top_20_tickers', [])[:20])}")
+            if selection_stats.get("top_10_tickers"):
+                lines.append(f"Ilk 10 : {', '.join(str(item) for item in selection_stats.get('top_10_tickers', [])[:10])}")
+            if selection_stats.get("top_5_tickers"):
+                lines.append(f"Ilk 5 : {', '.join(str(item) for item in selection_stats.get('top_5_tickers', [])[:5])}")
+            lines.append("")
 
         lines.append("🟢 Yeni Firsatlar")
 
@@ -1675,7 +2197,7 @@ class FinancePipelineService:
                         str(item.get("ticker") or "UNKNOWN"),
                         f"Sirket : {str(item.get('company_name') or item.get('ticker') or 'UNKNOWN')}",
                         f"Karar : {decision}",
-                        f"Guven : {int(round(float(item.get('confidence') or 0.0)))}",
+                        f"Guven : {self._format_confidence(item.get('confidence'))}",
                         f"Trend : {int(item.get('trend_strength') or 0)}",
                         f"Trend Suresi : {str(item.get('estimated_trend_duration') or '1-2 islem gunu')}",
                         f"Alis Araligi : {float(item.get('entry_range_low') or 0.0):.4f} - {float(item.get('entry_range_high') or 0.0):.4f}",
@@ -1686,9 +2208,68 @@ class FinancePipelineService:
                     ]
                 )
 
+                component_scores = dict(item.get("component_scores") or {})
+                if component_scores:
+                    lines.append(
+                        "Puanlar : "
+                        + ", ".join(
+                            [
+                                f"Grafik {float(component_scores.get('graph_structure', 0.0)):.0f}",
+                                f"Trend {float(component_scores.get('trend', 0.0)):.0f}",
+                                f"Volume {float(component_scores.get('volume', 0.0)):.0f}",
+                                f"Momentum {float(component_scores.get('momentum', 0.0)):.0f}",
+                                f"Haber {float(component_scores.get('news', 0.0)):.0f}",
+                                f"AI {float(component_scores.get('ai_confidence', 0.0)):.0f}",
+                            ]
+                        )
+                    )
+
+                formations = list(item.get("chart_formations") or [])
+                if formations:
+                    top_formations = ", ".join(
+                        f"{str(formation.get('name') or '')} ({int(round(float(formation.get('confidence') or 0.0)))}%)"
+                        for formation in formations[:3]
+                        if str(formation.get("name") or "").strip()
+                    )
+                    if top_formations:
+                        lines.append(f"Formasyonlar : {top_formations}")
+
+                market_structure = [str(value) for value in item.get("market_structure_signals") or [] if str(value).strip()]
+                if market_structure:
+                    lines.append(f"Price Action : {', '.join(market_structure[:4])}")
+
+                indicator_confirmations = [str(value) for value in item.get("indicator_confirmations") or [] if str(value).strip()]
+                if indicator_confirmations:
+                    lines.append(f"Indikator Teyidi : {', '.join(indicator_confirmations[:3])}")
+
+                reasons = [str(value) for value in item.get("reasons") or [] if str(value).strip()]
+                if reasons:
+                    lines.append(f"Sebep : {' | '.join(reasons[:3])}")
+
                 ai_summary = str(item.get("ai_summary") or "").strip()
                 lines.append(f"AI Ozet : {ai_summary or 'Yok'}")
                 lines.append("---")
+
+        if selection_stats and isinstance(selection_stats.get("best_opportunity"), dict):
+            best = dict(selection_stats.get("best_opportunity") or {})
+            lines.extend(
+                [
+                    "",
+                    f"En iyi fırsat : {best.get('ticker', 'N/A')} ({float(best.get('total_score') or 0.0):.2f})",
+                ]
+            )
+        if selection_stats and isinstance(selection_stats.get("riskiest_opportunity"), dict):
+            riskiest = dict(selection_stats.get("riskiest_opportunity") or {})
+            lines.append(f"En riskli fırsat : {riskiest.get('ticker', 'N/A')} ({float(riskiest.get('risk_reward_ratio') or 0.0):.2f})")
+        if selection_stats and isinstance(selection_stats.get("strongest_news"), dict):
+            strongest_news = dict(selection_stats.get("strongest_news") or {})
+            lines.append(f"En guclu haber etkisi : {strongest_news.get('ticker', 'N/A')} ({float(strongest_news.get('news_score') or 0.0):.2f})")
+        if selection_stats and isinstance(selection_stats.get("strongest_technical"), dict):
+            strongest_technical = dict(selection_stats.get("strongest_technical") or {})
+            lines.append(f"En guclu teknik gorunum : {strongest_technical.get('ticker', 'N/A')} ({float(strongest_technical.get('total_score') or 0.0):.2f})")
+        if selection_stats and isinstance(selection_stats.get("highest_volume_growth"), dict):
+            highest_volume_growth = dict(selection_stats.get("highest_volume_growth") or {})
+            lines.append(f"En yuksek hacim artisi : {highest_volume_growth.get('ticker', 'N/A')} ({float(highest_volume_growth.get('relative_volume') or 0.0):.2f})")
 
         if portfolio_analysis:
             lines.extend(["", "📂 Acik Pozisyonlar"])

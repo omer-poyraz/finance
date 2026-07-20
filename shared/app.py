@@ -9,6 +9,7 @@ from fastapi import HTTPException
 
 from config import settings
 from scheduler.jobs import build_scheduler
+from scheduler.jobs import register_interval_job
 from scheduler.jobs import register_weekday_job
 from scheduler.jobs import start_scheduler
 from services import FinancePipelineService
@@ -49,6 +50,14 @@ def create_app() -> FastAPI:
                 hour=settings.scheduler_bist_hour,
                 minute=settings.scheduler_bist_minute,
                 job_id="weekday_bist_report",
+            )
+
+        if settings.scheduler_bist_live_enabled:
+            register_interval_job(
+                scheduler,
+                pipeline_service.run_bist_live_monitoring,
+                minutes=settings.scheduler_bist_live_interval_minutes,
+                job_id="interval_bist_monitor",
             )
 
         if settings.scheduler_us_enabled:

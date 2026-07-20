@@ -1931,6 +1931,29 @@
     ]
   },
   {
+    "id": "7046217b43de9b982971e850203a5a05afbbc53741ac7162250fae56b12807b3",
+    "ticker": "YGGYO",
+    "news_count": 2,
+    "positive_count": 0,
+    "negative_count": 0,
+    "neutral_count": 2,
+    "average_news_score": 50.0,
+    "highest_news_score": 50.0,
+    "latest_news_date": "Sat, 18 Jul 2026 14:43:03 +0000",
+    "overall_news_sentiment": "Neutral",
+    "confidence": 67,
+    "top_keywords": [],
+    "all_reasons": [
+      "Detected ticker(s): RAPOR, YENI, YGGYO",
+      "Detected ticker(s): KARA, MASAK, PARA, YENI, YGGYO"
+    ],
+    "keyword_counts": {},
+    "processed_news_ids": [
+      "96e52334d6b0b976c862a96d7a672a51bbc074f18df538e3073994da1af70499",
+      "20f1e055ca8558e02295fed65a7a959bf7f28b5b7b28c370a3926d123b430a56"
+    ]
+  },
+  {
     "id": "d0b03244044abe773e890172c7deb371a0ea77967cab0855485209cab9771270",
     "ticker": "ZAMAN",
     "news_count": 2,

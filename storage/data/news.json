@@ -21,7 +21,7 @@
       "MIDAS",
       "İLETI"
     ],
-    "collected_at": "2026-07-20T12:27:46.461416+00:00",
+    "collected_at": "2026-07-20T14:56:21.603493+00:00",
     "id": "dd4425ea2e672ab71552d203478d0b7b9890e03027f196fad51e36885712ace8"
   },
   {
@@ -40,7 +40,7 @@
     "detected_tickers": [
       "KVKK"
     ],
-    "collected_at": "2026-07-20T12:27:46.461499+00:00",
+    "collected_at": "2026-07-20T14:56:21.603595+00:00",
     "id": "2b32953e40e4a7408d44bdfca9517c0bfa406b18afb29bd5041071fd6c2fae54"
   },
   {
@@ -59,7 +59,7 @@
     "detected_tickers": [
       "VEREN"
     ],
-    "collected_at": "2026-07-20T12:27:46.461556+00:00",
+    "collected_at": "2026-07-20T14:56:21.603660+00:00",
     "id": "02eacced1585e303f64a1b3c1ec8f57b1bf875a5540da023540298e0ba70d803"
   },
   {
@@ -81,7 +81,7 @@
       "FAIZ",
       "ZAMAN"
     ],
-    "collected_at": "2026-07-20T12:27:46.461618+00:00",
+    "collected_at": "2026-07-20T14:56:21.603718+00:00",
     "id": "47a1ba2bf12aa1020afec26be3d25a606042e89b9a2b4d30723a73bc67c2f27a"
   },
   {
@@ -103,7 +103,7 @@
       "FAIZ",
       "OLUR"
     ],
-    "collected_at": "2026-07-20T12:27:46.461675+00:00",
+    "collected_at": "2026-07-20T14:56:21.603775+00:00",
     "id": "043e319f517ef849abab1ae497a2f95c1a7be22cf45eac206694974ae4670d0c"
   },
   {
@@ -122,7 +122,7 @@
     "detected_tickers": [
       "EMIR"
     ],
-    "collected_at": "2026-07-20T12:27:46.461725+00:00",
+    "collected_at": "2026-07-20T14:56:21.603825+00:00",
     "id": "1e824eee55e886f68516c4d0717f436de0459070e8473f1ee8243ca4661f9c8f"
   },
   {
@@ -137,7 +137,7 @@
     ],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.461775+00:00",
+    "collected_at": "2026-07-20T14:56:21.603876+00:00",
     "id": "daef314e6b4f46be10dc58bada702e2aca6da84f7dc40aae6e6d89f2ba9b440d"
   },
   {
@@ -159,7 +159,7 @@
       "DEMEK",
       "İPTAL"
     ],
-    "collected_at": "2026-07-20T12:27:46.461830+00:00",
+    "collected_at": "2026-07-20T14:56:21.603934+00:00",
     "id": "c988ea54c93c3263f2fdd99ee85c2b1ef0cb77e167c91505b206ca5c7f1c1857"
   },
   {
@@ -185,7 +185,7 @@
       "HISSE",
       "NEDIR"
     ],
-    "collected_at": "2026-07-20T12:27:46.461885+00:00",
+    "collected_at": "2026-07-20T14:56:21.603988+00:00",
     "id": "79e7bf28e7214053003ef27386a0e6a117ac71d1eba7d0193a6aa75a1b9292bb"
   },
   {
@@ -207,7 +207,7 @@
       "BIST",
       "NEDIR"
     ],
-    "collected_at": "2026-07-20T12:27:46.461933+00:00",
+    "collected_at": "2026-07-20T14:56:21.604035+00:00",
     "id": "e1399476cbe6d44e4f1b3329e6e1f629b2e191b1187d4566e81f4baaa423a1db"
   },
   {
@@ -227,7 +227,7 @@
     "detected_tickers": [
       "İŞLEM"
     ],
-    "collected_at": "2026-07-20T12:27:46.461984+00:00",
+    "collected_at": "2026-07-20T14:56:21.604086+00:00",
     "id": "2fdeaaf7802d7569210e891292ed1b7c263da5fd9d162785757248da2e2656fc"
   },
   {
@@ -246,7 +246,7 @@
     "detected_tickers": [
       "PARA"
     ],
-    "collected_at": "2026-07-20T12:27:46.462032+00:00",
+    "collected_at": "2026-07-20T14:56:21.604133+00:00",
     "id": "32311acf971bfc747b6e8dddd797b52178e4ba542ca8841a8b1b3c94c5486352"
   },
   {
@@ -265,7 +265,7 @@
     "detected_tickers": [
       "NASIL"
     ],
-    "collected_at": "2026-07-20T12:27:46.462081+00:00",
+    "collected_at": "2026-07-20T14:56:21.604183+00:00",
     "id": "97f7d3fd72945b083706dff59c4ac86e6ba43f6f818300279133b107ea9e9ec2"
   },
   {
@@ -280,7 +280,7 @@
     ],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462129+00:00",
+    "collected_at": "2026-07-20T14:56:21.604234+00:00",
     "id": "5b2fa47f6e5e44d961de16a0ba09d9240703d6a6ff5bd7073da58fd312f66fcf"
   },
   {
@@ -295,7 +295,7 @@
     ],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462193+00:00",
+    "collected_at": "2026-07-20T14:56:21.604298+00:00",
     "id": "dfd51d4899b543bd29f836658477b1eafdf97b12430f57cba4eec493d28c8b81"
   },
   {
@@ -314,7 +314,7 @@
     "detected_tickers": [
       "MERZ"
     ],
-    "collected_at": "2026-07-20T12:27:46.462258+00:00",
+    "collected_at": "2026-07-20T14:56:21.604360+00:00",
     "id": "3e0d7fb32b96b6d7d34702b59e9680c03ae7e080889364906327341ede01e2dd"
   },
   {
@@ -333,7 +333,7 @@
     "detected_tickers": [
       "FUAT"
     ],
-    "collected_at": "2026-07-20T12:27:46.462319+00:00",
+    "collected_at": "2026-07-20T14:56:21.604419+00:00",
     "id": "464218a252522fa29418a2025f0bb427250120b1a445da5584f7656640b98c8c"
   },
   {
@@ -346,7 +346,7 @@
     "company_names": [],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462392+00:00",
+    "collected_at": "2026-07-20T14:56:21.604491+00:00",
     "id": "23d41dc794fde17cad6756ece914a3ab2adf889225a9c1e32e5b93d785899dc5"
   },
   {
@@ -365,7 +365,7 @@
     "detected_tickers": [
       "TRUMP"
     ],
-    "collected_at": "2026-07-20T12:27:46.462460+00:00",
+    "collected_at": "2026-07-20T14:56:21.604560+00:00",
     "id": "45e404701e1d819812373261a46f1dbedda2c5bf1f860ea8d9e59117f22335ec"
   },
   {
@@ -384,7 +384,7 @@
     "detected_tickers": [
       "ITHAL"
     ],
-    "collected_at": "2026-07-20T12:27:46.462522+00:00",
+    "collected_at": "2026-07-20T14:56:21.604625+00:00",
     "id": "ee137fbc8becfcb09d06d0bb95e68a171538444696f8c027d74d6e4b81ca87a0"
   },
   {
@@ -399,7 +399,7 @@
     ],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462585+00:00",
+    "collected_at": "2026-07-20T14:56:21.604684+00:00",
     "id": "25e606a1575a6f807d9e13df1a10df5e661a6a488471c0e605814e328be7fb76"
   },
   {
@@ -418,7 +418,7 @@
     "detected_tickers": [
       "TEKI"
     ],
-    "collected_at": "2026-07-20T12:27:46.462646+00:00",
+    "collected_at": "2026-07-20T14:56:21.604744+00:00",
     "id": "40da1dfe6bfc425efb33dfa9c3f4cd99173d0b46f9ff71aff45348115ce3dbdc"
   },
   {
@@ -434,7 +434,7 @@
     ],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462708+00:00",
+    "collected_at": "2026-07-20T14:56:21.604806+00:00",
     "id": "82cc6147860d06941eda790897f7f3a2f62a74e08f9591e854c7449d9212113d"
   },
   {
@@ -447,7 +447,7 @@
     "company_names": [],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462768+00:00",
+    "collected_at": "2026-07-20T14:56:21.604866+00:00",
     "id": "59b86b19db46e231447a1728583bc096caf48437fe8bab4d430daf03199c3a1b"
   },
   {
@@ -466,7 +466,7 @@
     "detected_tickers": [
       "RESMI"
     ],
-    "collected_at": "2026-07-20T12:27:46.462826+00:00",
+    "collected_at": "2026-07-20T14:56:21.604924+00:00",
     "id": "d24e59991d9b5199eecaff12c34180370c8f1ab902dd201fc42c98d136568e99"
   },
   {
@@ -481,7 +481,7 @@
     ],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462883+00:00",
+    "collected_at": "2026-07-20T14:56:21.604978+00:00",
     "id": "f6620ffa6b7369ef34a2193dcb28d9d0e6551726dc3c2f006f80e6097ceb55f5"
   },
   {
@@ -494,7 +494,7 @@
     "company_names": [],
     "ticker_candidates": [],
     "detected_tickers": [],
-    "collected_at": "2026-07-20T12:27:46.462942+00:00",
+    "collected_at": "2026-07-20T14:56:21.605036+00:00",
     "id": "b5f377127b7bb938ad4295d904075a4fdc96c1f702d1cc973b3f8b1659f63ce4"
   },
   {
@@ -511,7 +511,7 @@
     "detected_tickers": [
       "URUM"
     ],
-    "collected_at": "2026-07-20T12:27:46.463001+00:00",
+    "collected_at": "2026-07-20T14:56:21.605096+00:00",
     "id": "217f7c64f9ac72f722e6ea65728da01f6fa655c7519afc594017ec0818339dfe"
   },
   {
@@ -532,7 +532,7 @@
       "RAPOR",
       "YENI"
     ],
-    "collected_at": "2026-07-20T12:27:46.463063+00:00",
+    "collected_at": "2026-07-20T14:56:21.605154+00:00",
     "id": "96e52334d6b0b976c862a96d7a672a51bbc074f18df538e3073994da1af70499"
   },
   {
@@ -551,7 +551,7 @@
     "detected_tickers": [
       "NDAKI"
     ],
-    "collected_at": "2026-07-20T12:27:46.463125+00:00",
+    "collected_at": "2026-07-20T14:56:21.605218+00:00",
     "id": "3077c80c3577278d5e65517be6d4a7cffab57f70fdc85e4c96340173adc6d865"
   },
   {
@@ -572,7 +572,7 @@
       "TCMB",
       "ZLER"
     ],
-    "collected_at": "2026-07-20T12:27:46.463196+00:00",
+    "collected_at": "2026-07-20T14:56:21.605286+00:00",
     "id": "ca3af6a1e6765ce112944426ec11b39aa7c0b803c644a3fc5590d097c920ce53"
   },
   {
@@ -591,7 +591,7 @@
     "detected_tickers": [
       "TEKI"
     ],
-    "collected_at": "2026-07-20T12:27:46.463268+00:00",
+    "collected_at": "2026-07-20T14:56:21.605355+00:00",
     "id": "ebdf52f6d4c43a05bc52e0ba83c1d6495aeddab066241f10bd716def39eb10e5"
   },
   {
@@ -610,7 +610,7 @@
     "detected_tickers": [
       "IRAK"
     ],
-    "collected_at": "2026-07-20T12:27:46.463333+00:00",
+    "collected_at": "2026-07-20T14:56:21.605420+00:00",
     "id": "f897e6bc71a118ce688a15be0538852187e9cd3d547d2ebb1223d6d479fd5185"
   },
   {
@@ -633,7 +633,7 @@
       "PARA",
       "YENI"
     ],
-    "collected_at": "2026-07-20T12:27:46.463403+00:00",
+    "collected_at": "2026-07-20T14:56:21.605488+00:00",
     "id": "20f1e055ca8558e02295fed65a7a959bf7f28b5b7b28c370a3926d123b430a56"
   }
 ]

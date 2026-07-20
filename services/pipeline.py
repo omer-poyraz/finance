@@ -1047,7 +1047,7 @@ class FinancePipelineService:
         final_item = dict(item)
         final_item["rank"] = rank
         final_item["market"] = "BIST"
-        final_item["decision"] = "BUY"
+        final_item["decision"] = str(final_item.get("decision") or "WAIT")
         final_item["confidence"] = None
         final_item["overall_score"] = round(float(final_item.get("total_score") or 0.0), 2)
         final_item["recommended_amount"] = round(float(final_item.get("recommended_amount") or 0.0), 2)
@@ -1069,6 +1069,7 @@ class FinancePipelineService:
             f"TP1={float(item.get('take_profit_1') or 0.0):.4f} | "
             f"TP2={float(item.get('take_profit_2') or 0.0):.4f} | "
             f"TP3={float(item.get('take_profit_3') or 0.0):.4f} | "
+            f"TP4={float(item.get('take_profit_4') or 0.0):.4f} | "
             f"RR={float(item.get('risk_reward_ratio') or 0.0):.2f} | "
             f"Score={float(item.get('overall_score') or 0.0):.2f} | "
             f"Confidence={self._format_confidence(item.get('confidence'))} | "
@@ -2196,17 +2197,48 @@ class FinancePipelineService:
                         "",
                         str(item.get("ticker") or "UNKNOWN"),
                         f"Sirket : {str(item.get('company_name') or item.get('ticker') or 'UNKNOWN')}",
-                        f"Karar : {decision}",
+                        f"Islem : {decision}",
+                        f"Entry Durumu : {str(item.get('entry_status') or 'WAIT')}",
                         f"Guven : {self._format_confidence(item.get('confidence'))}",
                         f"Trend : {int(item.get('trend_strength') or 0)}",
                         f"Trend Suresi : {str(item.get('estimated_trend_duration') or '1-2 islem gunu')}",
-                        f"Alis Araligi : {float(item.get('entry_range_low') or 0.0):.4f} - {float(item.get('entry_range_high') or 0.0):.4f}",
-                        f"Guncel Hedef : {float(item.get('current_target') or 0.0):.4f}",
+                        f"Guncel Fiyat : {float(item.get('current_price') or 0.0):.4f}",
+                        f"Alis Bolgesi : {float(item.get('entry_range_low') or 0.0):.4f} - {float(item.get('entry_range_high') or 0.0):.4f}",
+                        f"Limit Emir : {float(item.get('limit_entry_price') or 0.0):.4f}",
+                        f"Market Alinabilir : {'EVET' if bool(item.get('market_entry_allowed')) else 'HAYIR'}",
+                        f"Giris Turu : {str(item.get('entry_strategy') or 'Unknown')}",
+                        f"Giris Nedeni : {str(item.get('entry_strategy_reason') or 'N/A')}",
                         f"Koruyucu Stop : {float(item.get('stop_loss') or 0.0):.4f}",
-                        f"Risk/Odul : {float(item.get('risk_reward_ratio') or 0.0):.2f}",
+                        f"Ana Hedef : {float(item.get('current_target') or 0.0):.4f}",
+                        f"Toplam RR : {float(item.get('risk_reward_ratio') or 0.0):.2f}",
                         f"Sermaye Dagilimi : {float(item.get('recommended_amount') or 0.0):.2f} TL",
                     ]
                 )
+
+                tp_levels = [dict(level) for level in item.get("take_profit_levels") or [] if isinstance(level, dict)]
+                rr_by_tp = {
+                    str(rr.get("label") or ""): dict(rr)
+                    for rr in item.get("risk_reward_by_tp") or []
+                    if isinstance(rr, dict)
+                }
+                if tp_levels:
+                    for level in tp_levels[:4]:
+                        label = str(level.get("label") or "TP")
+                        price = float(level.get("price") or 0.0)
+                        reason = str(level.get("reason") or "Teknik hedef")
+                        rr_item = rr_by_tp.get(label, {})
+                        probability = float(rr_item.get("probability") or 0.0)
+                        rr_value = float(rr_item.get("rr") or 0.0)
+                        lines.append(f"{label} : {price:.4f} | Olasilik {probability:.0f}% | RR {rr_value:.2f} | {reason}")
+                else:
+                    lines.extend(
+                        [
+                            f"TP1 : {float(item.get('take_profit_1') or 0.0):.4f}",
+                            f"TP2 : {float(item.get('take_profit_2') or 0.0):.4f}",
+                            f"TP3 : {float(item.get('take_profit_3') or 0.0):.4f}",
+                            f"TP4 : {float(item.get('take_profit_4') or 0.0):.4f}",
+                        ]
+                    )
 
                 component_scores = dict(item.get("component_scores") or {})
                 if component_scores:
@@ -2241,6 +2273,10 @@ class FinancePipelineService:
                 indicator_confirmations = [str(value) for value in item.get("indicator_confirmations") or [] if str(value).strip()]
                 if indicator_confirmations:
                     lines.append(f"Indikator Teyidi : {', '.join(indicator_confirmations[:3])}")
+
+                fresh_signals = [str(value) for value in item.get("fresh_signals") or [] if str(value).strip()]
+                if fresh_signals:
+                    lines.append(f"Taze Sinyal : {', '.join(fresh_signals[:4])}")
 
                 reasons = [str(value) for value in item.get("reasons") or [] if str(value).strip()]
                 if reasons:

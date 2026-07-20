@@ -32,7 +32,7 @@ class Settings:
     )
     news_sources: str = os.getenv(
         "NEWS_SOURCES",
-        "https://www.getmidas.com/|https://www.getmidas.com/borsa-haberleri/|https://www.kap.org.tr/tr/rss|https://www.borsaistanbul.com/tr/rss|https://www.bloomberght.com/rss",
+        "https://www.getmidas.com/|https://www.getmidas.com/borsa-haberleri/|https://www.getmidas.com/borsa-haberleri/feed/|https://www.kap.org.tr/tr/rss|https://www.borsaistanbul.com/tr/rss|https://www.bloomberght.com/rss|https://www.ekonomim.com/rss|https://www.paraanaliz.com/feed/|https://www.ntv.com.tr/ekonomi.rss|https://www.borsagundem.com/rss",
     )
     kap_source_url: str = os.getenv(
         "KAP_SOURCE_URL",
@@ -81,6 +81,7 @@ class Settings:
     scheduler_us_minute: int = int(os.getenv("SCHEDULER_US_MINUTE", "0"))
     scheduler_portfolio_hour: int = int(os.getenv("SCHEDULER_PORTFOLIO_HOUR", "22"))
     scheduler_portfolio_minute: int = int(os.getenv("SCHEDULER_PORTFOLIO_MINUTE", "30"))
+    live_only_mode: bool = _env_bool("LIVE_ONLY_MODE", False)
 
     @property
     def database_url(self) -> str:

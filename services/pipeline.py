@@ -238,6 +238,8 @@ class FinancePipelineService:
             return normalized
         except Exception as exc:
             logger.exception("News collection failed: %s", exc)
+            if settings.live_only_mode:
+                return list(self._runtime_cache.get("news.json") or [])
             existing = self._load_cached("news.json", default=[])
             self._save_if_changed("news.json", existing)
             return existing
@@ -253,6 +255,8 @@ class FinancePipelineService:
             return normalized
         except Exception as exc:
             logger.exception("KAP collection failed: %s", exc)
+            if settings.live_only_mode:
+                return list(self._runtime_cache.get("kap.json") or [])
             existing = self._load_cached("kap.json", default=[])
             self._save_if_changed("kap.json", existing)
             return existing
@@ -309,6 +313,8 @@ class FinancePipelineService:
             return allowed
         except Exception as exc:
             logger.exception("Market collection failed: %s", exc)
+            if settings.live_only_mode:
+                return list(self._runtime_cache.get("market.json") or [])
             existing = self._load_cached("market.json", default=[])
             self._save_if_changed("market.json", existing)
             return existing
@@ -328,8 +334,8 @@ class FinancePipelineService:
     def analyze(self) -> dict[str, Any]:
         """Compute analyzer scores and persist the analysis payload."""
 
-        news_payload = self.storage.load("news.json", default=[])
-        market_payload = self.storage.load("market.json", default=[])
+        news_payload = self._load_cached("news.json", default=[])
+        market_payload = self._load_cached("market.json", default=[])
 
         news_items = [
             NewsItem(
@@ -342,7 +348,7 @@ class FinancePipelineService:
             if item.get("title") and item.get("url")
         ]
         news_summary = self.analyze_news()
-        news_analysis_items = self.storage.load("news_analysis.json", default=[])
+        news_analysis_items = self._load_cached("news_analysis.json", default=[])
         news_score = self._average_news_score(news_analysis_items)
 
         frame = self._market_frame(market_payload)
@@ -359,13 +365,18 @@ class FinancePipelineService:
         }
         analysis["reasons"] = self._analysis_reasons(analysis["scores"])
 
-        self.storage.save("analysis.json", analysis)
+        self._save_if_changed("analysis.json", analysis)
         return analysis
 
-    def analyze_market(self, *, market: str | None = None) -> dict[str, int]:
+    def analyze_market(
+        self,
+        *,
+        market: str | None = None,
+        market_payload: list[dict[str, Any]] | None = None,
+    ) -> dict[str, int]:
         """Build technical intelligence profile for each collected market stock."""
 
-        market_payload = self.storage.load("market.json", default=[])
+        market_payload = list(market_payload or self.storage.load("market.json", default=[]))
         if not market_payload:
             market_payload = self.collect_market()
 
@@ -380,7 +391,9 @@ class FinancePipelineService:
                 continue
             grouped.setdefault(ticker, []).append(item)
 
-        ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
+        ticker_news_summary = list(self._runtime_cache.get("ticker_news_summary_live") or [])
+        if not ticker_news_summary:
+            ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
         news_lookup = {
             str(item.get("ticker") or "").strip().upper(): float(item.get("average_news_score") or 50.0)
             for item in ticker_news_summary
@@ -412,13 +425,18 @@ class FinancePipelineService:
                 **fundamental,
                 **market_intel,
                 **trend,
+                **self._timeframe_snapshot(frame),
                 "market": market_name,
                 "company_name": company_name,
                 "news_score": round(float(news_lookup.get(ticker, 50.0)), 2),
+                "candles": self._candles_from_frame(frame, limit=260),
+                "candles_hourly": self._candles_from_frame(frame.tail(120), limit=120),
+                "candles_daily": self._candles_from_frame(frame.tail(260), limit=260),
             }
             analysis_items.append(merged)
         if market is None:
             self._save_if_changed("market_analysis.json", analysis_items)
+            self._runtime_cache["market_analysis_live"] = list(analysis_items)
         else:
             normalized_market = self._normalize_market_name(market)
             existing_analysis = self._load_cached("market_analysis.json", default=[])
@@ -429,6 +447,7 @@ class FinancePipelineService:
             ]
             merged_analysis.extend(analysis_items)
             self._save_if_changed("market_analysis.json", merged_analysis)
+            self._runtime_cache.setdefault("market_analysis_live_by_market", {})[normalized_market] = list(analysis_items)
             if normalized_market == "BIST":
                 self._save_if_changed("bist_market_analysis.json", analysis_items)
             elif normalized_market == "US":
@@ -444,14 +463,19 @@ class FinancePipelineService:
             "neutral": neutral,
         }
 
-    def analyze_news(self) -> dict[str, int]:
+    def analyze_news(
+        self,
+        *,
+        news_payload: list[dict[str, Any]] | None = None,
+        market_payload: list[dict[str, Any]] | None = None,
+    ) -> dict[str, int]:
         """Analyze collected news with configurable keyword intelligence rules."""
 
         keyword_config = self._load_news_keyword_config()
         self.news_analyzer.set_keyword_config(keyword_config)
 
-        news_payload = self._load_cached("news.json", default=[])
-        market_payload = self._load_cached("market.json", default=[])
+        news_payload = list(news_payload or self._load_cached("news.json", default=[]))
+        market_payload = list(market_payload or self._load_cached("market.json", default=[]))
         self.news_analyzer.set_ticker_alias_map(self._build_ticker_alias_map(market_payload))
 
         existing_analysis = self._load_cached("news_analysis.json", default=[])
@@ -462,7 +486,7 @@ class FinancePipelineService:
         }
 
         new_items = self.news_analyzer.analyze(news_payload, already_analyzed_ids=analyzed_ids)
-        market_payload = self._load_cached("market.json", default=[])
+        market_payload = list(market_payload or self._load_cached("market.json", default=[]))
         allowed_tickers = {
             str(item.get("symbol") or item.get("ticker") or "").strip().upper()
             for item in market_payload
@@ -487,16 +511,27 @@ class FinancePipelineService:
         else:
             combined = existing_analysis
 
-        self.analyze_tickers()
+        self._runtime_cache["news_analysis_live"] = list(combined)
+        self.analyze_tickers(
+            news_analysis=combined,
+            news_items=news_payload,
+            market_payload=market_payload,
+        )
 
         return self._news_summary(combined)
 
-    def analyze_tickers(self) -> dict[str, int]:
+    def analyze_tickers(
+        self,
+        *,
+        news_analysis: list[dict[str, Any]] | None = None,
+        news_items: list[dict[str, Any]] | None = None,
+        market_payload: list[dict[str, Any]] | None = None,
+    ) -> dict[str, int]:
         """Aggregate analyzed news incrementally by ticker and persist ticker summaries."""
 
-        news_analysis = self.storage.load("news_analysis.json", default=[])
-        news_items = self.storage.load("news.json", default=[])
-        market_payload = self.storage.load("market.json", default=[])
+        news_analysis = list(news_analysis or self.storage.load("news_analysis.json", default=[]))
+        news_items = list(news_items or self.storage.load("news.json", default=[]))
+        market_payload = list(market_payload or self.storage.load("market.json", default=[]))
         allowed_tickers = {
             str(item.get("symbol") or item.get("ticker") or "").strip().upper()
             for item in market_payload
@@ -653,6 +688,7 @@ class FinancePipelineService:
             )
 
         self._save_if_changed("ticker_news_summary.json", summaries)
+        self._runtime_cache["ticker_news_summary_live"] = list(summaries)
 
         positive = sum(1 for item in summaries if item.get("overall_news_sentiment") == "Positive")
         negative = sum(1 for item in summaries if item.get("overall_news_sentiment") == "Negative")
@@ -905,20 +941,28 @@ class FinancePipelineService:
     def _generate_bist_recommendations(self, *, started_at: float) -> list[dict[str, Any]]:
         """Run the BIST-only scoring flow and persist ranked opportunities."""
 
-        self.collect_news()
+        news_payload = self.collect_news()
         self.collect_kap()
-        self.collect_market(markets=["BIST"])
-        self.analyze_news()
-        self.analyze_market(market="BIST")
-        self.analyze_tickers()
+        market_payload = self.collect_market(markets=["BIST"])
+        self.analyze_news(news_payload=news_payload, market_payload=market_payload)
+        self.analyze_market(market="BIST", market_payload=market_payload)
 
-        market_analysis = self._load_cached("market_analysis.json", default=[])
-        market_analysis = [
-            item
-            for item in market_analysis
-            if self._normalize_market_name(item.get("market") or "") == "BIST"
-        ]
-        ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
+        market_analysis = list(
+            self._runtime_cache.get("market_analysis_live_by_market", {}).get("BIST")
+            or []
+        )
+        if not market_analysis:
+            market_analysis = self._load_cached("market_analysis.json", default=[])
+            market_analysis = [
+                item
+                for item in market_analysis
+                if self._normalize_market_name(item.get("market") or "") == "BIST"
+            ]
+
+        ticker_news_summary = list(self._runtime_cache.get("ticker_news_summary_live") or [])
+        if not ticker_news_summary:
+            ticker_news_summary = self._load_cached("ticker_news_summary.json", default=[])
+
         news_by_ticker, default_news_score, news_reasons_by_ticker, news_sentiment_by_ticker = self._news_lookup(
             ticker_news_summary
         )
@@ -960,7 +1004,7 @@ class FinancePipelineService:
         scored_items.sort(key=self._bist_score_sort_key, reverse=True)
         eligible_items = [item for item in scored_items if not bool(item.get("hard_filtered"))]
         top_n = int(self.bist_opportunity_engine.config.get("top_n") or 20)
-        final_n = int(self.bist_opportunity_engine.config.get("final_n") or 5)
+        final_n = int(self.bist_opportunity_engine.config.get("final_n") or 10)
 
         if eligible_items:
             ranked_pool = eligible_items[:top_n]
@@ -972,9 +1016,9 @@ class FinancePipelineService:
 
         ai_review_pool = self._enrich_recommendations_with_ai(ranked_pool)
         top_10 = ai_review_pool[:10]
-        top_5 = ai_review_pool[:final_n]
+        top_final = ai_review_pool[:final_n]
 
-        final_recommendations = [self._finalize_bist_recommendation(item, rank=index + 1) for index, item in enumerate(top_5)]
+        final_recommendations = [self._finalize_bist_recommendation(item, rank=index + 1) for index, item in enumerate(top_final)]
         for item in final_recommendations:
             item["recommended_amount"] = 0.0
 
@@ -1016,9 +1060,11 @@ class FinancePipelineService:
                 "top_20": int(len(ranked_pool)),
                 "top_10": int(len(top_10)),
                 "top_5": int(len(final_recommendations)),
+                "top_final": int(len(final_recommendations)),
                 "top_20_tickers": [str(item.get("ticker") or "") for item in ranked_pool],
                 "top_10_tickers": [str(item.get("ticker") or "") for item in top_10],
                 "top_5_tickers": [str(item.get("ticker") or "") for item in final_recommendations],
+                "top_final_tickers": [str(item.get("ticker") or "") for item in final_recommendations],
                 "best_opportunity": summary["best_opportunity"],
                 "riskiest_opportunity": summary["riskiest_opportunity"],
                 "strongest_news": summary["strongest_news"],
@@ -1029,7 +1075,7 @@ class FinancePipelineService:
         )
 
         logger.info(
-            "BIST scoring completed | analyzed=%s filtered=%s scored=%s top20=%s top10=%s top5=%s elapsed=%.2fs",
+            "BIST scoring completed | analyzed=%s filtered=%s scored=%s top20=%s top10=%s top_final=%s elapsed=%.2fs",
             summary["analyzed_total"],
             summary["hard_filtered"],
             summary["scored_total"],
@@ -1057,7 +1103,106 @@ class FinancePipelineService:
         final_item["ai_summary"] = final_item.get("ai_summary")
         final_item["ai_reason"] = final_item.get("ai_reason")
         final_item["ai_risk"] = final_item.get("ai_risk")
+        execution_plan = self._build_execution_plan(final_item)
+        final_item["execution_plan"] = execution_plan
+        final_item["trade_instruction"] = str(execution_plan.get("instruction") or "NO TRADE")
         return final_item
+
+    def _build_execution_plan(self, item: dict[str, Any]) -> dict[str, Any]:
+        ticker = str(item.get("ticker") or "UNKNOWN").strip().upper() or "UNKNOWN"
+        decision = str(item.get("decision") or "WAIT").upper()
+        entry_status = str(item.get("entry_status") or "WAIT").upper()
+        current_price = float(item.get("current_price") or 0.0)
+        entry_low = float(item.get("entry_range_low") or 0.0)
+        entry_high = float(item.get("entry_range_high") or 0.0)
+        limit_entry = float(item.get("limit_entry_price") or item.get("entry_price") or 0.0)
+        stop_loss = float(item.get("stop_loss") or 0.0)
+        risk_reward = float(item.get("risk_reward_ratio") or 0.0)
+
+        tp_levels = [dict(level) for level in item.get("take_profit_levels") or [] if isinstance(level, dict)]
+        if not tp_levels:
+            tp_levels = [
+                {"label": "TP1", "price": float(item.get("take_profit_1") or 0.0), "reason": "Teknik hedef"},
+                {"label": "TP2", "price": float(item.get("take_profit_2") or 0.0), "reason": "Teknik hedef"},
+                {"label": "TP3", "price": float(item.get("take_profit_3") or 0.0), "reason": "Teknik hedef"},
+                {"label": "TP4", "price": float(item.get("take_profit_4") or 0.0), "reason": "Teknik hedef"},
+            ]
+
+        valid_tp = [level for level in tp_levels if float(level.get("price") or 0.0) > 0.0]
+        valid_tp.sort(key=lambda value: float(value.get("price") or 0.0))
+
+        sell_schedule: list[dict[str, Any]] = []
+        default_weights = [35, 30, 20, 15]
+        for idx, level in enumerate(valid_tp[:4]):
+            sell_schedule.append(
+                {
+                    "label": str(level.get("label") or f"TP{idx + 1}"),
+                    "price": round(float(level.get("price") or 0.0), 4),
+                    "size_percent": default_weights[idx],
+                    "order_type": "LIMIT_SELL",
+                    "reason": str(level.get("reason") or "Teknik hedef"),
+                }
+            )
+
+        actionable = decision in {"BUY", "BUY NOW", "LIMIT BUY"} and entry_status not in {"NO TRADE", "ENTRY MISSED"}
+        if not actionable or limit_entry <= 0 or stop_loss <= 0 or stop_loss >= max(limit_entry, current_price, 0.01):
+            return {
+                "actionable": False,
+                "instruction": f"{ticker}: NO TRADE",
+                "entry_order": None,
+                "stop_order": None,
+                "sell_orders": [],
+                "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+                "risk_reward": round(risk_reward, 2),
+            }
+
+        buy_price = round(limit_entry, 4)
+        buy_range_low = round(entry_low if entry_low > 0 else limit_entry, 4)
+        buy_range_high = round(entry_high if entry_high > 0 else limit_entry, 4)
+        stop_price = round(stop_loss, 4)
+        trigger_price = round(max(0.01, buy_price * 1.003), 4)
+
+        entry_order_type = "LIMIT_BUY"
+        if entry_status == "BUY" and bool(item.get("market_entry_allowed")):
+            entry_order_type = "MARKET_BUY"
+        elif str(item.get("entry_strategy") or "").strip().lower() == "breakout":
+            entry_order_type = "STOP_LIMIT_BUY"
+
+        entry_order: dict[str, Any] = {
+            "type": entry_order_type,
+            "price": buy_price,
+            "range_low": buy_range_low,
+            "range_high": buy_range_high,
+            "trigger_price": trigger_price if entry_order_type == "STOP_LIMIT_BUY" else None,
+            "time_in_force": "DAY",
+        }
+
+        stop_order = {
+            "type": "STOP_MARKET_SELL",
+            "price": stop_price,
+            "trail_after_tp1": True,
+            "trail_rule": "TP1 hit sonra stop entry fiyata cek",
+        }
+
+        primary_target = 0.0
+        if sell_schedule:
+            primary_target = float(sell_schedule[0].get("price") or 0.0)
+
+        instruction = (
+            f"{ticker}: ALIS {entry_order_type} {buy_price:.4f}"
+            f" | STOP {stop_price:.4f}"
+            f" | SATIS {primary_target:.4f} ve TP merdiveni"
+        )
+
+        return {
+            "actionable": True,
+            "instruction": instruction,
+            "entry_order": entry_order,
+            "stop_order": stop_order,
+            "sell_orders": sell_schedule,
+            "invalidation": "Fiyat stop seviyesinin altinda 15dk kapanirsa plan iptal",
+            "risk_reward": round(risk_reward, 2),
+        }
 
     def _format_bist_recommendation_log(self, item: dict[str, Any]) -> str:
         component_scores = dict(item.get("component_scores") or {})
@@ -1320,7 +1465,7 @@ class FinancePipelineService:
                     f"Skorlanan : {int(summary.get('scored_total', 0))}",
                     f"Top 20 : {len(summary.get('top_20', []))}",
                     f"Top 10 : {len(summary.get('top_10', []))}",
-                    f"Top 5 : {len(summary.get('top_5', []))}",
+                    f"Top Oneri : {len(summary.get('top_5', []))}",
                     "",
                 ]
             )
@@ -1394,6 +1539,7 @@ class FinancePipelineService:
         market: str | None = None,
         include_portfolio: bool = True,
         report_title: str | None = None,
+        recommendations_override: list[dict[str, Any]] | None = None,
     ) -> dict[str, Any]:
         """Send latest recommendations via configured notifiers."""
 
@@ -1404,7 +1550,9 @@ class FinancePipelineService:
         elif normalized_market == "US":
             storage_file = "us_recommendations.json"
 
-        recommendations = self.storage.load(storage_file, default=[])
+        recommendations = list(recommendations_override or [])
+        if not recommendations and not settings.live_only_mode:
+            recommendations = self.storage.load(storage_file, default=[])
         if not recommendations:
             recommendations = self.generate_recommendations(market=market)
         portfolio_analysis = self.analyze_portfolio_positions() if include_portfolio else []
@@ -1450,16 +1598,17 @@ class FinancePipelineService:
             market="BIST",
             include_portfolio=False,
             report_title="📈 BIST Daily Report",
+            recommendations_override=recommendations,
         )
         stats = self._get_selection_stats("BIST")
         logger.info(
-            "BIST | Toplam Hisse=%s | Elenen=%s | Skorlanan=%s | Top20=%s | Top10=%s | Top5=%s | Toplam Sure=%.2fs | Gemini Cagrisi=%s | API Key=%s",
+            "BIST | Toplam Hisse=%s | Elenen=%s | Skorlanan=%s | Top20=%s | Top10=%s | TopFinal=%s | Toplam Sure=%.2fs | Gemini Cagrisi=%s | API Key=%s",
             stats.get("analyzed_total", 0),
             stats.get("filter_rejected", 0),
             stats.get("scored_total", 0),
             stats.get("top_20", 0),
             stats.get("top_10", 0),
-            stats.get("top_5", 0),
+            stats.get("top_final", stats.get("top_5", 0)),
             float(time.perf_counter() - started_at),
             stats.get("gemini_calls", 0),
             stats.get("gemini_last_key_label", "N/A"),
@@ -1467,8 +1616,10 @@ class FinancePipelineService:
         return {
             "market": "BIST",
             "recommendations": len(recommendations),
+            "items": recommendations,
             "notifications": notifications,
             "stats": stats,
+            "live_only_mode": bool(settings.live_only_mode),
         }
 
     def send_us_daily_report(self) -> dict[str, Any]:
@@ -1847,13 +1998,13 @@ class FinancePipelineService:
                 }
             )
 
-        if 1 <= len(prepared) < 60:
+        if 1 <= len(prepared) < 260:
             latest = prepared[-1]
             close_now = float(latest["close"])
             change_pct = float(latest.get("daily_change_pct") or 0.0) / 100.0
             previous_close = close_now / (1.0 + change_pct) if abs(1.0 + change_pct) > 1e-9 else close_now
 
-            points_needed = 60 - len(prepared)
+            points_needed = 260 - len(prepared)
             seed_close = max(0.01, previous_close)
             drift = (close_now - seed_close) / max(1, points_needed)
             base_volume = max(1.0, float(latest.get("volume") or 1.0))
@@ -1892,6 +2043,59 @@ class FinancePipelineService:
             )
 
         return pd.DataFrame(prepared)
+
+    def _candles_from_frame(self, frame: pd.DataFrame, *, limit: int) -> list[dict[str, float]]:
+        candles: list[dict[str, float]] = []
+        if frame.empty:
+            return candles
+
+        for _, row in frame.tail(limit).iterrows():
+            candles.append(
+                {
+                    "open": round(float(row.get("open") or 0.0), 6),
+                    "high": round(float(row.get("high") or 0.0), 6),
+                    "low": round(float(row.get("low") or 0.0), 6),
+                    "close": round(float(row.get("close") or 0.0), 6),
+                    "volume": round(float(row.get("volume") or 0.0), 6),
+                }
+            )
+        return candles
+
+    def _timeframe_snapshot(self, frame: pd.DataFrame) -> dict[str, Any]:
+        if frame.empty:
+            return {
+                "trend_1h": "Neutral",
+                "trend_1d": "Neutral",
+                "trend_strength_1h": 0,
+                "trend_strength_1d": 0,
+            }
+
+        daily_tail = frame.tail(60)
+        hourly_tail = frame.tail(24)
+
+        def _trend_from_tail(tail: pd.DataFrame) -> tuple[str, int]:
+            close = tail["close"].astype(float)
+            ema_fast = ema(close, 20)
+            ema_slow = ema(close, 50)
+            fast = float(ema_fast.iloc[-1])
+            slow = float(ema_slow.iloc[-1])
+            price = float(close.iloc[-1])
+            spread_pct = ((fast - slow) / max(price, 1e-9)) * 100.0
+            strength = int(max(0.0, min(100.0, abs(spread_pct) * 35.0)))
+            if fast > slow:
+                return "Bullish", strength
+            if fast < slow:
+                return "Bearish", strength
+            return "Neutral", strength
+
+        trend_1d, trend_strength_1d = _trend_from_tail(daily_tail)
+        trend_1h, trend_strength_1h = _trend_from_tail(hourly_tail)
+        return {
+            "trend_1h": trend_1h,
+            "trend_1d": trend_1d,
+            "trend_strength_1h": trend_strength_1h,
+            "trend_strength_1d": trend_strength_1d,
+        }
 
     def _build_market_profile(
         self,
@@ -2158,7 +2362,7 @@ class FinancePipelineService:
                     f"Skorlanan : {int(selection_stats.get('scored_total', selection_stats.get('ai_candidates', 0)))}",
                     f"Top 20 : {int(selection_stats.get('top_20', 0))}",
                     f"Top 10 : {int(selection_stats.get('top_10', 0))}",
-                    f"Top 5 : {int(selection_stats.get('top_5', selection_stats.get('recommended', 0)))}",
+                    f"Top Oneri : {int(selection_stats.get('top_final', selection_stats.get('top_5', selection_stats.get('recommended', 0))))}",
                     "",
                 ]
             )
@@ -2167,8 +2371,10 @@ class FinancePipelineService:
                 lines.append(f"Ilk 20 : {', '.join(str(item) for item in selection_stats.get('top_20_tickers', [])[:20])}")
             if selection_stats.get("top_10_tickers"):
                 lines.append(f"Ilk 10 : {', '.join(str(item) for item in selection_stats.get('top_10_tickers', [])[:10])}")
-            if selection_stats.get("top_5_tickers"):
-                lines.append(f"Ilk 5 : {', '.join(str(item) for item in selection_stats.get('top_5_tickers', [])[:5])}")
+            if selection_stats.get("top_final_tickers"):
+                lines.append(f"Ilk Oneriler : {', '.join(str(item) for item in selection_stats.get('top_final_tickers', [])[:10])}")
+            elif selection_stats.get("top_5_tickers"):
+                lines.append(f"Ilk Oneriler : {', '.join(str(item) for item in selection_stats.get('top_5_tickers', [])[:10])}")
             lines.append("")
 
         lines.append("🟢 Yeni Firsatlar")
@@ -2214,6 +2420,34 @@ class FinancePipelineService:
                         f"Sermaye Dagilimi : {float(item.get('recommended_amount') or 0.0):.2f} TL",
                     ]
                 )
+
+                execution_plan = dict(item.get("execution_plan") or {})
+                if execution_plan:
+                    lines.append(f"Net Emir : {str(execution_plan.get('instruction') or 'NO TRADE')}")
+                    if bool(execution_plan.get("actionable")):
+                        entry_order = dict(execution_plan.get("entry_order") or {})
+                        stop_order = dict(execution_plan.get("stop_order") or {})
+                        lines.append(
+                            "Emir Giris : "
+                            f"{str(entry_order.get('type') or 'LIMIT_BUY')} "
+                            f"{float(entry_order.get('price') or 0.0):.4f} "
+                            f"[{float(entry_order.get('range_low') or 0.0):.4f}-{float(entry_order.get('range_high') or 0.0):.4f}]"
+                        )
+                        if entry_order.get("trigger_price"):
+                            lines.append(f"Emir Tetik : {float(entry_order.get('trigger_price') or 0.0):.4f}")
+                        lines.append(f"Emir Stop : {float(stop_order.get('price') or 0.0):.4f}")
+
+                        sell_orders = [dict(order) for order in execution_plan.get("sell_orders") or [] if isinstance(order, dict)]
+                        if sell_orders:
+                            for order in sell_orders[:4]:
+                                lines.append(
+                                    "Emir Satis : "
+                                    f"{str(order.get('label') or 'TP')} "
+                                    f"{float(order.get('price') or 0.0):.4f} "
+                                    f"%{int(order.get('size_percent') or 0)}"
+                                )
+                    else:
+                        lines.append(f"Plan Durumu : {str(execution_plan.get('invalidation') or 'No trade')}")
 
                 tp_levels = [dict(level) for level in item.get("take_profit_levels") or [] if isinstance(level, dict)]
                 rr_by_tp = {
@@ -2280,7 +2514,15 @@ class FinancePipelineService:
 
                 reasons = [str(value) for value in item.get("reasons") or [] if str(value).strip()]
                 if reasons:
-                    lines.append(f"Sebep : {' | '.join(reasons[:3])}")
+                    lines.append(f"Sebep : {' | '.join(reasons[:5])}")
+
+                score_lines = [str(value) for value in item.get("score_lines") or [] if str(value).strip()]
+                if score_lines:
+                    lines.append(f"Skor Kirilimi : {' | '.join(score_lines[:4])}")
+
+                macro_notes = [str(value) for value in item.get("macro_notes") or [] if str(value).strip()]
+                if macro_notes:
+                    lines.append(f"Makro Not : {' | '.join(macro_notes[:2])}")
 
                 ai_summary = str(item.get("ai_summary") or "").strip()
                 lines.append(f"AI Ozet : {ai_summary or 'Yok'}")
@@ -2600,16 +2842,25 @@ class FinancePipelineService:
         if filename in self._runtime_cache:
             return self._runtime_cache[filename]
 
+        if settings.live_only_mode:
+            payload = default
+            self._runtime_cache[filename] = payload
+            return payload
+
         payload = self.storage.load(filename, default=default)
         self._runtime_cache[filename] = payload
         return payload
 
     def _save_if_changed(self, filename: str, payload: Any) -> Any:
         current = self._runtime_cache.get(filename)
-        if current is None:
+        if current is None and not settings.live_only_mode:
             current = self.storage.load(filename, default=None) if self.storage.exists(filename) else None
 
         if current == payload:
+            self._runtime_cache[filename] = payload
+            return payload
+
+        if settings.live_only_mode:
             self._runtime_cache[filename] = payload
             return payload
 

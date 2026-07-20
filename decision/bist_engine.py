@@ -9,14 +9,14 @@ from typing import Any
 
 DEFAULT_BIST_SCORING_CONFIG: dict[str, Any] = {
     "top_n": 20,
-    "final_n": 5,
+    "final_n": 10,
     "weights": {
-        "graph_structure": 45,
-        "trend": 20,
-        "volume": 15,
+        "graph_structure": 50,
+        "trend": 22,
+        "volume": 12,
         "momentum": 10,
-        "news": 5,
-        "ai_confidence": 5,
+        "news": 4,
+        "ai_confidence": 2,
     },
     "hard_filters": {
         "min_price": 0.1,
@@ -29,6 +29,11 @@ DEFAULT_BIST_SCORING_CONFIG: dict[str, Any] = {
         "strengthened_rr_delta": 0.2,
         "weakened_score_delta": -5,
         "exit_score": 35,
+    },
+    "macro": {
+        "enabled": True,
+        "min_multiplier": 0.84,
+        "max_multiplier": 1.12,
     },
 }
 
@@ -82,6 +87,8 @@ class BistOpportunityResult:
     macd_state: str = "Neutral"
     news_score: float = 0.0
     news_sentiment: str = "Neutral"
+    macro_multiplier: float = 1.0
+    macro_notes: list[str] = field(default_factory=list)
     ai_confidence: float | None = None
     ai_summary: str | None = None
     ai_reason: str | None = None
@@ -254,6 +261,13 @@ class BistOpportunityEngine:
         )
         price_plan_notes.extend([str(note) for note in trade_plan.get("plan_notes") or []])
 
+        no_news_signal = self._is_news_signal_missing(
+            news_score=news_score,
+            news_sentiment=news_sentiment,
+            news_reasons=news_reasons or [],
+        )
+        has_gap_signal = bool(market_item.get("gap_up") or market_item.get("gap_down"))
+
         entry_range_low = float(trade_plan.get("entry_range_low") or 0.0)
         entry_range_high = float(trade_plan.get("entry_range_high") or 0.0)
         take_profit_1 = float(trade_plan.get("take_profit_1") or 0.0)
@@ -283,7 +297,22 @@ class BistOpportunityEngine:
             "ai_confidence": self._ai_confidence_score(news_confidence=news_confidence),
         }
         component_scores = self._weighted_component_scores(raw_components)
-        total_score = round(sum(component_scores.values()), 2)
+
+        if no_news_signal and not has_gap_signal:
+            # If there is no actionable news/gap signal, bias scoring toward chart structure.
+            transferable = float(component_scores.get("news", 0.0)) + float(component_scores.get("ai_confidence", 0.0))
+            component_scores["news"] = 0.0
+            component_scores["ai_confidence"] = 0.0
+            component_scores["graph_structure"] = self._cap(float(component_scores.get("graph_structure", 0.0)) + (transferable * 0.58), "graph_structure")
+            component_scores["trend"] = self._cap(float(component_scores.get("trend", 0.0)) + (transferable * 0.24), "trend")
+            component_scores["momentum"] = self._cap(float(component_scores.get("momentum", 0.0)) + (transferable * 0.18), "momentum")
+
+        macro_multiplier, macro_notes = self._macro_adjustment(
+            market_item=market_item,
+            news_reasons=news_reasons or [],
+            news_sentiment=news_sentiment,
+        )
+        total_score = round(sum(component_scores.values()) * macro_multiplier, 2)
 
         score_lines = [
             f"Grafik +{component_scores['graph_structure']:.0f}",
@@ -292,6 +321,7 @@ class BistOpportunityEngine:
             f"Momentum +{component_scores['momentum']:.0f}",
             f"News +{component_scores['news']:.0f}",
             f"AI +{component_scores['ai_confidence']:.0f}",
+            f"Makro x{macro_multiplier:.2f}",
         ]
         reasons = self._reasons(
             market_item=market_item,
@@ -303,6 +333,9 @@ class BistOpportunityEngine:
             news_sentiment=news_sentiment,
             news_reasons=news_reasons or [],
             graph_analysis=graph_analysis,
+            no_news_signal=no_news_signal,
+            has_gap_signal=has_gap_signal,
+            macro_notes=macro_notes,
         )
 
         score_label = self._label(total_score)
@@ -354,6 +387,8 @@ class BistOpportunityEngine:
             macd_state=macd_state,
             news_score=round(max(0.0, min(100.0, float(news_score))), 2),
             news_sentiment=news_sentiment,
+            macro_multiplier=round(macro_multiplier, 4),
+            macro_notes=list(macro_notes),
             ai_confidence=None,
             ai_summary=ai_summary,
             ai_reason=ai_reason,
@@ -457,8 +492,18 @@ class BistOpportunityEngine:
         )
         formations = self._detect_chart_formations(feature)
         market_structure = self._detect_market_structure(feature, market_item=market_item)
-        indicator_confirmations = self._indicator_confirmations(feature)
+        indicator_confirmations = self._indicator_confirmations(feature, market_item=market_item)
         fresh_signals = list(feature.get("fresh_signals") or [])
+        multi_tf = self._multi_timeframe_context(market_item=market_item, feature=feature)
+        category_signals = self._mandatory_category_signals(
+            market_item=market_item,
+            feature=feature,
+            formations=formations,
+            market_structure=market_structure,
+            indicator_confirmations=indicator_confirmations,
+        )
+        fresh_signals.extend(category_signals)
+        fresh_signals.extend(list(multi_tf.get("signals") or []))
 
         formation_score = 0.0
         if formations:
@@ -483,6 +528,7 @@ class BistOpportunityEngine:
         freshness_score = min(100.0, len(fresh_signals) * 12.5)
 
         score = (formation_score * 0.55) + (structure_score * 0.2) + (confirmation_score * 0.1) + (freshness_score * 0.15)
+        score += float(multi_tf.get("score_adjustment") or 0.0)
         if not formations and not fresh_signals:
             score *= 0.55
         if feature["breakout_down"] and feature["trend"] != "Bullish":
@@ -494,9 +540,107 @@ class BistOpportunityEngine:
             "market_structure": market_structure,
             "indicator_confirmations": indicator_confirmations,
             "fresh_signals": fresh_signals,
+            "multi_timeframe": multi_tf,
             "breakout_up": bool(feature["breakout_up"]),
             "breakout_down": bool(feature["breakout_down"]),
         }
+
+    def _multi_timeframe_context(self, *, market_item: dict[str, Any], feature: dict[str, Any]) -> dict[str, Any]:
+        trend_1h = str(market_item.get("trend_1h") or feature.get("trend") or "Neutral")
+        trend_1d = str(market_item.get("trend_1d") or feature.get("trend") or "Neutral")
+        strength_1h = self._int(market_item.get("trend_strength_1h") or feature.get("trend_strength") or 0)
+        strength_1d = self._int(market_item.get("trend_strength_1d") or feature.get("trend_strength") or 0)
+
+        aligned = trend_1h == trend_1d and trend_1h in {"Bullish", "Bearish"}
+        conflict = trend_1h != trend_1d and trend_1h in {"Bullish", "Bearish"} and trend_1d in {"Bullish", "Bearish"}
+
+        score_adjustment = 0.0
+        signals: list[str] = []
+        if aligned:
+            score_adjustment += 6.0
+            signals.append(f"MTF uyumlu trend ({trend_1h})")
+        if conflict:
+            score_adjustment -= 8.0
+            signals.append(f"MTF trend catismasi ({trend_1h}/{trend_1d})")
+        if strength_1h >= 60 and strength_1d >= 60:
+            score_adjustment += 2.5
+            signals.append("Saatlik ve gunluk trend gucu yuksek")
+
+        return {
+            "trend_1h": trend_1h,
+            "trend_1d": trend_1d,
+            "trend_strength_1h": strength_1h,
+            "trend_strength_1d": strength_1d,
+            "aligned": aligned,
+            "conflict": conflict,
+            "score_adjustment": score_adjustment,
+            "signals": signals,
+        }
+
+    def _mandatory_category_signals(
+        self,
+        *,
+        market_item: dict[str, Any],
+        feature: dict[str, Any],
+        formations: list[dict[str, Any]],
+        market_structure: list[str],
+        indicator_confirmations: list[str],
+    ) -> list[str]:
+        signals: list[str] = []
+        candles = self._extract_candles(market_item)
+        levels = self._compute_levels(
+            candles=candles,
+            current_price=float(feature.get("current_price") or 0.0),
+            support=float(feature.get("support") or 0.0),
+            resistance=float(feature.get("resistance") or 0.0),
+        )
+
+        if formations:
+            signals.append("Kategori-1 Formasyonlar: aktif")
+        if any(token in market_structure for token in ["Break of Structure", "Retest", "False Breakout"]):
+            signals.append("Kategori-2 Kirilim/Retest/Fake: teyitli")
+        if any(token in market_structure for token in ["Higher High", "Higher Low", "Lower Low", "Lower High"]):
+            signals.append("Kategori-3 Market Structure HH/HL-LH/LL")
+        if any("RSI" in item or "MACD" in item for item in indicator_confirmations):
+            signals.append("Kategori-4 Candle+Price Action: momentum teyidi")
+        if any(item.startswith("Mum:") for item in indicator_confirmations):
+            signals.append("Kategori-5 Mum formasyonlari algilandi")
+        if levels.get("support_levels") or levels.get("resistance_levels"):
+            signals.append("Kategori-6 Destek/Direnc katmanlari olustu")
+
+        ema20 = float(feature.get("ema20") or 0.0)
+        ema50 = float(feature.get("ema50") or 0.0)
+        ema200 = float(feature.get("ema200") or 0.0)
+        if ema20 > 0 and ema50 > 0 and ema200 > 0:
+            signals.append("Kategori-7 MA trend hiyerarsisi mevcut")
+        if any(token.startswith("MA:") for token in indicator_confirmations):
+            signals.append("Kategori-8 MA cross/compression/expansion teyidi")
+
+        fib_618 = float(feature.get("fib_618") or 0.0)
+        if fib_618 > 0:
+            signals.append("Kategori-9 Fibonacci retracement/extension uyumu")
+        if float(feature.get("relative_volume") or 0.0) >= 1.1:
+            signals.append("Kategori-10 Hacim Profili/OBV-CMF benzeri hacim teyidi")
+        if any(token.startswith("Volume:") for token in indicator_confirmations):
+            signals.append("Kategori-10 Hacim akis sinyali mevcut")
+
+        adx = float(feature.get("adx") or 0.0)
+        atr_ratio = float(feature.get("atr_ratio") or 0.0)
+        bb_ratio = float(feature.get("bb_width_ratio") or 0.0)
+        if adx > 20 or atr_ratio > 0 or bb_ratio > 0:
+            signals.append("Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi")
+        if any(token.startswith("Trend:") for token in indicator_confirmations):
+            signals.append("Kategori-11 Trend gucu/DMI benzeri teyit")
+
+        if candles:
+            closes = [row[3] for row in candles[-20:]]
+            if len(closes) >= 5:
+                if closes[-1] > max(closes[-5:-1]):
+                    signals.append("Kategori-2 Multi-timeframe saatlik breakout")
+                if closes[-1] >= closes[0]:
+                    signals.append("Kategori-3 Gunluk trend devami")
+
+        return signals[:8]
 
     def _trend_score(self, *, trend: str, trend_strength: int, market_item: dict[str, Any]) -> float:
         score = 0.0
@@ -583,6 +727,85 @@ class BistOpportunityEngine:
 
     def _ai_confidence_score(self, *, news_confidence: float) -> float:
         return max(0.0, min(100.0, float(news_confidence)))
+
+    def _is_news_signal_missing(
+        self,
+        *,
+        news_score: float,
+        news_sentiment: str,
+        news_reasons: list[str],
+    ) -> bool:
+        if news_sentiment in {"Positive", "Negative"}:
+            return False
+        if any(str(reason).strip() for reason in news_reasons):
+            return False
+        return 46.0 <= max(0.0, min(100.0, float(news_score))) <= 54.0
+
+    def _macro_adjustment(
+        self,
+        *,
+        market_item: dict[str, Any],
+        news_reasons: list[str],
+        news_sentiment: str,
+    ) -> tuple[float, list[str]]:
+        macro_cfg = dict(self._config.get("macro") or {})
+        if not bool(macro_cfg.get("enabled", True)):
+            return 1.0, []
+
+        min_multiplier = max(0.7, float(macro_cfg.get("min_multiplier", 0.84)))
+        max_multiplier = min(1.3, float(macro_cfg.get("max_multiplier", 1.12)))
+        multiplier = 1.0
+        notes: list[str] = []
+
+        raw_macro_score = market_item.get("macro_impact_score")
+        try:
+            macro_score = float(raw_macro_score)
+            macro_score = max(0.0, min(100.0, macro_score))
+            drift = (macro_score - 50.0) / 250.0
+            multiplier += drift
+            notes.append(f"Makro skor {macro_score:.0f}/100")
+        except (TypeError, ValueError):
+            macro_score = None
+
+        volatility_pct = self._float(market_item.get("volatility_pct"))
+        if volatility_pct >= 0.03:
+            multiplier -= min(0.07, volatility_pct * 0.9)
+            notes.append("Yuksek piyasa volatilitesi")
+
+        lowered_reasons = [str(item).lower() for item in news_reasons]
+        negative_tokens = [
+            "fed faiz art",
+            "tcmb faiz art",
+            "merkez bankasi faiz art",
+            "siki para",
+            "enflasyon yuksek",
+        ]
+        positive_tokens = [
+            "fed faiz indir",
+            "tcmb faiz indir",
+            "merkez bankasi faiz indir",
+            "enflasyon dusus",
+            "tesvik",
+            "likidite",
+        ]
+
+        negative_hits = sum(1 for token in negative_tokens if any(token in reason for reason in lowered_reasons))
+        positive_hits = sum(1 for token in positive_tokens if any(token in reason for reason in lowered_reasons))
+
+        if negative_hits:
+            multiplier -= min(0.1, 0.025 * negative_hits)
+            notes.append("Sikilasici makro sinyal")
+        if positive_hits:
+            multiplier += min(0.08, 0.02 * positive_hits)
+            notes.append("Destekleyici makro sinyal")
+
+        if news_sentiment == "Negative":
+            multiplier -= 0.01
+        elif news_sentiment == "Positive":
+            multiplier += 0.01
+
+        multiplier = max(min_multiplier, min(max_multiplier, multiplier))
+        return multiplier, notes[:3]
 
     def _chart_features(
         self,
@@ -858,6 +1081,33 @@ class BistOpportunityEngine:
             trendline_slope = (closes[-1] - closes[0]) / max(1.0, len(closes) - 1)
             if trendline_slope > 0 and hh and hl:
                 signals.append("Trend Continuation")
+
+            recent_high = max(highs)
+            recent_low = min(lows)
+            range_mid = (recent_high + recent_low) / 2.0
+            if closes[-1] >= range_mid:
+                signals.append("Premium")
+            else:
+                signals.append("Discount")
+
+            eq_high_ref = sum(highs[-4:-1]) / max(1, len(highs[-4:-1]))
+            eq_low_ref = sum(lows[-4:-1]) / max(1, len(lows[-4:-1]))
+            if abs(highs[-1] - eq_high_ref) / max(feature["current_price"], 1e-9) <= 0.004:
+                signals.append("Equal High")
+            if abs(lows[-1] - eq_low_ref) / max(feature["current_price"], 1e-9) <= 0.004:
+                signals.append("Equal Low")
+
+            if len(candles) >= 6:
+                prev = candles[-2]
+                if prev[3] < prev[0] and closes[-1] > prev[1]:
+                    signals.append("Order Block")
+                if prev[3] > prev[0] and closes[-1] < prev[2]:
+                    signals.append("Breaker Block")
+
+            fvg = self._fair_value_gap_signal(candles)
+            if fvg:
+                signals.append(fvg)
+                signals.append("Mitigation Block")
         else:
             if feature["trend"] == "Bullish" and feature["breakout_up"]:
                 signals.append("Break of Structure")
@@ -887,7 +1137,7 @@ class BistOpportunityEngine:
             unique.append(item)
         return unique[:10]
 
-    def _indicator_confirmations(self, feature: dict[str, Any]) -> list[str]:
+    def _indicator_confirmations(self, feature: dict[str, Any], *, market_item: dict[str, Any]) -> list[str]:
         confirmations: list[str] = []
         ema20 = float(feature.get("ema20") or 0.0)
         ema50 = float(feature.get("ema50") or 0.0)
@@ -920,6 +1170,19 @@ class BistOpportunityEngine:
             confirmations.append(f"Bollinger sikisma ({float(feature['bb_width_ratio']) * 100:.2f}%)")
         if feature["volume_expansion"]:
             confirmations.append(f"Hacim artisi (RVOL {float(feature['relative_volume']):.2f})")
+
+        candles = self._extract_candles(market_item)
+        candle_patterns = self._candlestick_patterns(candles)
+        confirmations.extend([f"Mum: {name}" for name in candle_patterns[:2]])
+
+        ma_signals = self._moving_average_signals(candles)
+        confirmations.extend([f"MA: {name}" for name in ma_signals[:2]])
+
+        volume_signals = self._volume_flow_signals(candles)
+        confirmations.extend([f"Volume: {name}" for name in volume_signals[:2]])
+
+        trend_signals = self._trend_strength_extensions(candles)
+        confirmations.extend([f"Trend: {name}" for name in trend_signals[:2]])
         return confirmations[:5]
 
     def _price_plan(
@@ -1022,9 +1285,16 @@ class BistOpportunityEngine:
             current_price=current_price,
             support=support,
             resistance=resistance,
+            atr_value=self._float(market_item.get("atr")),
             trend=trend,
             breakout_up=bool(graph_analysis.get("breakout_up")),
             strategy=entry_strategy,
+            levels=self._compute_levels(
+                candles=self._extract_candles(market_item),
+                current_price=current_price,
+                support=support,
+                resistance=resistance,
+            ),
         )
 
         tp_candidates = self._target_candidates(
@@ -1138,14 +1408,33 @@ class BistOpportunityEngine:
         current_price: float,
         support: float,
         resistance: float,
+        atr_value: float,
         trend: str,
         breakout_up: bool,
         strategy: str,
+        levels: dict[str, Any],
     ) -> tuple[float, float, float, str, bool]:
-        support_gap = abs(entry_price - support) if support > 0 else max(entry_price * 0.004, 0.01)
-        band = max(entry_price * 0.004, support_gap * 0.55, 0.01)
-        entry_low = max(0.01, entry_price - (band * 0.85))
-        entry_high = entry_price + (band * 0.85)
+        support_levels = [float(value) for value in list(levels.get("support_levels") or []) if float(value) > 0 and float(value) < current_price]
+        resistance_levels = [float(value) for value in list(levels.get("resistance_levels") or []) if float(value) > current_price]
+
+        nearest_support = support
+        if support_levels:
+            nearest_support = max(support_levels)
+        nearest_resistance = resistance
+        if resistance_levels:
+            nearest_resistance = min(resistance_levels)
+
+        structure_span = abs(nearest_resistance - nearest_support) if nearest_support > 0 and nearest_resistance > 0 else 0.0
+        band = max(0.01, atr_value * 0.35, structure_span * 0.12)
+        pivot_entry = entry_price
+
+        if strategy in {"Destekten Donus", "EMA Pullback", "Fibonacci Retracement", "Retest", "Trendline Retest"} and nearest_support > 0:
+            pivot_entry = max(nearest_support + (band * 0.55), min(entry_price, current_price))
+        elif strategy == "Breakout" and nearest_resistance > 0:
+            pivot_entry = max(entry_price, nearest_resistance - (band * 0.25))
+
+        entry_low = max(0.01, pivot_entry - band)
+        entry_high = pivot_entry + band
 
         status = "WAIT"
         market_allowed = False
@@ -1160,10 +1449,10 @@ class BistOpportunityEngine:
         else:
             status = "ENTRY MISSED"
 
-        if resistance > 0 and current_price < resistance * 0.995 and breakout_up is False and status == "WAIT":
+        if nearest_resistance > 0 and current_price < nearest_resistance * 0.995 and breakout_up is False and status == "WAIT":
             status = "BREAKOUT BEKLE"
 
-        limit_price = min(entry_high, max(entry_low, entry_price))
+        limit_price = min(entry_high, max(entry_low, pivot_entry))
         return round(entry_low, 4), round(entry_high, 4), round(limit_price, 4), status, market_allowed
 
     def _target_candidates(
@@ -1224,11 +1513,13 @@ class BistOpportunityEngine:
         fib_1272 = breakout_level + (extension_base * 0.272)
         fib_1618 = breakout_level + (extension_base * 0.618)
         fib_2618 = breakout_level + (extension_base * 1.618)
+        fib_4236 = breakout_level + (extension_base * 3.236)
         candidates.extend(
             [
                 build("fib_1272", fib_1272, "Fibonacci 127.2 extension", 88),
                 build("fib_1618", fib_1618, "Fibonacci 161.8 extension", 86),
                 build("fib_2618", fib_2618, "Fibonacci 261.8 extension", 70),
+                build("fib_4236", fib_4236, "Fibonacci 423.6 extension", 62),
             ]
         )
 
@@ -1479,6 +1770,9 @@ class BistOpportunityEngine:
         news_sentiment: str,
         news_reasons: list[str],
         graph_analysis: dict[str, Any],
+        no_news_signal: bool,
+        has_gap_signal: bool,
+        macro_notes: list[str],
     ) -> list[str]:
         reasons: list[str] = []
         candle_count = self._candle_count(market_item)
@@ -1515,10 +1809,13 @@ class BistOpportunityEngine:
             reasons.append("Momentum dengeli")
         if macd_state == "Bullish":
             reasons.append("MACD pozitif")
+        if no_news_signal and not has_gap_signal:
+            reasons.append("Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi")
         if news_sentiment == "Positive":
             reasons.append("Haber akisi olumlu")
         elif news_sentiment == "Negative":
             reasons.append("Haber akisi baski yaratiyor")
+        reasons.extend(macro_notes[:2])
         reasons.extend(news_reasons[:3])
 
         unique: list[str] = []
@@ -1578,6 +1875,251 @@ class BistOpportunityEngine:
             else:
                 result[key] = value
         return result
+
+    def _fair_value_gap_signal(self, candles: list[tuple[float, float, float, float, float]]) -> str | None:
+        if len(candles) < 3:
+            return None
+        c1 = candles[-3]
+        c3 = candles[-1]
+        if c3[2] > c1[1]:
+            return "Fair Value Gap (Bullish)"
+        if c3[1] < c1[2]:
+            return "Fair Value Gap (Bearish)"
+        return None
+
+    def _candlestick_patterns(self, candles: list[tuple[float, float, float, float, float]]) -> list[str]:
+        if len(candles) < 2:
+            return []
+
+        patterns: list[str] = []
+
+        def body(candle: tuple[float, float, float, float, float]) -> float:
+            return abs(candle[3] - candle[0])
+
+        def upper(candle: tuple[float, float, float, float, float]) -> float:
+            return candle[1] - max(candle[0], candle[3])
+
+        def lower(candle: tuple[float, float, float, float, float]) -> float:
+            return min(candle[0], candle[3]) - candle[2]
+
+        prev = candles[-2]
+        curr = candles[-1]
+        b_prev = body(prev)
+        b_curr = body(curr)
+        range_curr = max(1e-9, curr[1] - curr[2])
+
+        if lower(curr) >= b_curr * 1.8 and upper(curr) <= b_curr * 0.5:
+            patterns.append("Hammer")
+        if upper(curr) >= b_curr * 1.8 and lower(curr) <= b_curr * 0.5:
+            patterns.append("Inverted Hammer")
+        if b_curr <= range_curr * 0.1:
+            patterns.append("Doji")
+        if b_curr >= range_curr * 0.85:
+            patterns.append("Marubozu")
+        if b_curr <= range_curr * 0.25 and upper(curr) > b_curr and lower(curr) > b_curr:
+            patterns.append("Spinning Top")
+
+        if prev[3] < prev[0] and curr[3] > curr[0] and curr[0] <= prev[3] and curr[3] >= prev[0]:
+            patterns.append("Bullish Engulfing")
+        if prev[3] > prev[0] and curr[3] < curr[0] and curr[0] >= prev[3] and curr[3] <= prev[0]:
+            patterns.append("Bearish Engulfing")
+
+        if prev[3] < prev[0] and curr[3] > curr[0] and curr[3] >= (prev[0] + prev[3]) / 2.0:
+            patterns.append("Piercing Line")
+        if prev[3] > prev[0] and curr[3] < curr[0] and curr[3] <= (prev[0] + prev[3]) / 2.0:
+            patterns.append("Dark Cloud Cover")
+
+        if curr[3] > curr[0] and prev[3] < prev[0] and curr[3] < prev[0] and curr[0] > prev[3]:
+            patterns.append("Harami")
+
+        if len(candles) >= 3:
+            c1 = candles[-3]
+            c2 = candles[-2]
+            c3 = candles[-1]
+            if c1[3] < c1[0] and body(c2) <= (c1[1] - c1[2]) * 0.25 and c3[3] > c3[0] and c3[3] > (c1[0] + c1[3]) / 2.0:
+                patterns.append("Morning Star")
+            if c1[3] > c1[0] and body(c2) <= (c1[1] - c1[2]) * 0.25 and c3[3] < c3[0] and c3[3] < (c1[0] + c1[3]) / 2.0:
+                patterns.append("Evening Star")
+
+        if len(candles) >= 4:
+            seq = candles[-4:-1]
+            if all(item[3] > item[0] for item in seq) and seq[0][3] < seq[1][3] < seq[2][3]:
+                patterns.append("Three White Soldiers")
+            if all(item[3] < item[0] for item in seq) and seq[0][3] > seq[1][3] > seq[2][3]:
+                patterns.append("Three Black Crows")
+
+        unique: list[str] = []
+        seen: set[str] = set()
+        for item in patterns:
+            if item in seen:
+                continue
+            seen.add(item)
+            unique.append(item)
+        return unique[:4]
+
+    def _moving_average_signals(self, candles: list[tuple[float, float, float, float, float]]) -> list[str]:
+        closes = [row[3] for row in candles if row[3] > 0]
+        if len(closes) < 20:
+            return []
+
+        def _sma(values: list[float], period: int) -> float:
+            if len(values) < period:
+                return values[-1]
+            subset = values[-period:]
+            return sum(subset) / len(subset)
+
+        def _ema(values: list[float], period: int) -> float:
+            if not values:
+                return 0.0
+            alpha = 2.0 / (period + 1.0)
+            result = values[0]
+            for value in values[1:]:
+                result = (value * alpha) + (result * (1.0 - alpha))
+            return result
+
+        close = closes[-1]
+        ema20 = _ema(closes[-60:], 20)
+        ema50 = _ema(closes[-120:], 50)
+        ema100 = _ema(closes[-180:], 100)
+        ema200 = _ema(closes[-260:], 200)
+        sma20 = _sma(closes, 20)
+        sma50 = _sma(closes, 50)
+        sma200 = _sma(closes, 200)
+
+        prev_sma50 = _sma(closes[:-1], 50) if len(closes) > 50 else sma50
+        prev_sma200 = _sma(closes[:-1], 200) if len(closes) > 200 else sma200
+
+        signals: list[str] = []
+        if ema20 > ema50 > ema100 > ema200:
+            signals.append("EMA20>EMA50>EMA100>EMA200")
+        if sma20 > sma50 > sma200:
+            signals.append("SMA20>SMA50>SMA200")
+        if prev_sma50 <= prev_sma200 and sma50 > sma200:
+            signals.append("Golden Cross")
+        if prev_sma50 >= prev_sma200 and sma50 < sma200:
+            signals.append("Death Cross")
+
+        ema_gap = abs(ema20 - ema50) / max(close, 1e-9)
+        if ema_gap <= 0.0025:
+            signals.append("EMA Compression")
+        if ema_gap >= 0.011:
+            signals.append("EMA Expansion")
+        if abs(close - ema20) / max(close, 1e-9) <= 0.005:
+            signals.append("EMA Pullback")
+
+        return signals[:4]
+
+    def _volume_flow_signals(self, candles: list[tuple[float, float, float, float, float]]) -> list[str]:
+        if len(candles) < 5:
+            return []
+
+        closes = [row[3] for row in candles]
+        volumes = [max(0.0, row[4]) for row in candles]
+        if not any(volumes):
+            return []
+
+        obv = 0.0
+        obv_series: list[float] = [0.0]
+        for idx in range(1, len(closes)):
+            if closes[idx] > closes[idx - 1]:
+                obv += volumes[idx]
+            elif closes[idx] < closes[idx - 1]:
+                obv -= volumes[idx]
+            obv_series.append(obv)
+
+        cmf_values: list[float] = []
+        for o, h, l, c, v in candles[-20:]:
+            denom = max(1e-9, h - l)
+            mfm = ((c - l) - (h - c)) / denom
+            cmf_values.append(mfm * v)
+        vol20 = sum(volumes[-20:])
+        cmf = (sum(cmf_values) / max(1e-9, vol20)) if vol20 > 0 else 0.0
+
+        latest_vol = volumes[-1]
+        avg_vol = sum(volumes[-20:]) / max(1, min(20, len(volumes)))
+        rvol = latest_vol / max(1e-9, avg_vol)
+
+        signals: list[str] = []
+        if obv_series[-1] > obv_series[max(0, len(obv_series) - 6)]:
+            signals.append("OBV Bullish")
+            signals.append("Accumulation")
+        else:
+            signals.append("OBV Bearish")
+            signals.append("Distribution")
+        if cmf >= 0.05:
+            signals.append("CMF Positive")
+        elif cmf <= -0.05:
+            signals.append("CMF Negative")
+        if rvol >= 1.8:
+            signals.append("Volume Spike")
+        elif rvol <= 0.65:
+            signals.append("Volume Dry Up")
+        signals.append(f"RVOL {rvol:.2f}")
+        return signals[:5]
+
+    def _trend_strength_extensions(self, candles: list[tuple[float, float, float, float, float]]) -> list[str]:
+        if len(candles) < 20:
+            return []
+
+        highs = [row[1] for row in candles]
+        lows = [row[2] for row in candles]
+        closes = [row[3] for row in candles]
+
+        true_ranges: list[float] = []
+        plus_dm: list[float] = []
+        minus_dm: list[float] = []
+        for idx in range(1, len(candles)):
+            tr = max(highs[idx] - lows[idx], abs(highs[idx] - closes[idx - 1]), abs(lows[idx] - closes[idx - 1]))
+            true_ranges.append(tr)
+            up_move = highs[idx] - highs[idx - 1]
+            down_move = lows[idx - 1] - lows[idx]
+            plus_dm.append(up_move if up_move > down_move and up_move > 0 else 0.0)
+            minus_dm.append(down_move if down_move > up_move and down_move > 0 else 0.0)
+
+        atr14 = sum(true_ranges[-14:]) / max(1, min(14, len(true_ranges)))
+        tr14 = sum(true_ranges[-14:])
+        pdi = (sum(plus_dm[-14:]) / max(1e-9, tr14)) * 100.0
+        mdi = (sum(minus_dm[-14:]) / max(1e-9, tr14)) * 100.0
+        dx = abs(pdi - mdi) / max(1e-9, (pdi + mdi)) * 100.0
+        adx = dx
+
+        close = closes[-1]
+        ema20 = close
+        alpha = 2.0 / 21.0
+        for value in closes[-60:]:
+            ema20 = (value * alpha) + (ema20 * (1.0 - alpha))
+
+        keltner_upper = ema20 + (atr14 * 2.0)
+        keltner_lower = ema20 - (atr14 * 2.0)
+        supertrend_base = ema20 - (atr14 * 3.0)
+
+        mean20 = sum(closes[-20:]) / 20.0
+        variance20 = sum((value - mean20) ** 2 for value in closes[-20:]) / 20.0
+        std20 = variance20 ** 0.5
+        bb_upper = mean20 + (std20 * 2.0)
+        bb_lower = mean20 - (std20 * 2.0)
+        bb_width = (bb_upper - bb_lower) / max(close, 1e-9)
+
+        signals: list[str] = []
+        if pdi > mdi:
+            signals.append("DMI+ > DMI-")
+        else:
+            signals.append("DMI- > DMI+")
+        if adx >= 25.0:
+            signals.append(f"ADX Strong ({adx:.1f})")
+        else:
+            signals.append(f"ADX Weak ({adx:.1f})")
+        if close > keltner_upper:
+            signals.append("Keltner Breakout Up")
+        elif close < keltner_lower:
+            signals.append("Keltner Breakout Down")
+        if close > supertrend_base:
+            signals.append("SuperTrend Bullish")
+        else:
+            signals.append("SuperTrend Bearish")
+        if bb_width <= 0.03:
+            signals.append("Bollinger Squeeze")
+        return signals[:5]
 
     def _extract_candles(self, market_item: dict[str, Any]) -> list[tuple[float, float, float, float, float]]:
         series = market_item.get("candles")

@@ -1,13 +1,13 @@
 {
     "top_n": 20,
-    "final_n": 5,
+    "final_n": 10,
     "weights": {
-        "graph_structure": 45,
-        "trend": 20,
-        "volume": 15,
+        "graph_structure": 50,
+        "trend": 22,
+        "volume": 12,
         "momentum": 10,
-        "news": 5,
-        "ai_confidence": 5
+        "news": 4,
+        "ai_confidence": 2
     },
     "hard_filters": {
         "min_price": 0.1,
@@ -20,6 +20,11 @@
         "strengthened_rr_delta": 0.2,
         "weakened_score_delta": -5,
         "exit_score": 35
+    },
+    "macro": {
+        "enabled": true,
+        "min_multiplier": 0.84,
+        "max_multiplier": 1.12
     },
     "monitoring": {
         "enabled": true,

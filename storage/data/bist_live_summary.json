@@ -7,8 +7,8 @@
   "top_20": [
     {
       "rank": 1,
-      "ticker": "TBORG",
-      "company_name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş.",
+      "ticker": "TTKOM",
+      "company_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
       "total_score": 47.24,
       "decision": "NO TRADE",
       "risk_reward_ratio": 0.0,
@@ -35,8 +35,8 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.03% spread)",
-        "MACD pozitif fark 0.0002",
+        "EMA trend pozitif (0.31% spread)",
+        "MACD pozitif fark 0.0009",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -87,8 +87,8 @@
     },
     {
       "rank": 3,
-      "ticker": "ISFIN",
-      "company_name": "İŞ FİNANSAL KİRALAMA A.Ş.",
+      "ticker": "ISMEN",
+      "company_name": "İŞ YATIRIM MENKUL DEĞERLER A.Ş.",
       "total_score": 46.39,
       "decision": "NO TRADE",
       "risk_reward_ratio": 0.0,
@@ -115,8 +115,8 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.03% spread)",
-        "MACD pozitif fark 0.0000",
+        "EMA trend pozitif (0.06% spread)",
+        "MACD pozitif fark 0.0001",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -127,125 +127,8 @@
     },
     {
       "rank": 4,
-      "ticker": "GLYHO",
-      "company_name": "GLOBAL YATIRIM HOLDİNG A.Ş.",
-      "total_score": 46.24,
-      "decision": "NO TRADE",
-      "risk_reward_ratio": 0.0,
-      "component_scores": {
-        "graph_structure": 9.96,
-        "trend": 14.98,
-        "volume": 6.94,
-        "momentum": 8.06,
-        "news": 2.5,
-        "ai_confidence": 3.8
-      },
-      "score_lines": [
-        "Grafik +10",
-        "Trend +15",
-        "Hacim +7",
-        "Momentum +8",
-        "News +2",
-        "AI +4"
-      ],
-      "reasons": [
-        "No-trade: mum verisi yetersiz (0/250)",
-        "Formasyon bulunamadi",
-        "Price Action: Swing High",
-        "Yeni EMA kesisimi",
-        "Yeni MACD kesisimi",
-        "Yeni trend donusu",
-        "EMA trend pozitif (0.04% spread)",
-        "MACD pozitif fark 0.0000",
-        "Trend guclu",
-        "Hacim normal ustu",
-        "Momentum dengeli",
-        "MACD pozitif",
-        "Detected ticker(s): FEEDS, GLBMD, GLYHO, THYAO, TIES, WITH, YAHOO",
-        "Detected ticker(s): FEEDS, GLBMD, GLYHO, HOTEL, NAMES, YAHOO, YEAR"
-      ]
-    },
-    {
-      "rank": 5,
-      "ticker": "TTKOM",
-      "company_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
-      "total_score": 45.55,
-      "decision": "NO TRADE",
-      "risk_reward_ratio": 0.0,
-      "component_scores": {
-        "graph_structure": 8.27,
-        "trend": 14.98,
-        "volume": 6.94,
-        "momentum": 8.06,
-        "news": 2.5,
-        "ai_confidence": 4.8
-      },
-      "score_lines": [
-        "Grafik +8",
-        "Trend +15",
-        "Hacim +7",
-        "Momentum +8",
-        "News +2",
-        "AI +5"
-      ],
-      "reasons": [
-        "No-trade: mum verisi yetersiz (0/250)",
-        "Formasyon bulunamadi",
-        "Price Action: Swing High",
-        "Yeni MACD kesisimi",
-        "EMA trend pozitif (0.36% spread)",
-        "MACD pozitif fark 0.0011",
-        "Trend guclu",
-        "Hacim normal ustu",
-        "Momentum dengeli",
-        "MACD pozitif",
-        "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
-        "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
-      ]
-    },
-    {
-      "rank": 6,
-      "ticker": "BRKVY",
-      "company_name": "BİRİKİM VARLIK YÖNETİM A.Ş.",
-      "total_score": 45.34,
-      "decision": "NO TRADE",
-      "risk_reward_ratio": 0.0,
-      "component_scores": {
-        "graph_structure": 9.96,
-        "trend": 14.98,
-        "volume": 6.94,
-        "momentum": 8.06,
-        "news": 2.5,
-        "ai_confidence": 2.9
-      },
-      "score_lines": [
-        "Grafik +10",
-        "Trend +15",
-        "Hacim +7",
-        "Momentum +8",
-        "News +2",
-        "AI +3"
-      ],
-      "reasons": [
-        "No-trade: mum verisi yetersiz (0/250)",
-        "Formasyon bulunamadi",
-        "Price Action: Swing High",
-        "Yeni EMA kesisimi",
-        "Yeni MACD kesisimi",
-        "Yeni trend donusu",
-        "EMA trend pozitif (0.04% spread)",
-        "MACD pozitif fark 0.0002",
-        "Trend guclu",
-        "Hacim normal ustu",
-        "Momentum dengeli",
-        "MACD pozitif",
-        "Detected ticker(s): BRKVY"
-      ]
-    },
-    {
-      "rank": 7,
-      "ticker": "YIGIT",
-      "company_name": "Yigit Aku Malzemeleri Nakliyat Turizm Insaat Sanayi Ve Ticaret",
+      "ticker": "ZERGY",
+      "company_name": "Zeray Gayrimenkul Yatirim Ortakligi AS",
       "total_score": 44.99,
       "decision": "NO TRADE",
       "risk_reward_ratio": 0.0,
@@ -272,7 +155,7 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.06% spread)",
+        "EMA trend pozitif (0.15% spread)",
         "MACD pozitif fark 0.0001",
         "Trend guclu",
         "Hacim normal ustu",
@@ -281,9 +164,9 @@
       ]
     },
     {
-      "rank": 8,
-      "ticker": "YATAS",
-      "company_name": "YATAŞ YATAK VE YORGAN SANAYİ TİCARET A.Ş.",
+      "rank": 5,
+      "ticker": "YYLGD",
+      "company_name": "YAYLA AGRO GIDA SANAYİ VE TİCARET A.Ş.",
       "total_score": 44.99,
       "decision": "NO TRADE",
       "risk_reward_ratio": 0.0,
@@ -310,8 +193,8 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.02% spread)",
-        "MACD pozitif fark 0.0000",
+        "EMA trend pozitif (0.34% spread)",
+        "MACD pozitif fark 0.0002",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -319,7 +202,7 @@
       ]
     },
     {
-      "rank": 9,
+      "rank": 6,
       "ticker": "YAPRK",
       "company_name": "YAPRAK SÜT VE BESİ ÇİFTLİKLERİ SANAYİ VE TİCARET A.Ş.",
       "total_score": 44.99,
@@ -348,7 +231,7 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.04% spread)",
+        "EMA trend pozitif (0.06% spread)",
         "MACD pozitif fark 0.0000",
         "Trend guclu",
         "Hacim normal ustu",
@@ -357,7 +240,45 @@
       ]
     },
     {
-      "rank": 10,
+      "rank": 7,
+      "ticker": "VSNMD",
+      "company_name": "Visne Madencilik Uretim Sanayi ve Ticaret AS",
+      "total_score": 44.99,
+      "decision": "NO TRADE",
+      "risk_reward_ratio": 0.0,
+      "component_scores": {
+        "graph_structure": 9.96,
+        "trend": 14.98,
+        "volume": 6.94,
+        "momentum": 8.06,
+        "news": 2.55,
+        "ai_confidence": 2.5
+      },
+      "score_lines": [
+        "Grafik +10",
+        "Trend +15",
+        "Hacim +7",
+        "Momentum +8",
+        "News +3",
+        "AI +2"
+      ],
+      "reasons": [
+        "No-trade: mum verisi yetersiz (0/250)",
+        "Formasyon bulunamadi",
+        "Price Action: Swing High",
+        "Yeni EMA kesisimi",
+        "Yeni MACD kesisimi",
+        "Yeni trend donusu",
+        "EMA trend pozitif (0.22% spread)",
+        "MACD pozitif fark 0.0009",
+        "Trend guclu",
+        "Hacim normal ustu",
+        "Momentum dengeli",
+        "MACD pozitif"
+      ]
+    },
+    {
+      "rank": 8,
       "ticker": "VAKFN",
       "company_name": "VAKIF FİNANSAL KİRALAMA A.Ş.",
       "total_score": 44.99,
@@ -395,121 +316,7 @@
       ]
     },
     {
-      "rank": 11,
-      "ticker": "UFUK",
-      "company_name": "UFUK YATIRIM YÖNETİM VE GAYRİMENKUL A.Ş.",
-      "total_score": 44.99,
-      "decision": "NO TRADE",
-      "risk_reward_ratio": 0.0,
-      "component_scores": {
-        "graph_structure": 9.96,
-        "trend": 14.98,
-        "volume": 6.94,
-        "momentum": 8.06,
-        "news": 2.55,
-        "ai_confidence": 2.5
-      },
-      "score_lines": [
-        "Grafik +10",
-        "Trend +15",
-        "Hacim +7",
-        "Momentum +8",
-        "News +3",
-        "AI +2"
-      ],
-      "reasons": [
-        "No-trade: mum verisi yetersiz (0/250)",
-        "Formasyon bulunamadi",
-        "Price Action: Swing High",
-        "Yeni EMA kesisimi",
-        "Yeni MACD kesisimi",
-        "Yeni trend donusu",
-        "EMA trend pozitif (0.08% spread)",
-        "MACD pozitif fark 0.0063",
-        "Trend guclu",
-        "Hacim normal ustu",
-        "Momentum dengeli",
-        "MACD pozitif"
-      ]
-    },
-    {
-      "rank": 12,
-      "ticker": "TURSG",
-      "company_name": "TÜRKİYE SİGORTA A.Ş.",
-      "total_score": 44.99,
-      "decision": "NO TRADE",
-      "risk_reward_ratio": 0.0,
-      "component_scores": {
-        "graph_structure": 9.96,
-        "trend": 14.98,
-        "volume": 6.94,
-        "momentum": 8.06,
-        "news": 2.55,
-        "ai_confidence": 2.5
-      },
-      "score_lines": [
-        "Grafik +10",
-        "Trend +15",
-        "Hacim +7",
-        "Momentum +8",
-        "News +3",
-        "AI +2"
-      ],
-      "reasons": [
-        "No-trade: mum verisi yetersiz (0/250)",
-        "Formasyon bulunamadi",
-        "Price Action: Swing High",
-        "Yeni EMA kesisimi",
-        "Yeni MACD kesisimi",
-        "Yeni trend donusu",
-        "EMA trend pozitif (0.32% spread)",
-        "MACD pozitif fark 0.0001",
-        "Trend guclu",
-        "Hacim normal ustu",
-        "Momentum dengeli",
-        "MACD pozitif"
-      ]
-    },
-    {
-      "rank": 13,
-      "ticker": "TUKAS",
-      "company_name": "TUKAŞ GIDA SANAYİ VE TİCARET A.Ş.",
-      "total_score": 44.99,
-      "decision": "NO TRADE",
-      "risk_reward_ratio": 0.0,
-      "component_scores": {
-        "graph_structure": 9.96,
-        "trend": 14.98,
-        "volume": 6.94,
-        "momentum": 8.06,
-        "news": 2.55,
-        "ai_confidence": 2.5
-      },
-      "score_lines": [
-        "Grafik +10",
-        "Trend +15",
-        "Hacim +7",
-        "Momentum +8",
-        "News +3",
-        "AI +2"
-      ],
-      "reasons": [
-        "No-trade: mum verisi yetersiz (0/250)",
-        "Formasyon bulunamadi",
-        "Price Action: Swing High",
-        "Yeni EMA kesisimi",
-        "Yeni MACD kesisimi",
-        "Yeni trend donusu",
-        "EMA trend pozitif (0.20% spread)",
-        "MACD pozitif fark 0.0000",
-        "Trend guclu",
-        "Hacim normal ustu",
-        "Momentum dengeli",
-        "MACD pozitif"
-      ]
-    },
-    {
-      "rank": 14,
+      "rank": 9,
       "ticker": "TSGYO",
       "company_name": "TSKB GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
       "total_score": 44.99,
@@ -538,7 +345,7 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.07% spread)",
+        "EMA trend pozitif (0.10% spread)",
         "MACD pozitif fark 0.0000",
         "Trend guclu",
         "Hacim normal ustu",
@@ -547,7 +354,7 @@
       ]
     },
     {
-      "rank": 15,
+      "rank": 10,
       "ticker": "TMSN",
       "company_name": "TÜMOSAN MOTOR VE TRAKTÖR SANAYİ A.Ş.",
       "total_score": 44.99,
@@ -576,8 +383,8 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.10% spread)",
-        "MACD pozitif fark 0.0004",
+        "EMA trend pozitif (0.04% spread)",
+        "MACD pozitif fark 0.0002",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -585,7 +392,7 @@
       ]
     },
     {
-      "rank": 16,
+      "rank": 11,
       "ticker": "TLMAN",
       "company_name": "TRABZON LİMAN İŞLETMECİLİĞİ A.Ş.",
       "total_score": 44.99,
@@ -614,8 +421,8 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.23% spread)",
-        "MACD pozitif fark 0.0009",
+        "EMA trend pozitif (0.18% spread)",
+        "MACD pozitif fark 0.0007",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -623,7 +430,7 @@
       ]
     },
     {
-      "rank": 17,
+      "rank": 12,
       "ticker": "TKNSA",
       "company_name": "TEKNOSA İÇ VE DIŞ TİCARET A.Ş.",
       "total_score": 44.99,
@@ -652,8 +459,8 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.15% spread)",
-        "MACD pozitif fark 0.0001",
+        "EMA trend pozitif (0.20% spread)",
+        "MACD pozitif fark 0.0002",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -661,7 +468,7 @@
       ]
     },
     {
-      "rank": 18,
+      "rank": 13,
       "ticker": "TKFEN",
       "company_name": "TEKFEN HOLDİNG A.Ş.",
       "total_score": 44.99,
@@ -690,8 +497,8 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.07% spread)",
-        "MACD pozitif fark 0.0005",
+        "EMA trend pozitif (0.10% spread)",
+        "MACD pozitif fark 0.0007",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -699,7 +506,7 @@
       ]
     },
     {
-      "rank": 19,
+      "rank": 14,
       "ticker": "TEHOL",
       "company_name": "Tera Yatirim Teknoloji Holding A.S.",
       "total_score": 44.99,
@@ -728,7 +535,7 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.04% spread)",
+        "EMA trend pozitif (0.05% spread)",
         "MACD pozitif fark 0.0001",
         "Trend guclu",
         "Hacim normal ustu",
@@ -737,7 +544,45 @@
       ]
     },
     {
-      "rank": 20,
+      "rank": 15,
+      "ticker": "TDGYO",
+      "company_name": "TREND GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+      "total_score": 44.99,
+      "decision": "NO TRADE",
+      "risk_reward_ratio": 0.0,
+      "component_scores": {
+        "graph_structure": 9.96,
+        "trend": 14.98,
+        "volume": 6.94,
+        "momentum": 8.06,
+        "news": 2.55,
+        "ai_confidence": 2.5
+      },
+      "score_lines": [
+        "Grafik +10",
+        "Trend +15",
+        "Hacim +7",
+        "Momentum +8",
+        "News +3",
+        "AI +2"
+      ],
+      "reasons": [
+        "No-trade: mum verisi yetersiz (0/250)",
+        "Formasyon bulunamadi",
+        "Price Action: Swing High",
+        "Yeni EMA kesisimi",
+        "Yeni MACD kesisimi",
+        "Yeni trend donusu",
+        "EMA trend pozitif (0.22% spread)",
+        "MACD pozitif fark 0.0002",
+        "Trend guclu",
+        "Hacim normal ustu",
+        "Momentum dengeli",
+        "MACD pozitif"
+      ]
+    },
+    {
+      "rank": 16,
       "ticker": "TCELL",
       "company_name": "TURKCELL İLETİŞİM HİZMETLERİ A.Ş.",
       "total_score": 44.99,
@@ -766,8 +611,160 @@
         "Yeni EMA kesisimi",
         "Yeni MACD kesisimi",
         "Yeni trend donusu",
-        "EMA trend pozitif (0.29% spread)",
-        "MACD pozitif fark 0.0016",
+        "EMA trend pozitif (0.22% spread)",
+        "MACD pozitif fark 0.0012",
+        "Trend guclu",
+        "Hacim normal ustu",
+        "Momentum dengeli",
+        "MACD pozitif"
+      ]
+    },
+    {
+      "rank": 17,
+      "ticker": "TABGD",
+      "company_name": "TAB Gida Sanayi ve Ticaret A.S.",
+      "total_score": 44.99,
+      "decision": "NO TRADE",
+      "risk_reward_ratio": 0.0,
+      "component_scores": {
+        "graph_structure": 9.96,
+        "trend": 14.98,
+        "volume": 6.94,
+        "momentum": 8.06,
+        "news": 2.55,
+        "ai_confidence": 2.5
+      },
+      "score_lines": [
+        "Grafik +10",
+        "Trend +15",
+        "Hacim +7",
+        "Momentum +8",
+        "News +3",
+        "AI +2"
+      ],
+      "reasons": [
+        "No-trade: mum verisi yetersiz (0/250)",
+        "Formasyon bulunamadi",
+        "Price Action: Swing High",
+        "Yeni EMA kesisimi",
+        "Yeni MACD kesisimi",
+        "Yeni trend donusu",
+        "EMA trend pozitif (0.20% spread)",
+        "MACD pozitif fark 0.0023",
+        "Trend guclu",
+        "Hacim normal ustu",
+        "Momentum dengeli",
+        "MACD pozitif"
+      ]
+    },
+    {
+      "rank": 18,
+      "ticker": "SISE",
+      "company_name": "TÜRKİYE ŞİŞE VE CAM FABRİKALARI A.Ş.",
+      "total_score": 44.99,
+      "decision": "NO TRADE",
+      "risk_reward_ratio": 0.0,
+      "component_scores": {
+        "graph_structure": 9.96,
+        "trend": 14.98,
+        "volume": 6.94,
+        "momentum": 8.06,
+        "news": 2.55,
+        "ai_confidence": 2.5
+      },
+      "score_lines": [
+        "Grafik +10",
+        "Trend +15",
+        "Hacim +7",
+        "Momentum +8",
+        "News +3",
+        "AI +2"
+      ],
+      "reasons": [
+        "No-trade: mum verisi yetersiz (0/250)",
+        "Formasyon bulunamadi",
+        "Price Action: Swing High",
+        "Yeni EMA kesisimi",
+        "Yeni MACD kesisimi",
+        "Yeni trend donusu",
+        "EMA trend pozitif (0.15% spread)",
+        "MACD pozitif fark 0.0003",
+        "Trend guclu",
+        "Hacim normal ustu",
+        "Momentum dengeli",
+        "MACD pozitif"
+      ]
+    },
+    {
+      "rank": 19,
+      "ticker": "SERNT",
+      "company_name": "Seranit Granit Seramik Sanayi ve Ticaret A.S.",
+      "total_score": 44.99,
+      "decision": "NO TRADE",
+      "risk_reward_ratio": 0.0,
+      "component_scores": {
+        "graph_structure": 9.96,
+        "trend": 14.98,
+        "volume": 6.94,
+        "momentum": 8.06,
+        "news": 2.55,
+        "ai_confidence": 2.5
+      },
+      "score_lines": [
+        "Grafik +10",
+        "Trend +15",
+        "Hacim +7",
+        "Momentum +8",
+        "News +3",
+        "AI +2"
+      ],
+      "reasons": [
+        "No-trade: mum verisi yetersiz (0/250)",
+        "Formasyon bulunamadi",
+        "Price Action: Swing High",
+        "Yeni EMA kesisimi",
+        "Yeni MACD kesisimi",
+        "Yeni trend donusu",
+        "EMA trend pozitif (0.02% spread)",
+        "MACD pozitif fark 0.0000",
+        "Trend guclu",
+        "Hacim normal ustu",
+        "Momentum dengeli",
+        "MACD pozitif"
+      ]
+    },
+    {
+      "rank": 20,
+      "ticker": "SEGYO",
+      "company_name": "ŞEKER GAYRİMENKUL YATIRIM ORTAKLIĞI A.Ş.",
+      "total_score": 44.99,
+      "decision": "NO TRADE",
+      "risk_reward_ratio": 0.0,
+      "component_scores": {
+        "graph_structure": 9.96,
+        "trend": 14.98,
+        "volume": 6.94,
+        "momentum": 8.06,
+        "news": 2.55,
+        "ai_confidence": 2.5
+      },
+      "score_lines": [
+        "Grafik +10",
+        "Trend +15",
+        "Hacim +7",
+        "Momentum +8",
+        "News +3",
+        "AI +2"
+      ],
+      "reasons": [
+        "No-trade: mum verisi yetersiz (0/250)",
+        "Formasyon bulunamadi",
+        "Price Action: Swing High",
+        "Yeni EMA kesisimi",
+        "Yeni MACD kesisimi",
+        "Yeni trend donusu",
+        "EMA trend pozitif (0.24% spread)",
+        "MACD pozitif fark 0.0001",
         "Trend guclu",
         "Hacim normal ustu",
         "Momentum dengeli",
@@ -776,27 +773,27 @@
     }
   ],
   "top_10": [
-    "TBORG",
-    "PRKAB",
-    "ISFIN",
-    "GLYHO",
     "TTKOM",
-    "BRKVY",
-    "YIGIT",
-    "YATAS",
+    "PRKAB",
+    "ISMEN",
+    "ZERGY",
+    "YYLGD",
     "YAPRK",
-    "VAKFN"
+    "VSNMD",
+    "VAKFN",
+    "TSGYO",
+    "TMSN"
   ],
   "top_5": [
-    "TBORG",
+    "TTKOM",
     "PRKAB",
-    "ISFIN",
-    "GLYHO",
-    "TTKOM"
+    "ISMEN",
+    "ZERGY",
+    "YYLGD"
   ],
   "best_opportunity": {
-    "ticker": "TBORG",
-    "company_name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş.",
+    "ticker": "TTKOM",
+    "company_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
     "market": "BIST",
     "total_score": 47.24,
     "decision": "NO TRADE",
@@ -821,11 +818,11 @@
       "Swing High"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (100.0)",
-      "ATR/Price kontrollu (1.07%)"
+      "ADX trend gucu (97.3)",
+      "ATR/Price kontrollu (1.49%)"
     ],
     "fresh_signals": [
       "Yeni EMA kesisimi",
@@ -840,8 +837,8 @@
       "Yeni EMA kesisimi",
       "Yeni MACD kesisimi",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "Trend guclu",
       "Hacim normal ustu",
       "Momentum dengeli",
@@ -850,16 +847,16 @@
       "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.1902",
-      "Pullback cap=126.2046",
-      "Entry finalized at 126.2046",
-      "Stop placed below support and ATR=124.3793",
+      "Entry current_price - buffer=0.0885",
+      "Pullback cap=57.7680",
+      "Entry finalized at 57.7680",
+      "Stop placed below support and ATR=56.5780",
       "250 mum alti veri: no-trade"
     ],
-    "entry_price": 126.2046,
+    "entry_price": 57.768,
     "entry_range_low": 0.0,
     "entry_range_high": 0.0,
-    "stop_loss": 124.3793,
+    "stop_loss": 56.578,
     "current_target": 0.0,
     "take_profit_1": 0.0,
     "take_profit_2": 0.0,
@@ -870,18 +867,18 @@
     "entry_strategy": "Yetersiz Veri",
     "entry_strategy_reason": "En az 250 mum gerekli",
     "entry_status": "NO TRADE",
-    "limit_entry_price": 126.2046,
+    "limit_entry_price": 57.768,
     "market_entry_allowed": false,
     "risk_reward_ratio": 0.0,
     "trend": "Bullish",
     "trend_strength": 68,
     "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 126.8,
-    "support": 125.951,
-    "resistance": 128.1,
-    "atr": 1.35204,
-    "volume": 152428.0,
-    "average_volume": 148236.23,
+    "current_price": 59.0,
+    "support": 57.65,
+    "resistance": 59.55,
+    "atr": 0.881499,
+    "volume": 37080077.0,
+    "average_volume": 36060374.8825,
     "relative_volume": 1.0283,
     "rsi14": 50.0,
     "macd_state": "Bullish",
@@ -897,13 +894,13 @@
     "rank": 1,
     "news_confidence": 96.0,
     "market_item": {
-      "ticker": "TBORG",
-      "name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş."
+      "ticker": "TTKOM",
+      "name": "TÜRK TELEKOMÜNİKASYON A.Ş."
     }
   },
   "riskiest_opportunity": {
-    "ticker": "TBORG",
-    "company_name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş.",
+    "ticker": "TTKOM",
+    "company_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
     "market": "BIST",
     "total_score": 47.24,
     "decision": "NO TRADE",
@@ -928,11 +925,11 @@
       "Swing High"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (100.0)",
-      "ATR/Price kontrollu (1.07%)"
+      "ADX trend gucu (97.3)",
+      "ATR/Price kontrollu (1.49%)"
     ],
     "fresh_signals": [
       "Yeni EMA kesisimi",
@@ -947,8 +944,8 @@
       "Yeni EMA kesisimi",
       "Yeni MACD kesisimi",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "Trend guclu",
       "Hacim normal ustu",
       "Momentum dengeli",
@@ -957,16 +954,16 @@
       "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.1902",
-      "Pullback cap=126.2046",
-      "Entry finalized at 126.2046",
-      "Stop placed below support and ATR=124.3793",
+      "Entry current_price - buffer=0.0885",
+      "Pullback cap=57.7680",
+      "Entry finalized at 57.7680",
+      "Stop placed below support and ATR=56.5780",
       "250 mum alti veri: no-trade"
     ],
-    "entry_price": 126.2046,
+    "entry_price": 57.768,
     "entry_range_low": 0.0,
     "entry_range_high": 0.0,
-    "stop_loss": 124.3793,
+    "stop_loss": 56.578,
     "current_target": 0.0,
     "take_profit_1": 0.0,
     "take_profit_2": 0.0,
@@ -977,18 +974,18 @@
     "entry_strategy": "Yetersiz Veri",
     "entry_strategy_reason": "En az 250 mum gerekli",
     "entry_status": "NO TRADE",
-    "limit_entry_price": 126.2046,
+    "limit_entry_price": 57.768,
     "market_entry_allowed": false,
     "risk_reward_ratio": 0.0,
     "trend": "Bullish",
     "trend_strength": 68,
     "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 126.8,
-    "support": 125.951,
-    "resistance": 128.1,
-    "atr": 1.35204,
-    "volume": 152428.0,
-    "average_volume": 148236.23,
+    "current_price": 59.0,
+    "support": 57.65,
+    "resistance": 59.55,
+    "atr": 0.881499,
+    "volume": 37080077.0,
+    "average_volume": 36060374.8825,
     "relative_volume": 1.0283,
     "rsi14": 50.0,
     "macd_state": "Bullish",
@@ -1004,13 +1001,13 @@
     "rank": 1,
     "news_confidence": 96.0,
     "market_item": {
-      "ticker": "TBORG",
-      "name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş."
+      "ticker": "TTKOM",
+      "name": "TÜRK TELEKOMÜNİKASYON A.Ş."
     }
   },
   "strongest_news": {
-    "ticker": "YIGIT",
-    "company_name": "Yigit Aku Malzemeleri Nakliyat Turizm Insaat Sanayi Ve Ticaret",
+    "ticker": "ZERGY",
+    "company_name": "Zeray Gayrimenkul Yatirim Ortakligi AS",
     "market": "BIST",
     "total_score": 44.99,
     "decision": "NO TRADE",
@@ -1035,11 +1032,11 @@
       "Swing High"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.06% spread)",
+      "EMA trend pozitif (0.15% spread)",
       "MACD pozitif fark 0.0001",
       "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (100.0)",
-      "ATR/Price kontrollu (1.11%)"
+      "ADX trend gucu (98.6)",
+      "ATR/Price kontrollu (1.24%)"
     ],
     "fresh_signals": [
       "Yeni EMA kesisimi",
@@ -1054,7 +1051,7 @@
       "Yeni EMA kesisimi",
       "Yeni MACD kesisimi",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.06% spread)",
+      "EMA trend pozitif (0.15% spread)",
       "MACD pozitif fark 0.0001",
       "Trend guclu",
       "Hacim normal ustu",
@@ -1062,16 +1059,16 @@
       "MACD pozitif"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.0331",
-      "Pullback cap=21.9493",
-      "Entry finalized at 21.9493",
-      "Stop placed below support and ATR=21.6191",
+      "Entry current_price - buffer=0.0151",
+      "Pullback cap=9.8701",
+      "Entry finalized at 9.8701",
+      "Stop placed below support and ATR=9.7019",
       "250 mum alti veri: no-trade"
     ],
-    "entry_price": 21.9493,
+    "entry_price": 9.8701,
     "entry_range_low": 0.0,
     "entry_range_high": 0.0,
-    "stop_loss": 21.6191,
+    "stop_loss": 9.7019,
     "current_target": 0.0,
     "take_profit_1": 0.0,
     "take_profit_2": 0.0,
@@ -1082,18 +1079,18 @@
     "entry_strategy": "Yetersiz Veri",
     "entry_strategy_reason": "En az 250 mum gerekli",
     "entry_status": "NO TRADE",
-    "limit_entry_price": 21.9493,
+    "limit_entry_price": 9.8701,
     "market_entry_allowed": false,
     "risk_reward_ratio": 0.0,
     "trend": "Bullish",
     "trend_strength": 68,
     "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 22.08,
-    "support": 21.9051,
-    "resistance": 22.34,
-    "atr": 0.244569,
-    "volume": 2229004.0,
-    "average_volume": 2167706.39,
+    "current_price": 10.06,
+    "support": 9.85,
+    "resistance": 10.1091,
+    "atr": 0.124606,
+    "volume": 7211396.0,
+    "average_volume": 7013082.61,
     "relative_volume": 1.0283,
     "rsi14": 50.0,
     "macd_state": "Bullish",
@@ -1106,16 +1103,16 @@
     "hard_filtered": false,
     "score_label": "Speculative",
     "status": "ELIGIBLE",
-    "rank": 7,
+    "rank": 4,
     "news_confidence": 50.0,
     "market_item": {
-      "ticker": "YIGIT",
-      "name": "Yigit Aku Malzemeleri Nakliyat Turizm Insaat Sanayi Ve Ticaret"
+      "ticker": "ZERGY",
+      "name": "Zeray Gayrimenkul Yatirim Ortakligi AS"
     }
   },
   "strongest_technical": {
-    "ticker": "TBORG",
-    "company_name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş.",
+    "ticker": "TTKOM",
+    "company_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
     "market": "BIST",
     "total_score": 47.24,
     "decision": "NO TRADE",
@@ -1140,11 +1137,11 @@
       "Swing High"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (100.0)",
-      "ATR/Price kontrollu (1.07%)"
+      "ADX trend gucu (97.3)",
+      "ATR/Price kontrollu (1.49%)"
     ],
     "fresh_signals": [
       "Yeni EMA kesisimi",
@@ -1159,8 +1156,8 @@
       "Yeni EMA kesisimi",
       "Yeni MACD kesisimi",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "Trend guclu",
       "Hacim normal ustu",
       "Momentum dengeli",
@@ -1169,16 +1166,16 @@
       "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.1902",
-      "Pullback cap=126.2046",
-      "Entry finalized at 126.2046",
-      "Stop placed below support and ATR=124.3793",
+      "Entry current_price - buffer=0.0885",
+      "Pullback cap=57.7680",
+      "Entry finalized at 57.7680",
+      "Stop placed below support and ATR=56.5780",
       "250 mum alti veri: no-trade"
     ],
-    "entry_price": 126.2046,
+    "entry_price": 57.768,
     "entry_range_low": 0.0,
     "entry_range_high": 0.0,
-    "stop_loss": 124.3793,
+    "stop_loss": 56.578,
     "current_target": 0.0,
     "take_profit_1": 0.0,
     "take_profit_2": 0.0,
@@ -1189,18 +1186,18 @@
     "entry_strategy": "Yetersiz Veri",
     "entry_strategy_reason": "En az 250 mum gerekli",
     "entry_status": "NO TRADE",
-    "limit_entry_price": 126.2046,
+    "limit_entry_price": 57.768,
     "market_entry_allowed": false,
     "risk_reward_ratio": 0.0,
     "trend": "Bullish",
     "trend_strength": 68,
     "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 126.8,
-    "support": 125.951,
-    "resistance": 128.1,
-    "atr": 1.35204,
-    "volume": 152428.0,
-    "average_volume": 148236.23,
+    "current_price": 59.0,
+    "support": 57.65,
+    "resistance": 59.55,
+    "atr": 0.881499,
+    "volume": 37080077.0,
+    "average_volume": 36060374.8825,
     "relative_volume": 1.0283,
     "rsi14": 50.0,
     "macd_state": "Bullish",
@@ -1216,13 +1213,13 @@
     "rank": 1,
     "news_confidence": 96.0,
     "market_item": {
-      "ticker": "TBORG",
-      "name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş."
+      "ticker": "TTKOM",
+      "name": "TÜRK TELEKOMÜNİKASYON A.Ş."
     }
   },
   "highest_volume_growth": {
-    "ticker": "TBORG",
-    "company_name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş.",
+    "ticker": "TTKOM",
+    "company_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
     "market": "BIST",
     "total_score": 47.24,
     "decision": "NO TRADE",
@@ -1247,11 +1244,11 @@
       "Swing High"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (100.0)",
-      "ATR/Price kontrollu (1.07%)"
+      "ADX trend gucu (97.3)",
+      "ATR/Price kontrollu (1.49%)"
     ],
     "fresh_signals": [
       "Yeni EMA kesisimi",
@@ -1266,8 +1263,8 @@
       "Yeni EMA kesisimi",
       "Yeni MACD kesisimi",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.03% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.31% spread)",
+      "MACD pozitif fark 0.0009",
       "Trend guclu",
       "Hacim normal ustu",
       "Momentum dengeli",
@@ -1276,16 +1273,16 @@
       "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.1902",
-      "Pullback cap=126.2046",
-      "Entry finalized at 126.2046",
-      "Stop placed below support and ATR=124.3793",
+      "Entry current_price - buffer=0.0885",
+      "Pullback cap=57.7680",
+      "Entry finalized at 57.7680",
+      "Stop placed below support and ATR=56.5780",
       "250 mum alti veri: no-trade"
     ],
-    "entry_price": 126.2046,
+    "entry_price": 57.768,
     "entry_range_low": 0.0,
     "entry_range_high": 0.0,
-    "stop_loss": 124.3793,
+    "stop_loss": 56.578,
     "current_target": 0.0,
     "take_profit_1": 0.0,
     "take_profit_2": 0.0,
@@ -1296,18 +1293,18 @@
     "entry_strategy": "Yetersiz Veri",
     "entry_strategy_reason": "En az 250 mum gerekli",
     "entry_status": "NO TRADE",
-    "limit_entry_price": 126.2046,
+    "limit_entry_price": 57.768,
     "market_entry_allowed": false,
     "risk_reward_ratio": 0.0,
     "trend": "Bullish",
     "trend_strength": 68,
     "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 126.8,
-    "support": 125.951,
-    "resistance": 128.1,
-    "atr": 1.35204,
-    "volume": 152428.0,
-    "average_volume": 148236.23,
+    "current_price": 59.0,
+    "support": 57.65,
+    "resistance": 59.55,
+    "atr": 0.881499,
+    "volume": 37080077.0,
+    "average_volume": 36060374.8825,
     "relative_volume": 1.0283,
     "rsi14": 50.0,
     "macd_state": "Bullish",
@@ -1323,10 +1320,10 @@
     "rank": 1,
     "news_confidence": 96.0,
     "market_item": {
-      "ticker": "TBORG",
-      "name": "TÜRK TUBORG BİRA VE MALT SANAYİİ A.Ş."
+      "ticker": "TTKOM",
+      "name": "TÜRK TELEKOMÜNİKASYON A.Ş."
     }
   },
-  "elapsed_seconds": 11.501,
-  "generated_at": "2026-07-20T14:56:30.295037+00:00"
+  "elapsed_seconds": 11.57,
+  "generated_at": "2026-07-20T19:20:01.803135+00:00"
 }

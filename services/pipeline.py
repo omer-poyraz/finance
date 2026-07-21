@@ -51,6 +51,9 @@ from storage import JsonStorage
 
 logger = logging.getLogger(__name__)
 
+MIN_EXPECTED_GAIN_PCT = 3.0
+TARGET_EXPECTED_GAIN_PCT = 10.0
+
 
 REQUIRED_STORAGE_FILES = [
     "news.json",
@@ -841,15 +844,27 @@ class FinancePipelineService:
 
             payload["market"] = str(market_item.get("market") or "BIST")
             payload["company_name"] = str(market_item.get("company_name") or payload.get("ticker") or "")
+            entry_price = float(payload.get("entry_price") or 0.0)
+            current_price = float(payload.get("current_price") or payload.get("entry_price") or 0.0)
+            target_price = float(payload.get("current_target") or 0.0)
+            payload["expected_gain_pct"] = round(
+                self._compute_gain_pct(base_price=entry_price, target_price=target_price),
+                2,
+            )
+            payload["today_potential_pct"] = round(
+                self._compute_gain_pct(base_price=current_price, target_price=target_price),
+                2,
+            )
             recommendations.append(payload)
 
+        recommendations = [
+            item
+            for item in recommendations
+            if float(item.get("expected_gain_pct") or 0.0) >= MIN_EXPECTED_GAIN_PCT
+        ]
+
         recommendations.sort(
-            key=lambda item: (
-                float(item.get("confidence", 0.0)),
-                float(item.get("overall_score", 0.0)),
-                float(item.get("trend_strength", 0.0)),
-            ),
-            reverse=True,
+            key=self._expected_gain_sort_key,
         )
 
         if not recommendations:
@@ -1006,6 +1021,26 @@ class FinancePipelineService:
         top_n = int(self.bist_opportunity_engine.config.get("top_n") or 20)
         final_n = int(self.bist_opportunity_engine.config.get("final_n") or 10)
 
+        for item in eligible_items:
+            entry_price = float(item.get("entry_price") or 0.0)
+            current_price = float(item.get("current_price") or entry_price or 0.0)
+            target_price = float(item.get("current_target") or 0.0)
+            item["expected_gain_pct"] = round(
+                self._compute_gain_pct(base_price=entry_price, target_price=target_price),
+                2,
+            )
+            item["today_potential_pct"] = round(
+                self._compute_gain_pct(base_price=current_price, target_price=target_price),
+                2,
+            )
+
+        eligible_items = [
+            item
+            for item in eligible_items
+            if float(item.get("expected_gain_pct") or 0.0) >= MIN_EXPECTED_GAIN_PCT
+        ]
+        eligible_items.sort(key=self._expected_gain_sort_key)
+
         if eligible_items:
             ranked_pool = eligible_items[:top_n]
         else:
@@ -1103,6 +1138,18 @@ class FinancePipelineService:
         final_item["ai_summary"] = final_item.get("ai_summary")
         final_item["ai_reason"] = final_item.get("ai_reason")
         final_item["ai_risk"] = final_item.get("ai_risk")
+        entry_price = float(final_item.get("entry_price") or 0.0)
+        current_price = float(final_item.get("current_price") or entry_price or 0.0)
+        target_price = float(final_item.get("current_target") or 0.0)
+        final_item["expected_gain_pct"] = round(
+            self._compute_gain_pct(base_price=entry_price, target_price=target_price),
+            2,
+        )
+        final_item["today_potential_pct"] = round(
+            self._compute_gain_pct(base_price=current_price, target_price=target_price),
+            2,
+        )
+        final_item["user_confidence"] = self._user_confidence_score(final_item)
         execution_plan = self._build_execution_plan(final_item)
         final_item["execution_plan"] = execution_plan
         final_item["trade_instruction"] = str(execution_plan.get("instruction") or "NO TRADE")
@@ -1230,6 +1277,142 @@ class FinancePipelineService:
             return str(int(round(float(value))))
         except (TypeError, ValueError):
             return "N/A"
+
+    def _compute_gain_pct(self, *, base_price: float, target_price: float) -> float:
+        if base_price <= 0 or target_price <= 0:
+            return 0.0
+        return ((target_price - base_price) / base_price) * 100.0
+
+    def _expected_gain_sort_key(self, item: dict[str, Any]) -> tuple[float, float, float, float, str]:
+        expected_gain = float(item.get("expected_gain_pct") or 0.0)
+        confidence = float(item.get("confidence") or item.get("overall_score") or 0.0)
+        technical_score = float(item.get("technical_score") or 0.0)
+        total_score = float(item.get("total_score") or item.get("overall_score") or 0.0)
+        return (
+            abs(TARGET_EXPECTED_GAIN_PCT - expected_gain),
+            -expected_gain,
+            -confidence,
+            -technical_score,
+            -total_score,
+            str(item.get("ticker") or ""),
+        )
+
+    def _user_confidence_score(self, item: dict[str, Any]) -> int:
+        component_scores = dict(item.get("component_scores") or {})
+        if component_scores:
+            graph = float(component_scores.get("graph_structure") or 0.0)
+            trend = float(component_scores.get("trend") or 0.0)
+            volume = float(component_scores.get("volume") or 0.0)
+            momentum = float(component_scores.get("momentum") or 0.0)
+            news = float(component_scores.get("news") or 0.0)
+            ai_conf = float(component_scores.get("ai_confidence") or 0.0)
+
+            normalized = (
+                (graph / 50.0) * 0.34
+                + (trend / 22.0) * 0.28
+                + (volume / 12.0) * 0.14
+                + (momentum / 10.0) * 0.12
+                + (news / 4.0) * 0.08
+                + (ai_conf / 2.0) * 0.04
+            )
+            return int(max(0, min(100, round(normalized * 100.0))))
+
+        raw_conf = float(item.get("confidence") or 0.0)
+        if raw_conf > 0:
+            return int(max(0, min(100, round(raw_conf))))
+
+        overall = float(item.get("overall_score") or item.get("total_score") or 0.0)
+        return int(max(0, min(100, round(overall))))
+
+    def _plain_turkish_reason(self, reason: str) -> str:
+        text = str(reason or "").strip()
+        if not text:
+            return ""
+
+        lowered = text.lower()
+        rules = [
+            (["higher high", "higher low"], "Yukselis egilimi gucleniyor."),
+            (["lower high", "lower low"], "Yukseliste zayiflama belirtileri var, dikkatli olunmali."),
+            (["cup and handle"], "Fiyat yukari hareket icin guclu bir hazirlikta gorunuyor."),
+            (["rsi"], "Kisa vadede alim-satim dengesi yukari yone donuyor."),
+            (["atr"], "Fiyatta hareketlilik artti; ani dalgalanmalara karsi dikkatli olunmali."),
+            (["ema", "moving average"], "Kisa ve orta vadede fiyatin yukari yonu destekleniyor."),
+            (["macd"], "Alicilarin gucu satiya gore artiyor."),
+            (["bollinger"], "Fiyat bant sinirlarinda hareket ediyor, devam ihtimali yukseliyor."),
+            (["momentum"], "Hareket hizi yukari yone gucleniyor."),
+            (["trend strength", "trend"], "Yukselis egilimi gucleniyor."),
+            (["price action", "market structure"], "Fiyat hareketleri alicilarin daha guclu oldugunu gosteriyor."),
+            (["volume above average", "relative volume", "hacim"], "Islem hacmi arttigi icin hareketin devam etme ihtimali yukseliyor."),
+            (["support bounce", "destek", "pullback"], "Destekten guc alarak yukari donmeye basladi."),
+            (["breakout"], "Direnc bolgesi asilmaya yaklasiyor, yukari hareket hizlanabilir."),
+            (["positive", "olumlu", "news"], "Olumlu haber akisinin fiyati destekleme ihtimali var."),
+            (["negative", "olumsuz"], "Olumsuz gelismeler nedeniyle kisa vadede temkinli olunmali."),
+            (["overbought", "elevated"], "Yukseliste zayiflama belirtileri olusuyor, kar satisi gelebilir."),
+            (["no strong", "weak", "zayif"], "Kisa vadede net bir guc sinyali yok; dikkatli olunmali."),
+        ]
+
+        for keywords, translated in rules:
+            if any(keyword in lowered for keyword in keywords):
+                return translated
+
+        return "Kisa vadede fiyat hareketi olumlu; yine de risk yonetimi onemli."
+
+    def _build_plain_reasons(self, item: dict[str, Any], *, limit: int = 3) -> list[str]:
+        candidates: list[str] = []
+        candidates.extend([str(value) for value in item.get("reasons") or [] if str(value).strip()])
+        candidates.extend([str(value) for value in item.get("fresh_signals") or [] if str(value).strip()])
+        candidates.extend([str(value) for value in item.get("indicator_confirmations") or [] if str(value).strip()])
+        candidates.extend([str(value) for value in item.get("market_structure_signals") or [] if str(value).strip()])
+
+        seen: set[str] = set()
+        plain: list[str] = []
+        for raw in candidates:
+            simplified = self._plain_turkish_reason(raw)
+            key = simplified.lower()
+            if not simplified or key in seen:
+                continue
+            seen.add(key)
+            plain.append(simplified)
+            if len(plain) >= limit:
+                break
+
+        if not plain:
+            plain = [
+                "Yukselis egilimi gucleniyor.",
+                "Islem hacmi hareketi destekliyor.",
+                "Kisa vadede firsat devam edebilir.",
+            ]
+        return plain[:limit]
+
+    def _sanitize_user_output(self, text: str) -> str:
+        sanitized = str(text)
+        replacements = {
+            "Higher High": "Yukselis egilimi gucleniyor",
+            "Higher Low": "Alicilarin gucu artiyor",
+            "Lower High": "Yukseliste zayiflama olabilir",
+            "Lower Low": "Satis baskisi artiyor olabilir",
+            "Cup and Handle": "Yukari yonlu hazirlik formu",
+            "RSI": "kisa vade denge gostergesi",
+            "ATR": "hareketlilik seviyesi",
+            "EMA": "fiyat ortalama yonu",
+            "MACD": "alici-satici guc farki",
+            "Bollinger": "fiyat bant araligi",
+            "Momentum": "hareket hizi",
+            "Trend Strength": "trend gucu",
+            "Price Action": "fiyat davranisi",
+        }
+        for source, target in replacements.items():
+            sanitized = sanitized.replace(source, target)
+            sanitized = sanitized.replace(source.lower(), target)
+            sanitized = sanitized.replace(source.upper(), target)
+        return sanitized
+
+    def _market_outlook_label(self, *, strong_count: int, medium_count: int, risky_count: int) -> tuple[str, str]:
+        if strong_count >= max(2, medium_count) and risky_count <= (strong_count + medium_count):
+            return "🟢", "Olumlu"
+        if risky_count > (strong_count + medium_count):
+            return "🔴", "Dikkatli olunmali"
+        return "🟡", "Kararsiz"
 
     def _build_bist_summary(
         self,
@@ -1454,40 +1637,79 @@ class FinancePipelineService:
         return events
 
     def _format_bist_change_message(self, summary: dict[str, Any], events: list[dict[str, Any]]) -> str:
-        date_text = format_istanbul_datetime(pattern="%d.%m.%Y %H:%M")
-        lines = ["📡 BIST Canli Izleme", f"📅 {date_text}", ""]
+        date_text = format_istanbul_datetime(pattern="%d.%m.%Y")
+        time_text = format_istanbul_datetime(pattern="%H:%M")
+        lines = ["📡 BIST Canli Firsatlar", "", f"📅 {date_text}", f"🕐 {time_text}", ""]
 
         if isinstance(summary, dict) and summary:
             lines.extend(
                 [
-                    f"Analiz Edilen : {int(summary.get('analyzed_total', 0))}",
-                    f"Elenen : {int(summary.get('hard_filtered', 0))}",
-                    f"Skorlanan : {int(summary.get('scored_total', 0))}",
-                    f"Top 20 : {len(summary.get('top_20', []))}",
-                    f"Top 10 : {len(summary.get('top_10', []))}",
-                    f"Top Oneri : {len(summary.get('top_5', []))}",
+                    f"Analiz edilen hisse: {int(summary.get('analyzed_total', 0))}",
+                    f"Aktif firsat havuzu: {len(summary.get('top_20', []))}",
                     "",
                 ]
             )
 
-        for event in events[:10]:
+        for event in events[:6]:
+            state = str(event.get("state") or "ACTIVE").upper()
+            state_icon = "🟡"
+            state_text = "Guncel"
+            if state in {"NEW", "STRENGTHENED"}:
+                state_icon = "🟢"
+                state_text = "Gucleniyor"
+            elif state in {"WEAKENED", "EXIT"}:
+                state_icon = "🔴"
+                state_text = "Temkinli"
+
+            current_price = float(event.get("price") or 0.0)
+            target_price = float(event.get("current_target") or 0.0)
+            stop_price = float(event.get("stop_loss") or 0.0)
+            expected_gain = self._compute_gain_pct(base_price=current_price, target_price=target_price)
+
             lines.extend(
                 [
-                    f"{event['ticker']} - {event['state']}",
-                    f"Skor : {event['score']:.2f}",
-                    f"Risk/Odul : {event['risk_reward_ratio']:.2f}",
-                    f"Fiyat : {event['price']:.4f}",
-                    f"Stop : {event['stop_loss']:.4f}",
-                    f"TP : {event['current_target']:.4f}",
+                    f"{state_icon} {event['ticker']} - {state_text}",
+                    f"Alis: {current_price:.2f} TL",
+                    f"Zarar Durdur: {stop_price:.2f} TL",
+                    f"Bugunku Potansiyel: %{expected_gain:.1f}",
                 ]
             )
             if event.get("summary"):
-                lines.append(f"Sebep : {', '.join(str(item) for item in event['summary'])}")
+                plain_summary = [
+                    self._plain_turkish_reason(str(item))
+                    for item in list(event.get("summary") or [])
+                ]
+                plain_summary = [item for item in plain_summary if item]
+                if plain_summary:
+                    lines.append(f"Neden: {plain_summary[0]}")
             if event.get("ai_summary"):
-                lines.append(f"AI : {str(event['ai_summary'])}")
-            lines.append("---")
+                lines.append("Haber etkisi: Olumlu akis hareketi destekliyor.")
+            lines.append("──────────────────")
 
-        return "\n".join(lines)
+        analyzed_total = int(summary.get("analyzed_total", 0)) if isinstance(summary, dict) else 0
+        strong_count = sum(1 for event in events if str(event.get("state") or "").upper() in {"NEW", "STRENGTHENED"})
+        medium_count = sum(1 for event in events if str(event.get("state") or "").upper() in {"ACTIVE", "CLOSED"})
+        risky_count = max(0, analyzed_total - strong_count - medium_count)
+        outlook_icon, outlook_text = self._market_outlook_label(
+            strong_count=strong_count,
+            medium_count=medium_count,
+            risky_count=risky_count,
+        )
+
+        lines.extend(
+            [
+                "",
+                "📊 Genel Durum",
+                "",
+                f"Bugun guclu yukselis beklenen hisse sayisi: {strong_count}",
+                f"Orta seviyede firsat: {medium_count}",
+                f"Riskli gorulen hisse: {risky_count}",
+                "Piyasa gorunumu:",
+                f"{outlook_icon} {outlook_text}",
+            ]
+        )
+
+        return self._sanitize_user_output("\n".join(lines))
 
     def _bist_event_signature(self, ticker: str, state: str, item: dict[str, Any]) -> str:
         score_bucket = round(float(item.get("total_score") or item.get("confidence") or 0.0), 1)
@@ -2336,7 +2558,7 @@ class FinancePipelineService:
         if ai_market_summary:
             lines.extend(["", "Today's AI Summary", str(ai_market_summary).strip()])
 
-        return "\n".join(lines)
+        return self._sanitize_user_output("\n".join(lines))
 
     def _format_telegram_message(
         self,
@@ -2348,36 +2570,13 @@ class FinancePipelineService:
         selection_stats: dict[str, Any] | None = None,
     ) -> str:
         date_text = format_istanbul_datetime(pattern="%d.%m.%Y")
+        time_text = format_istanbul_datetime(pattern="%H:%M")
         lines = [
-            str(report_title or "📈 Daily Report"),
-            f"📅 {date_text}",
+            str(report_title or "📡 BIST Canli Firsatlar"),
             "",
+            f"📅 {date_text}",
+            f"🕐 {time_text}",
         ]
-
-        if selection_stats:
-            lines.extend(
-                [
-                    f"Analiz Edilen : {int(selection_stats.get('analyzed_total', 0))}",
-                    f"Elenen : {int(selection_stats.get('filter_rejected', selection_stats.get('halal_passed', 0)))}",
-                    f"Skorlanan : {int(selection_stats.get('scored_total', selection_stats.get('ai_candidates', 0)))}",
-                    f"Top 20 : {int(selection_stats.get('top_20', 0))}",
-                    f"Top 10 : {int(selection_stats.get('top_10', 0))}",
-                    f"Top Oneri : {int(selection_stats.get('top_final', selection_stats.get('top_5', selection_stats.get('recommended', 0))))}",
-                    "",
-                ]
-            )
-
-            if selection_stats.get("top_20_tickers"):
-                lines.append(f"Ilk 20 : {', '.join(str(item) for item in selection_stats.get('top_20_tickers', [])[:20])}")
-            if selection_stats.get("top_10_tickers"):
-                lines.append(f"Ilk 10 : {', '.join(str(item) for item in selection_stats.get('top_10_tickers', [])[:10])}")
-            if selection_stats.get("top_final_tickers"):
-                lines.append(f"Ilk Oneriler : {', '.join(str(item) for item in selection_stats.get('top_final_tickers', [])[:10])}")
-            elif selection_stats.get("top_5_tickers"):
-                lines.append(f"Ilk Oneriler : {', '.join(str(item) for item in selection_stats.get('top_5_tickers', [])[:10])}")
-            lines.append("")
-
-        lines.append("🟢 Yeni Firsatlar")
 
         wait_only = (
             len(recommendations) == 1
@@ -2389,165 +2588,77 @@ class FinancePipelineService:
             lines.extend(
                 [
                     "",
-                    "📌 Bugun analiz edilen hisseler arasinda minimum kalite kriterlerini saglayan uygun yatirim firsati bulunamadi.",
-                    "",
-                    "Bugunku oneri:",
-                    "WAIT IN CASH",
+                    "📌 Bugun minimum beklenen kazanc (%3) kriterine uyan uygun firsat bulunamadi.",
+                    "Kisa vadede nakitte beklemek daha guvenli gorunuyor.",
                 ]
             )
         else:
-            for item in recommendations:
-                decision = str(item.get("decision") or "BUY")
+            ranked_recommendations = [
+                dict(item)
+                for item in recommendations
+                if str(item.get("ticker") or "").upper() != "CASH"
+            ]
+            ranked_recommendations.sort(key=self._expected_gain_sort_key)
+
+            top_item = ranked_recommendations[0] if ranked_recommendations else {}
+            if top_item:
+                ticker = str(top_item.get("ticker") or "UNKNOWN")
+                confidence = int(top_item.get("user_confidence") or self._user_confidence_score(top_item))
+                entry_price = float(top_item.get("entry_price") or 0.0)
+                target_price = float(top_item.get("current_target") or 0.0)
+                stop_price = float(top_item.get("stop_loss") or 0.0)
+                expected_gain = float(
+                    top_item.get("expected_gain_pct")
+                    or self._compute_gain_pct(base_price=entry_price, target_price=target_price)
+                )
+                today_potential = float(
+                    top_item.get("today_potential_pct")
+                    or self._compute_gain_pct(
+                        base_price=float(top_item.get("current_price") or entry_price),
+                        target_price=target_price,
+                    )
+                )
+                reasons = self._build_plain_reasons(top_item, limit=3)
+
                 lines.extend(
                     [
                         "",
-                        str(item.get("ticker") or "UNKNOWN"),
-                        f"Sirket : {str(item.get('company_name') or item.get('ticker') or 'UNKNOWN')}",
-                        f"Islem : {decision}",
-                        f"Entry Durumu : {str(item.get('entry_status') or 'WAIT')}",
-                        f"Guven : {self._format_confidence(item.get('confidence'))}",
-                        f"Trend : {int(item.get('trend_strength') or 0)}",
-                        f"Trend Suresi : {str(item.get('estimated_trend_duration') or '1-2 islem gunu')}",
-                        f"Guncel Fiyat : {float(item.get('current_price') or 0.0):.4f}",
-                        f"Alis Bolgesi : {float(item.get('entry_range_low') or 0.0):.4f} - {float(item.get('entry_range_high') or 0.0):.4f}",
-                        f"Limit Emir : {float(item.get('limit_entry_price') or 0.0):.4f}",
-                        f"Market Alinabilir : {'EVET' if bool(item.get('market_entry_allowed')) else 'HAYIR'}",
-                        f"Giris Turu : {str(item.get('entry_strategy') or 'Unknown')}",
-                        f"Giris Nedeni : {str(item.get('entry_strategy_reason') or 'N/A')}",
-                        f"Koruyucu Stop : {float(item.get('stop_loss') or 0.0):.4f}",
-                        f"Ana Hedef : {float(item.get('current_target') or 0.0):.4f}",
-                        f"Toplam RR : {float(item.get('risk_reward_ratio') or 0.0):.2f}",
-                        f"Sermaye Dagilimi : {float(item.get('recommended_amount') or 0.0):.2f} TL",
+                        "⭐ En Guclu Oneri",
+                        "",
+                        ticker,
+                        "",
+                        "🟢 Guven",
+                        f"%{confidence}",
+                        "",
+                        "💰 Alis",
+                        f"{entry_price:.2f} TL",
+                        "",
+                        "🛑 Zarar Durdur",
+                        f"{stop_price:.2f} TL",
+                        "",
+                        "📈 Beklenen Kazanc",
+                        f"%{expected_gain:.1f}",
+                        "",
+                        "🎯 Bugunku Potansiyel",
+                        f"%{today_potential:.1f}",
+                        "",
+                        "Neden Oneriliyor?",
+                        "",
+                        f"✅ {reasons[0]}",
+                        f"✅ {reasons[1] if len(reasons) > 1 else 'Alicilar satis yapanlardan daha guclu.'}",
+                        f"✅ {reasons[2] if len(reasons) > 2 else 'Kisa vadede firsat devam edebilir.'}",
+                        "",
+                        "──────────────────",
                     ]
                 )
 
-                execution_plan = dict(item.get("execution_plan") or {})
-                if execution_plan:
-                    lines.append(f"Net Emir : {str(execution_plan.get('instruction') or 'NO TRADE')}")
-                    if bool(execution_plan.get("actionable")):
-                        entry_order = dict(execution_plan.get("entry_order") or {})
-                        stop_order = dict(execution_plan.get("stop_order") or {})
-                        lines.append(
-                            "Emir Giris : "
-                            f"{str(entry_order.get('type') or 'LIMIT_BUY')} "
-                            f"{float(entry_order.get('price') or 0.0):.4f} "
-                            f"[{float(entry_order.get('range_low') or 0.0):.4f}-{float(entry_order.get('range_high') or 0.0):.4f}]"
-                        )
-                        if entry_order.get("trigger_price"):
-                            lines.append(f"Emir Tetik : {float(entry_order.get('trigger_price') or 0.0):.4f}")
-                        lines.append(f"Emir Stop : {float(stop_order.get('price') or 0.0):.4f}")
-
-                        sell_orders = [dict(order) for order in execution_plan.get("sell_orders") or [] if isinstance(order, dict)]
-                        if sell_orders:
-                            for order in sell_orders[:4]:
-                                lines.append(
-                                    "Emir Satis : "
-                                    f"{str(order.get('label') or 'TP')} "
-                                    f"{float(order.get('price') or 0.0):.4f} "
-                                    f"%{int(order.get('size_percent') or 0)}"
-                                )
-                    else:
-                        lines.append(f"Plan Durumu : {str(execution_plan.get('invalidation') or 'No trade')}")
-
-                tp_levels = [dict(level) for level in item.get("take_profit_levels") or [] if isinstance(level, dict)]
-                rr_by_tp = {
-                    str(rr.get("label") or ""): dict(rr)
-                    for rr in item.get("risk_reward_by_tp") or []
-                    if isinstance(rr, dict)
-                }
-                if tp_levels:
-                    for level in tp_levels[:4]:
-                        label = str(level.get("label") or "TP")
-                        price = float(level.get("price") or 0.0)
-                        reason = str(level.get("reason") or "Teknik hedef")
-                        rr_item = rr_by_tp.get(label, {})
-                        probability = float(rr_item.get("probability") or 0.0)
-                        rr_value = float(rr_item.get("rr") or 0.0)
-                        lines.append(f"{label} : {price:.4f} | Olasilik {probability:.0f}% | RR {rr_value:.2f} | {reason}")
-                else:
-                    lines.extend(
-                        [
-                            f"TP1 : {float(item.get('take_profit_1') or 0.0):.4f}",
-                            f"TP2 : {float(item.get('take_profit_2') or 0.0):.4f}",
-                            f"TP3 : {float(item.get('take_profit_3') or 0.0):.4f}",
-                            f"TP4 : {float(item.get('take_profit_4') or 0.0):.4f}",
-                        ]
-                    )
-
-                component_scores = dict(item.get("component_scores") or {})
-                if component_scores:
-                    lines.append(
-                        "Puanlar : "
-                        + ", ".join(
-                            [
-                                f"Grafik {float(component_scores.get('graph_structure', 0.0)):.0f}",
-                                f"Trend {float(component_scores.get('trend', 0.0)):.0f}",
-                                f"Volume {float(component_scores.get('volume', 0.0)):.0f}",
-                                f"Momentum {float(component_scores.get('momentum', 0.0)):.0f}",
-                                f"Haber {float(component_scores.get('news', 0.0)):.0f}",
-                                f"AI {float(component_scores.get('ai_confidence', 0.0)):.0f}",
-                            ]
-                        )
-                    )
-
-                formations = list(item.get("chart_formations") or [])
-                if formations:
-                    top_formations = ", ".join(
-                        f"{str(formation.get('name') or '')} ({int(round(float(formation.get('confidence') or 0.0)))}%)"
-                        for formation in formations[:3]
-                        if str(formation.get("name") or "").strip()
-                    )
-                    if top_formations:
-                        lines.append(f"Formasyonlar : {top_formations}")
-
-                market_structure = [str(value) for value in item.get("market_structure_signals") or [] if str(value).strip()]
-                if market_structure:
-                    lines.append(f"Price Action : {', '.join(market_structure[:4])}")
-
-                indicator_confirmations = [str(value) for value in item.get("indicator_confirmations") or [] if str(value).strip()]
-                if indicator_confirmations:
-                    lines.append(f"Indikator Teyidi : {', '.join(indicator_confirmations[:3])}")
-
-                fresh_signals = [str(value) for value in item.get("fresh_signals") or [] if str(value).strip()]
-                if fresh_signals:
-                    lines.append(f"Taze Sinyal : {', '.join(fresh_signals[:4])}")
-
-                reasons = [str(value) for value in item.get("reasons") or [] if str(value).strip()]
-                if reasons:
-                    lines.append(f"Sebep : {' | '.join(reasons[:5])}")
-
-                score_lines = [str(value) for value in item.get("score_lines") or [] if str(value).strip()]
-                if score_lines:
-                    lines.append(f"Skor Kirilimi : {' | '.join(score_lines[:4])}")
-
-                macro_notes = [str(value) for value in item.get("macro_notes") or [] if str(value).strip()]
-                if macro_notes:
-                    lines.append(f"Makro Not : {' | '.join(macro_notes[:2])}")
-
-                ai_summary = str(item.get("ai_summary") or "").strip()
-                lines.append(f"AI Ozet : {ai_summary or 'Yok'}")
-                lines.append("---")
-
-        if selection_stats and isinstance(selection_stats.get("best_opportunity"), dict):
-            best = dict(selection_stats.get("best_opportunity") or {})
-            lines.extend(
-                [
-                    "",
-                    f"En iyi fırsat : {best.get('ticker', 'N/A')} ({float(best.get('total_score') or 0.0):.2f})",
-                ]
-            )
-        if selection_stats and isinstance(selection_stats.get("riskiest_opportunity"), dict):
-            riskiest = dict(selection_stats.get("riskiest_opportunity") or {})
-            lines.append(f"En riskli fırsat : {riskiest.get('ticker', 'N/A')} ({float(riskiest.get('risk_reward_ratio') or 0.0):.2f})")
-        if selection_stats and isinstance(selection_stats.get("strongest_news"), dict):
-            strongest_news = dict(selection_stats.get("strongest_news") or {})
-            lines.append(f"En guclu haber etkisi : {strongest_news.get('ticker', 'N/A')} ({float(strongest_news.get('news_score') or 0.0):.2f})")
-        if selection_stats and isinstance(selection_stats.get("strongest_technical"), dict):
-            strongest_technical = dict(selection_stats.get("strongest_technical") or {})
-            lines.append(f"En guclu teknik gorunum : {strongest_technical.get('ticker', 'N/A')} ({float(strongest_technical.get('total_score') or 0.0):.2f})")
-        if selection_stats and isinstance(selection_stats.get("highest_volume_growth"), dict):
-            highest_volume_growth = dict(selection_stats.get("highest_volume_growth") or {})
-            lines.append(f"En yuksek hacim artisi : {highest_volume_growth.get('ticker', 'N/A')} ({float(highest_volume_growth.get('relative_volume') or 0.0):.2f})")
+            if len(ranked_recommendations) > 1:
+                lines.append("Diger on plana cikan hisseler:")
+                for extra in ranked_recommendations[1:5]:
+                    extra_ticker = str(extra.get("ticker") or "UNKNOWN")
+                    extra_gain = float(extra.get("expected_gain_pct") or 0.0)
+                    extra_conf = int(extra.get("user_confidence") or self._user_confidence_score(extra))
+                    lines.append(f"🟡 {extra_ticker} | Beklenen Kazanc: %{extra_gain:.1f} | Guven: %{extra_conf}")
 
         if portfolio_analysis:
             lines.extend(["", "📂 Acik Pozisyonlar"])
@@ -2567,7 +2678,46 @@ class FinancePipelineService:
             lines.append("AI Piyasa Ozeti")
             lines.append(str(ai_market_summary).strip())
 
-        return "\n".join(lines)
+        analyzed_total = int(selection_stats.get("analyzed_total", 0)) if selection_stats else 0
+        visible_recs = [
+            item
+            for item in recommendations
+            if str(item.get("ticker") or "").upper() != "CASH"
+        ]
+        strong_count = sum(
+            1
+            for item in visible_recs
+            if float(item.get("expected_gain_pct") or 0.0) >= 7.0
+            and int(item.get("user_confidence") or self._user_confidence_score(item)) >= 70
+        )
+        medium_count = sum(
+            1
+            for item in visible_recs
+            if 3.0 <= float(item.get("expected_gain_pct") or 0.0) < 7.0
+        )
+        risky_count = max(0, analyzed_total - strong_count - medium_count)
+        outlook_icon, outlook_text = self._market_outlook_label(
+            strong_count=strong_count,
+            medium_count=medium_count,
+            risky_count=risky_count,
+        )
+
+        lines.extend(
+            [
+                "",
+                "📊 Genel Durum",
+                "",
+                f"Analiz edilen hisse: {analyzed_total}",
+                f"Guclu firsat: {strong_count}",
+                f"Orta firsat: {medium_count}",
+                f"Riskli gorulen hisse: {risky_count}",
+                "",
+                "Bugun piyasa gorunumu:",
+                f"{outlook_icon} {outlook_text}",
+            ]
+        )
+
+        return self._sanitize_user_output("\n".join(lines))
 
     def _enrich_recommendations_with_ai(self, recommendations: list[dict[str, Any]]) -> list[dict[str, Any]]:
         if not recommendations:

@@ -39,6 +39,7 @@ class GeminiService:
 
         self._models_by_key: dict[str, Any] = {}
         self._sdk: Any | None = None
+        self._sdk_variant: str | None = None
         self._active_key_index = 0
         self._last_used_key_index = 0
         self._request_count = 0
@@ -278,12 +279,21 @@ class GeminiService:
         if self._sdk is not None:
             return True
 
-        try:
-            self._sdk = importlib.import_module("google.generativeai")
-            return True
-        except ModuleNotFoundError:
-            logger.warning("Gemini SDK is not installed; AI enrichment disabled")
-            return False
+        for module_name, variant in [
+            ("google.generativeai", "legacy"),
+            ("google.genai", "modern"),
+        ]:
+            try:
+                self._sdk = importlib.import_module(module_name)
+                self._sdk_variant = variant
+                return True
+            except ModuleNotFoundError:
+                continue
+
+        logger.warning(
+            "Gemini SDK is not installed; AI enrichment disabled. Install google-generativeai or google-genai."
+        )
+        return False
 
     def _model_for_key(self, api_key: str) -> Any | None:
         model = self._models_by_key.get(api_key)
@@ -294,20 +304,78 @@ class GeminiService:
             return None
 
         assert self._sdk is not None
-        configure = getattr(self._sdk, "configure", None)
-        model_cls = getattr(self._sdk, "GenerativeModel", None)
-        if not callable(configure) or model_cls is None:
-            logger.warning("Gemini SDK exports are unavailable; AI enrichment disabled")
-            return None
-
         try:
-            configure(api_key=api_key)
-            model = model_cls(self._model_name)
+            model: Any
+            if self._sdk_variant == "legacy":
+                configure = getattr(self._sdk, "configure", None)
+                model_cls = getattr(self._sdk, "GenerativeModel", None)
+                if not callable(configure) or model_cls is None:
+                    logger.warning("Gemini legacy SDK exports are unavailable; AI enrichment disabled")
+                    return None
+                configure(api_key=api_key)
+                model = model_cls(self._model_name)
+            elif self._sdk_variant == "modern":
+                client_cls = getattr(self._sdk, "Client", None)
+                if client_cls is None:
+                    logger.warning("Gemini modern SDK exports are unavailable; AI enrichment disabled")
+                    return None
+                model = client_cls(api_key=api_key)
+            else:
+                logger.warning("Gemini SDK variant could not be detected")
+                return None
+
             self._models_by_key[api_key] = model
             return model
         except Exception as exc:  # pragma: no cover - SDK-specific initialization failure
             logger.warning("Gemini client initialization failed for key index %s: %s", self._safe_key_index(api_key), exc)
             return None
+
+    def _extract_response_text(self, response: Any) -> str:
+        text_value = str(getattr(response, "text", "") or "").strip()
+        if text_value:
+            return text_value
+
+        candidates = getattr(response, "candidates", None)
+        if isinstance(candidates, list):
+            for candidate in candidates:
+                content = getattr(candidate, "content", None)
+                parts = getattr(content, "parts", None)
+                if not isinstance(parts, list):
+                    continue
+                chunks: list[str] = []
+                for part in parts:
+                    part_text = str(getattr(part, "text", "") or "").strip()
+                    if part_text:
+                        chunks.append(part_text)
+                if chunks:
+                    return "\n".join(chunks).strip()
+
+        return ""
+
+    def _generate_with_handle(self, handle: Any, prompt: str) -> str:
+        if self._sdk_variant == "legacy":
+            response = handle.generate_content(
+                prompt,
+                generation_config={"temperature": 0.1, "max_output_tokens": 700},
+                request_options={"timeout": self._timeout_seconds},
+            )
+            return self._extract_response_text(response)
+
+        if self._sdk_variant == "modern":
+            model_api = getattr(handle, "models", None)
+            if model_api is None or not hasattr(model_api, "generate_content"):
+                raise RuntimeError("Gemini modern client missing models.generate_content")
+
+            response = model_api.generate_content(
+                model=self._model_name,
+                contents=prompt,
+                config={"temperature": 0.1, "max_output_tokens": 700},
+            )
+            return self._extract_response_text(response)
+
+        # Fallback for tests and custom stubs.
+        response = handle.generate_content(prompt)
+        return self._extract_response_text(response)
 
     def _request_json(self, *, prompt: str, cache_key: str, retries: int | None = None) -> dict[str, Any] | None:
         cached = self._cache.get(cache_key)
@@ -348,12 +416,7 @@ class GeminiService:
                 continue
 
             try:
-                response = model.generate_content(
-                    prompt,
-                    generation_config={"temperature": 0.1, "max_output_tokens": 700},
-                    request_options={"timeout": self._timeout_seconds},
-                )
-                text = str(getattr(response, "text", "") or "").strip()
+                text = self._generate_with_handle(model, prompt)
                 if not text:
                     raise ValueError("empty response text")
 
@@ -398,6 +461,7 @@ class GeminiService:
         return {
             "total_requests": int(self._request_count),
             "last_key_label": key_label,
+            "sdk_variant": str(self._sdk_variant or "unknown"),
         }
 
     def _cache_key(self, prefix: str, payload: Any) -> str:

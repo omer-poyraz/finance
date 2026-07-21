@@ -53,6 +53,7 @@ class Settings:
     telegram_chat_id: str = os.getenv("TELEGRAM_CHAT_ID", "")
     gemini_api_key: str = os.getenv("GEMINI_API_KEY", "")
     gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
+    gemini_required: bool = _env_bool("GEMINI_REQUIRED", True)
     storage_data_dir: str = os.getenv("STORAGE_DATA_DIR", "storage/data")
     markets: str = os.getenv("MARKETS", "BIST,US")
     us_market_tickers: str = os.getenv("US_MARKET_TICKERS", "GOOGL,AMZN,TSLA,META,NFLX")

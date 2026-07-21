@@ -8,6 +8,7 @@ from datetime import UTC
 from datetime import datetime
 import json
 import logging
+import math
 import time
 from typing import Any
 
@@ -1129,7 +1130,6 @@ class FinancePipelineService:
         final_item["rank"] = rank
         final_item["market"] = "BIST"
         final_item["decision"] = str(final_item.get("decision") or "WAIT")
-        final_item["confidence"] = None
         final_item["overall_score"] = round(float(final_item.get("total_score") or 0.0), 2)
         final_item["recommended_amount"] = round(float(final_item.get("recommended_amount") or 0.0), 2)
         final_item["rejected"] = False
@@ -1149,7 +1149,8 @@ class FinancePipelineService:
             self._compute_gain_pct(base_price=current_price, target_price=target_price),
             2,
         )
-        final_item["user_confidence"] = self._user_confidence_score(final_item)
+        final_item["confidence"] = float(self._bist_confidence_score(final_item))
+        final_item["user_confidence"] = int(round(float(final_item.get("confidence") or 0.0)))
         execution_plan = self._build_execution_plan(final_item)
         final_item["execution_plan"] = execution_plan
         final_item["trade_instruction"] = str(execution_plan.get("instruction") or "NO TRADE")
@@ -1323,6 +1324,109 @@ class FinancePipelineService:
 
         overall = float(item.get("overall_score") or item.get("total_score") or 0.0)
         return int(max(0, min(100, round(overall))))
+
+    def _bist_confidence_score(self, item: dict[str, Any]) -> float:
+        component_scores = dict(item.get("component_scores") or {})
+
+        def normalize_component(name: str, cap_value: float) -> float:
+            value = float(component_scores.get(name) or 0.0)
+            if cap_value <= 0:
+                return 0.0
+            return max(0.0, min(100.0, (value / cap_value) * 100.0))
+
+        pattern_score = normalize_component("graph_structure", 50.0)
+        trend_score = normalize_component("trend", 22.0)
+        volume_score = normalize_component("volume", 12.0)
+        momentum_score = normalize_component("momentum", 10.0)
+        news_score = normalize_component("news", 4.0)
+        ai_score = normalize_component("ai_confidence", 2.0)
+
+        rr = float(item.get("risk_reward_ratio") or 0.0)
+        if rr <= 0:
+            risk_score = 0.0
+        elif rr >= 3.0:
+            risk_score = 100.0
+        else:
+            risk_score = (rr / 3.0) * 100.0
+
+        macro_multiplier = float(item.get("macro_multiplier") or 1.0)
+        market_score = max(0.0, min(100.0, ((macro_multiplier - 0.84) / 0.28) * 100.0))
+        if market_score == 0.0:
+            market_score = max(0.0, min(100.0, float(item.get("trend_strength") or 0.0)))
+
+        decision = str(item.get("decision") or "WAIT").upper()
+        decision_score = {
+            "BUY NOW": 90.0,
+            "LIMIT BUY": 84.0,
+            "BUY": 82.0,
+            "PULLBACK BEKLE": 64.0,
+            "BREAKOUT BEKLE": 62.0,
+            "WAIT": 50.0,
+            "ENTRY MISSED": 42.0,
+            "SELL": 30.0,
+            "EXIT": 25.0,
+            "NO TRADE": 20.0,
+        }.get(decision, 48.0)
+
+        confidence = (
+            pattern_score * 0.20
+            + trend_score * 0.14
+            + momentum_score * 0.12
+            + volume_score * 0.10
+            + news_score * 0.10
+            + ai_score * 0.08
+            + risk_score * 0.14
+            + market_score * 0.07
+            + decision_score * 0.05
+        )
+        return round(max(0.0, min(100.0, confidence)), 2)
+
+    def _apply_ai_enrichment_to_scores(
+        self,
+        item: dict[str, Any],
+        *,
+        news_ai: dict[str, Any] | None,
+        kap_ai: dict[str, Any] | None,
+    ) -> dict[str, Any]:
+        payload = dict(item)
+        component_scores = dict(payload.get("component_scores") or {})
+        if not component_scores:
+            return payload
+
+        signals = [data for data in [news_ai, kap_ai] if isinstance(data, dict)]
+        if not signals:
+            return payload
+
+        sentiment_map = {"POSITIVE": 1.0, "NEUTRAL": 0.0, "NEGATIVE": -1.0}
+        sentiments = [sentiment_map.get(str(data.get("sentiment") or "NEUTRAL").upper(), 0.0) for data in signals]
+        confidences = [max(0.0, min(100.0, float(data.get("confidence") or 50.0))) for data in signals]
+
+        sentiment_bias = sum(sentiments) / max(1, len(sentiments))
+        avg_confidence = sum(confidences) / max(1, len(confidences))
+
+        base_ai_component = (avg_confidence / 100.0) * 2.0
+        ai_component = max(0.0, min(2.0, base_ai_component + (sentiment_bias * 0.35)))
+        news_component = float(component_scores.get("news") or 0.0)
+        news_component = max(0.0, min(4.0, news_component + (sentiment_bias * 0.8)))
+
+        component_scores["ai_confidence"] = round(ai_component, 2)
+        component_scores["news"] = round(news_component, 2)
+        payload["component_scores"] = component_scores
+
+        macro_multiplier = float(payload.get("macro_multiplier") or 1.0)
+        total_score = round(sum(float(value or 0.0) for value in component_scores.values()) * macro_multiplier, 2)
+        payload["total_score"] = total_score
+        payload["overall_score"] = total_score
+        payload["confidence"] = self._bist_confidence_score(payload)
+
+        reasons = list(payload.get("reasons") or [])
+        if sentiment_bias > 0.2:
+            reasons.append("Gemini haber tonu olumlu")
+        elif sentiment_bias < -0.2:
+            reasons.append("Gemini haber tonu olumsuz")
+        payload["reasons"] = reasons
+
+        return payload
 
     def _plain_turkish_reason(self, reason: str) -> str:
         text = str(reason or "").strip()
@@ -1984,10 +2088,16 @@ class FinancePipelineService:
                     "tp1": round(tp1, 4),
                     "tp2": round(tp2, 4),
                     "tp3": round(tp3, 4),
+                    "tp4": round(float(item.get("take_profit_4") or tp3), 4),
+                    "take_profit_levels": list(item.get("take_profit_levels") or []),
                     "risk_reward": round(float(item.get("risk_reward_ratio") or 0.0), 4),
                     "current_target": round(target, 4),
                     "entry_range_low": round(float(item.get("entry_range_low") or entry), 4),
                     "entry_range_high": round(float(item.get("entry_range_high") or entry), 4),
+                    "entry_strategy": str(item.get("entry_strategy") or "Unknown"),
+                    "entry_status": str(item.get("entry_status") or "WAIT"),
+                    "limit_entry_price": round(float(item.get("limit_entry_price") or entry), 4),
+                    "trade_instruction": str(item.get("trade_instruction") or ""),
                     "confidence": round(float(item.get("confidence") or 0.0), 2),
                     "overall_score": round(float(item.get("overall_score") or 0.0), 2),
                     "technical_score": round(float(item.get("technical_score") or 0.0), 2),
@@ -2002,6 +2112,9 @@ class FinancePipelineService:
                     "profit_pct": 0.0,
                     "loss_percent": 0.0,
                     "holding_days": 0,
+                    "holding_time_hours": 0.0,
+                    "reached_tp": "NONE",
+                    "stopped": False,
                     "max_gain": 0.0,
                     "max_drawdown": 0.0,
                 }
@@ -2117,11 +2230,14 @@ class FinancePipelineService:
                 entry["result"] = result
                 entry["risk_reward_result"] = risk_reward_result
                 entry["holding_days"] = int(holding_days)
+                entry["holding_time_hours"] = round(max(0.0, (now_utc - opened_dt).total_seconds() / 3600.0), 2)
                 entry["profit_percent"] = round(max(profit_pct, 0.0), 4)
                 entry["profit_pct"] = round(profit_pct, 4)
                 entry["loss_percent"] = round(abs(min(profit_pct, 0.0)), 4)
                 entry["max_gain"] = round(max(max_gain, 0.0), 4)
                 entry["max_drawdown"] = round(abs(min(max_drawdown, 0.0)), 4)
+                entry["reached_tp"] = risk_reward_result if risk_reward_result.startswith("TP") else "NONE"
+                entry["stopped"] = bool(risk_reward_result == "STOP")
 
         performance = self._calculate_performance(history)
         self._save_if_changed("history.json", history)
@@ -2765,6 +2881,7 @@ class FinancePipelineService:
             enriched_item["ai_summary"] = ai_summary or None
             enriched_item["ai_risk"] = self._ai_risk_label(news_ai, kap_ai)
             enriched_item["ai_reason"] = " | ".join(ai_reason_parts) if ai_reason_parts else None
+            enriched_item = self._apply_ai_enrichment_to_scores(enriched_item, news_ai=news_ai, kap_ai=kap_ai)
             enriched.append(enriched_item)
 
         return enriched
@@ -2964,10 +3081,105 @@ class FinancePipelineService:
         worst_trade = min((float(entry.get("profit_pct") or 0.0) for entry in closed_entries), default=0.0)
         average_holding = sum(float(entry.get("holding_days") or 0.0) for entry in entries) / len(entries) if entries else 0.0
 
+        pending_signals = len(open_entries)
+        tp_hits = sum(
+            1
+            for entry in closed_entries
+            if str(entry.get("risk_reward_result") or "").upper().startswith("TP")
+        )
+        stop_hits = sum(1 for entry in closed_entries if str(entry.get("risk_reward_result") or "").upper() == "STOP")
+
+        gross_profit = sum(max(0.0, float(entry.get("profit_pct") or 0.0)) for entry in closed_entries)
+        gross_loss = abs(sum(min(0.0, float(entry.get("profit_pct") or 0.0)) for entry in closed_entries))
+        if gross_loss <= 1e-9:
+            profit_factor = float(gross_profit) if gross_profit > 0 else 0.0
+        else:
+            profit_factor = gross_profit / gross_loss
+
+        win_rate_ratio = (len(winning_entries) / len(closed_entries)) if closed_entries else 0.0
+        loss_rate_ratio = (len(losing_entries) / len(closed_entries)) if closed_entries else 0.0
+        expectancy = (win_rate_ratio * average_profit) + (loss_rate_ratio * average_loss)
+
+        returns = [float(entry.get("profit_pct") or 0.0) / 100.0 for entry in closed_entries]
+        sharpe = 0.0
+        if len(returns) >= 2:
+            mean_return = sum(returns) / len(returns)
+            variance = sum((value - mean_return) ** 2 for value in returns) / (len(returns) - 1)
+            std_dev = math.sqrt(max(0.0, variance))
+            if std_dev > 1e-9:
+                sharpe = (mean_return / std_dev) * math.sqrt(len(returns))
+
+        rr_values = [float(entry.get("risk_reward") or 0.0) for entry in entries if float(entry.get("risk_reward") or 0.0) > 0]
+        average_rr = (sum(rr_values) / len(rr_values)) if rr_values else 0.0
+
+        strategy_bucket: dict[str, dict[str, int]] = {}
+        for entry in entries:
+            strategy = str(entry.get("entry_strategy") or "Unknown").strip() or "Unknown"
+            bucket = strategy_bucket.setdefault(strategy, {"total": 0, "closed": 0, "wins": 0, "losses": 0})
+            bucket["total"] += 1
+            status = str(entry.get("status") or "").upper()
+            if status != "CLOSED":
+                continue
+            bucket["closed"] += 1
+            result = str(entry.get("result") or "").upper()
+            if result == "WIN":
+                bucket["wins"] += 1
+            elif result == "LOSE":
+                bucket["losses"] += 1
+
+        strategy_success: dict[str, dict[str, float | int]] = {}
+        for strategy, data in strategy_bucket.items():
+            closed = int(data["closed"])
+            wins = int(data["wins"])
+            losses = int(data["losses"])
+            strategy_success[strategy] = {
+                "total": int(data["total"]),
+                "closed": closed,
+                "wins": wins,
+                "losses": losses,
+                "pending": max(0, int(data["total"]) - closed),
+                "win_rate": round((wins / closed * 100.0) if closed else 0.0, 2),
+            }
+
+        daily: dict[str, dict[str, Any]] = {}
+        for entry in entries:
+            timestamp = str(entry.get("generated_time") or entry.get("opened_at") or "")
+            day_key = timestamp[:10] if len(timestamp) >= 10 else "UNKNOWN"
+            row = daily.setdefault(
+                day_key,
+                {"signals": 0, "closed": 0, "wins": 0, "losses": 0, "pending": 0, "total_profit_pct": 0.0},
+            )
+            row["signals"] += 1
+            status = str(entry.get("status") or "").upper()
+            if status == "CLOSED":
+                row["closed"] += 1
+                row["total_profit_pct"] += float(entry.get("profit_pct") or 0.0)
+                result = str(entry.get("result") or "").upper()
+                if result == "WIN":
+                    row["wins"] += 1
+                elif result == "LOSE":
+                    row["losses"] += 1
+            else:
+                row["pending"] += 1
+
+        daily_report = {
+            date_key: {
+                "signals": int(payload["signals"]),
+                "closed": int(payload["closed"]),
+                "wins": int(payload["wins"]),
+                "losses": int(payload["losses"]),
+                "pending": int(payload["pending"]),
+                "total_profit_pct": round(float(payload["total_profit_pct"]), 4),
+                "win_rate": round((float(payload["wins"]) / float(payload["closed"]) * 100.0) if float(payload["closed"]) > 0 else 0.0, 2),
+            }
+            for date_key, payload in sorted(daily.items())
+        }
+
         return {
             "total_signals": total,
             "winning_signals": len(winning_entries),
             "losing_signals": len(losing_entries),
+            "pending_signals": pending_signals,
             "success_rate": round(success_rate, 2),
             "average_profit": round(average_profit, 4),
             "average_loss": round(average_loss, 4),
@@ -2985,6 +3197,14 @@ class FinancePipelineService:
             "tp3_hits": sum(1 for entry in closed_entries if str(entry.get("risk_reward_result") or "").upper() == "TP3"),
             "stop_hits": sum(1 for entry in closed_entries if str(entry.get("risk_reward_result") or "").upper() == "STOP"),
             "current_open_positions": len(open_entries),
+            "reached_tp": tp_hits,
+            "stopped": stop_hits,
+            "profit_factor": round(profit_factor, 4),
+            "expectancy": round(expectancy, 4),
+            "sharpe": round(sharpe, 4),
+            "average_risk_reward": round(average_rr, 4),
+            "strategy_success": strategy_success,
+            "daily_report": daily_report,
             "updated_at": datetime.now(UTC).isoformat(),
         }
 

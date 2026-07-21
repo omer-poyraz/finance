@@ -22,6 +22,10 @@ DEFAULT_BIST_SCORING_CONFIG: dict[str, Any] = {
         "min_price": 0.1,
         "min_volume": 1,
         "min_average_volume": 1,
+        "min_relative_volume": 0.65,
+        "min_technical_score": 10,
+        "min_atr_ratio": 0.001,
+        "max_atr_ratio": 0.2,
     },
     "thresholds": {
         "buy_score": 60,
@@ -159,6 +163,7 @@ class BistOpportunityEngine:
             average_volume=average_volume,
             technical_score=technical_score,
             trend=trend,
+            relative_volume=relative_volume,
         )
         if hard_filter_reasons:
             return BistOpportunityResult(
@@ -299,13 +304,9 @@ class BistOpportunityEngine:
         component_scores = self._weighted_component_scores(raw_components)
 
         if no_news_signal and not has_gap_signal:
-            # If there is no actionable news/gap signal, bias scoring toward chart structure.
-            transferable = float(component_scores.get("news", 0.0)) + float(component_scores.get("ai_confidence", 0.0))
-            component_scores["news"] = 0.0
-            component_scores["ai_confidence"] = 0.0
-            component_scores["graph_structure"] = self._cap(float(component_scores.get("graph_structure", 0.0)) + (transferable * 0.58), "graph_structure")
-            component_scores["trend"] = self._cap(float(component_scores.get("trend", 0.0)) + (transferable * 0.24), "trend")
-            component_scores["momentum"] = self._cap(float(component_scores.get("momentum", 0.0)) + (transferable * 0.18), "momentum")
+            # Keep a non-zero baseline contribution for neutral news/AI instead of zeroing them out.
+            component_scores["news"] = self._cap(float(component_scores.get("news", 0.0)) * 0.45, "news")
+            component_scores["ai_confidence"] = self._cap(float(component_scores.get("ai_confidence", 0.0)) * 0.45, "ai_confidence")
 
         macro_multiplier, macro_notes = self._macro_adjustment(
             market_item=market_item,
@@ -409,6 +410,7 @@ class BistOpportunityEngine:
         average_volume: float,
         technical_score: float,
         trend: str,
+        relative_volume: float,
     ) -> list[str]:
         hard_filters = self._hard_filter_config()
         reasons: list[str] = []
@@ -421,8 +423,21 @@ class BistOpportunityEngine:
             reasons.append("Islem hacmi yok denecek kadar dusuk")
         if average_volume <= float(hard_filters.get("min_average_volume", 1)):
             reasons.append("Ortalama hacim yetersiz")
-        if technical_score < 5 and trend not in {"Bullish", "Neutral", "Bearish"}:
+        min_technical_score = float(hard_filters.get("min_technical_score", 10))
+        if technical_score < min_technical_score and trend not in {"Bullish", "Neutral", "Bearish"}:
             reasons.append("Teknik durum yorumlanamiyor")
+
+        min_relative_volume = float(hard_filters.get("min_relative_volume", 0.65))
+        if relative_volume < min_relative_volume:
+            reasons.append("Likidite zayif: relatif hacim yetersiz")
+
+        atr_ratio = (atr_value / max(current_price, 1e-9)) if current_price > 0 else 0.0
+        min_atr_ratio = float(hard_filters.get("min_atr_ratio", 0.001))
+        max_atr_ratio = float(hard_filters.get("max_atr_ratio", 0.2))
+        if atr_ratio < min_atr_ratio:
+            reasons.append("Volatilite cok dusuk: hareket alani yetersiz")
+        if atr_ratio > max_atr_ratio:
+            reasons.append("Volatilite asiri yuksek: risk artiyor")
 
         seen: set[str] = set()
         unique: list[str] = []
@@ -1667,7 +1682,23 @@ class BistOpportunityEngine:
                 }
             )
 
-        return selected
+        selected.sort(key=lambda item: float(item.get("price") or 0.0))
+        monotonic: list[dict[str, Any]] = []
+        previous_price = 0.0
+        for index, item in enumerate(selected, start=1):
+            price = round(float(item.get("price") or 0.0), 4)
+            if price <= previous_price:
+                price = round(previous_price + 0.0001, 4)
+            previous_price = price
+            monotonic.append(
+                {
+                    **item,
+                    "label": f"TP{index}",
+                    "price": price,
+                }
+            )
+
+        return monotonic
 
     def _risk_reward_by_tp(
         self,

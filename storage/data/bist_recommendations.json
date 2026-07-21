@@ -1,97 +1,164 @@
 [
   {
-    "ticker": "TTKOM",
-    "company_name": "TÜRK TELEKOMÜNİKASYON A.Ş.",
+    "ticker": "ARMGD",
+    "company_name": "Armada Gida Ticaret ve Sanayi Anonim Sirketi",
     "market": "BIST",
-    "total_score": 47.24,
-    "decision": "NO TRADE",
+    "total_score": 33.5,
+    "decision": "SELL",
     "component_scores": {
-      "graph_structure": 9.96,
-      "trend": 14.98,
-      "volume": 6.94,
-      "momentum": 8.06,
-      "news": 2.5,
-      "ai_confidence": 4.8
+      "graph_structure": 23.32,
+      "trend": 3.12,
+      "volume": 5.55,
+      "momentum": 1.51,
+      "news": 0.0,
+      "ai_confidence": 0.0
     },
     "score_lines": [
-      "Grafik +10",
-      "Trend +15",
-      "Hacim +7",
-      "Momentum +8",
-      "News +2",
-      "AI +5"
+      "Grafik +23",
+      "Trend +3",
+      "Hacim +6",
+      "Momentum +2",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
     ],
     "chart_formations": [],
     "market_structure_signals": [
-      "Swing High"
+      "Higher High",
+      "Higher Low",
+      "Discount",
+      "Range",
+      "Consolidation"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.31% spread)",
-      "MACD pozitif fark 0.0009",
-      "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (97.3)",
-      "ATR/Price kontrollu (1.49%)"
+      "EMA trend negatif (0.12% spread)",
+      "MACD negatif fark 0.0000",
+      "ADX trend gucu (99.6)",
+      "ATR/Price kontrollu (1.69%)",
+      "Bollinger sikisma (0.18%)"
     ],
     "fresh_signals": [
-      "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
-      "Yeni trend donusu"
+      "Yeni trend donusu",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bearish)"
     ],
     "hard_filter_reasons": [],
     "reasons": [
-      "No-trade: mum verisi yetersiz (0/250)",
       "Formasyon bulunamadi",
-      "Price Action: Swing High",
-      "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
+      "Price Action: Higher High",
+      "Price Action: Higher Low",
+      "Price Action: Discount",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.31% spread)",
-      "MACD pozitif fark 0.0009",
-      "Trend guclu",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "EMA trend negatif (0.12% spread)",
+      "MACD negatif fark 0.0000",
+      "Trend zayif",
       "Hacim normal ustu",
-      "Momentum dengeli",
-      "MACD pozitif",
-      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
-      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.0885",
-      "Pullback cap=57.7680",
-      "Entry finalized at 57.7680",
-      "Stop placed below support and ATR=56.5780",
-      "250 mum alti veri: no-trade"
+      "Entry current_price - buffer=0.2970",
+      "Pullback cap=197.4060",
+      "Entry finalized at 197.4060",
+      "Stop placed below support and ATR=192.8770",
+      "Entry strategy: EMA Pullback",
+      "Entry status: BUY",
+      "TP ladder: [206.3, 212.0317, 221.3063, 217.0173]"
     ],
-    "entry_price": 57.768,
-    "entry_range_low": 0.0,
-    "entry_range_high": 0.0,
-    "stop_loss": 56.578,
-    "current_target": 0.0,
-    "take_profit_1": 0.0,
-    "take_profit_2": 0.0,
-    "take_profit_3": 0.0,
-    "take_profit_4": 0.0,
-    "take_profit_levels": [],
-    "risk_reward_by_tp": [],
-    "entry_strategy": "Yetersiz Veri",
-    "entry_strategy_reason": "En az 250 mum gerekli",
-    "entry_status": "NO TRADE",
-    "limit_entry_price": 57.768,
-    "market_entry_allowed": false,
-    "risk_reward_ratio": 0.0,
-    "trend": "Bullish",
-    "trend_strength": 68,
-    "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 59.0,
-    "support": 57.65,
-    "resistance": 59.55,
-    "atr": 0.881499,
-    "volume": 37080077.0,
-    "average_volume": 36060374.8825,
+    "entry_price": 197.406,
+    "entry_range_low": 196.497,
+    "entry_range_high": 198.8454,
+    "stop_loss": 192.877,
+    "current_target": 217.0173,
+    "take_profit_1": 206.3,
+    "take_profit_2": 212.0317,
+    "take_profit_3": 221.3063,
+    "take_profit_4": 217.0173,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 206.3,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 212.0317,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 221.3063,
+        "reason": "Fibonacci 261.8 extension",
+        "type": "fib_2618"
+      },
+      {
+        "label": "TP4",
+        "price": 217.0173,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 206.3,
+        "rr": 1.96,
+        "probability": 49.9,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 212.0317,
+        "rr": 3.23,
+        "probability": 32.6,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 221.3063,
+        "rr": 5.28,
+        "probability": 14.5,
+        "reason": "Fibonacci 261.8 extension"
+      },
+      {
+        "label": "TP4",
+        "price": 217.0173,
+        "rr": 4.33,
+        "probability": 10.0,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "EMA Pullback",
+    "entry_strategy_reason": "EMA20 seviyesine geri cekilme",
+    "entry_status": "BUY",
+    "limit_entry_price": 197.6712,
+    "market_entry_allowed": true,
+    "risk_reward_ratio": 5.28,
+    "trend": "Bearish",
+    "trend_strength": 28,
+    "estimated_trend_duration": "1-2 islem gunu",
+    "current_price": 198.0,
+    "support": 197.0254,
+    "resistance": 206.3,
+    "atr": 3.35481,
+    "volume": 744555.0,
+    "average_volume": 724079.7375,
     "relative_volume": 1.0283,
-    "rsi14": 50.0,
-    "macd_state": "Bullish",
-    "news_score": 50.0,
+    "rsi14": 0.0,
+    "macd_state": "Bearish",
+    "news_score": 51.09,
     "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
     "ai_confidence": null,
     "ai_summary": null,
     "ai_reason": null,
@@ -100,442 +167,1294 @@
     "score_label": "Speculative",
     "status": "ELIGIBLE",
     "rank": 1,
-    "news_confidence": 96.0,
+    "news_confidence": 50.0,
     "market_item": {
-      "ticker": "TTKOM",
-      "name": "TÜRK TELEKOMÜNİKASYON A.Ş."
+      "ticker": "ARMGD",
+      "name": "Armada Gida Ticaret ve Sanayi Anonim Sirketi"
     },
+    "expected_gain_pct": 9.93,
+    "today_potential_pct": 9.6,
     "confidence": null,
-    "overall_score": 47.24,
+    "overall_score": 33.5,
     "recommended_amount": 0.0,
     "rejected": false,
-    "reject_reasons": []
+    "reject_reasons": [],
+    "user_confidence": 28,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "ARMGD: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 5.28
+    },
+    "trade_instruction": "ARMGD: NO TRADE"
   },
   {
-    "ticker": "PRKAB",
-    "company_name": "TÜRK PRYSMİAN KABLO VE SİSTEMLERİ A.Ş.",
+    "ticker": "ICUGS",
+    "company_name": "ICU Girisim Sermayesi Yatirim Ortakligi A.S.",
     "market": "BIST",
-    "total_score": 47.24,
-    "decision": "NO TRADE",
+    "total_score": 77.91,
+    "decision": "LIMIT BUY",
     "component_scores": {
-      "graph_structure": 9.96,
-      "trend": 14.98,
-      "volume": 6.94,
-      "momentum": 8.06,
-      "news": 2.5,
-      "ai_confidence": 4.8
+      "graph_structure": 46.13,
+      "trend": 17.13,
+      "volume": 5.55,
+      "momentum": 9.09,
+      "news": 0.0,
+      "ai_confidence": 0.0
     },
     "score_lines": [
-      "Grafik +10",
-      "Trend +15",
-      "Hacim +7",
-      "Momentum +8",
-      "News +2",
-      "AI +5"
+      "Grafik +46",
+      "Trend +17",
+      "Hacim +6",
+      "Momentum +9",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
     ],
-    "chart_formations": [],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 72.3,
+        "reason": "Destekten toparlanma ve trend devami"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 67.3,
+        "reason": "Destekte cift dipten donus"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 64.3,
+        "reason": "Boyun cizgisi ustunde kuvvet"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 63.0,
+        "reason": "Yukselen diplerle sikisan fiyat"
+      }
+    ],
     "market_structure_signals": [
-      "Swing High"
+      "Higher High",
+      "Lower Low",
+      "Liquidity Sweep",
+      "False Breakout",
+      "Retest",
+      "Discount",
+      "Range",
+      "Consolidation"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.19% spread)",
-      "MACD pozitif fark 0.0003",
+      "EMA trend pozitif (0.03% spread)",
+      "MACD pozitif fark 0.0000",
       "RSI denge bolgesi (50.0)",
       "ADX trend gucu (100.0)",
-      "ATR/Price kontrollu (1.29%)"
+      "ATR/Price kontrollu (1.35%)"
     ],
     "fresh_signals": [
       "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
-      "Yeni trend donusu"
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bullish)",
+      "Saatlik ve gunluk trend gucu yuksek"
     ],
     "hard_filter_reasons": [],
     "reasons": [
-      "No-trade: mum verisi yetersiz (0/250)",
-      "Formasyon bulunamadi",
-      "Price Action: Swing High",
+      "Formasyon: Cup and Handle (72%)",
+      "Destekten toparlanma ve trend devami",
+      "Price Action: Higher High",
+      "Price Action: Lower Low",
+      "Price Action: Liquidity Sweep",
       "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.19% spread)",
-      "MACD pozitif fark 0.0003",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "EMA trend pozitif (0.03% spread)",
+      "MACD pozitif fark 0.0000",
       "Trend guclu",
       "Hacim normal ustu",
       "Momentum dengeli",
       "MACD pozitif",
-      "Detected ticker(s): AMID, CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO",
-      "Detected ticker(s): CALL, FEEDS, HAVA, PRKAB, TBORG, THYAO, TKHVY, TRALT, TRILC, TTKOM, TTRAK, TURK, YAHOO"
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.0519",
-      "Pullback cap=34.1537",
-      "Entry finalized at 34.1537",
-      "Stop placed below support and ATR=33.5531",
-      "250 mum alti veri: no-trade"
+      "Entry current_price - buffer=0.0100",
+      "Pullback cap=5.7115",
+      "Entry finalized at 5.7115",
+      "Stop placed below support and ATR=5.6068",
+      "Entry strategy: Retest",
+      "Entry status: BUY",
+      "TP ladder: [5.94, 6.0883, 6.18, 6.2873]"
     ],
-    "entry_price": 34.1537,
-    "entry_range_low": 0.0,
-    "entry_range_high": 0.0,
-    "stop_loss": 33.5531,
-    "current_target": 0.0,
-    "take_profit_1": 0.0,
-    "take_profit_2": 0.0,
-    "take_profit_3": 0.0,
-    "take_profit_4": 0.0,
-    "take_profit_levels": [],
-    "risk_reward_by_tp": [],
-    "entry_strategy": "Yetersiz Veri",
-    "entry_strategy_reason": "En az 250 mum gerekli",
-    "entry_status": "NO TRADE",
-    "limit_entry_price": 34.1537,
+    "entry_price": 5.7115,
+    "entry_range_low": 5.687,
+    "entry_range_high": 5.7446,
+    "stop_loss": 5.6068,
+    "current_target": 6.2873,
+    "take_profit_1": 5.94,
+    "take_profit_2": 6.0883,
+    "take_profit_3": 6.18,
+    "take_profit_4": 6.2873,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 5.94,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 6.0883,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 6.18,
+        "reason": "Cup and Handle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 6.2873,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 5.94,
+        "rr": 2.18,
+        "probability": 76.9,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 6.0883,
+        "rr": 3.6,
+        "probability": 59.8,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 6.18,
+        "rr": 4.47,
+        "probability": 43.1,
+        "reason": "Cup and Handle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 6.2873,
+        "rr": 5.5,
+        "probability": 26.2,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "Retest",
+    "entry_strategy_reason": "Kirilan seviyenin geri testi goruluyor",
+    "entry_status": "BUY",
+    "limit_entry_price": 5.7158,
     "market_entry_allowed": false,
-    "risk_reward_ratio": 0.0,
+    "risk_reward_ratio": 4.47,
     "trend": "Bullish",
-    "trend_strength": 68,
+    "trend_strength": 66,
     "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 34.58,
-    "support": 34.0845,
-    "resistance": 35.0,
-    "atr": 0.444884,
-    "volume": 482293.0,
-    "average_volume": 469029.9425,
-    "relative_volume": 1.0283,
-    "rsi14": 50.0,
-    "macd_state": "Bullish",
-    "news_score": 50.0,
-    "news_sentiment": "Neutral",
-    "ai_confidence": null,
-    "ai_summary": null,
-    "ai_reason": null,
-    "ai_risk": null,
-    "hard_filtered": false,
-    "score_label": "Speculative",
-    "status": "ELIGIBLE",
-    "rank": 2,
-    "news_confidence": 96.0,
-    "market_item": {
-      "ticker": "PRKAB",
-      "name": "TÜRK PRYSMİAN KABLO VE SİSTEMLERİ A.Ş."
-    },
-    "confidence": null,
-    "overall_score": 47.24,
-    "recommended_amount": 0.0,
-    "rejected": false,
-    "reject_reasons": []
-  },
-  {
-    "ticker": "ISMEN",
-    "company_name": "İŞ YATIRIM MENKUL DEĞERLER A.Ş.",
-    "market": "BIST",
-    "total_score": 46.39,
-    "decision": "NO TRADE",
-    "component_scores": {
-      "graph_structure": 9.96,
-      "trend": 14.98,
-      "volume": 6.94,
-      "momentum": 8.06,
-      "news": 2.5,
-      "ai_confidence": 3.95
-    },
-    "score_lines": [
-      "Grafik +10",
-      "Trend +15",
-      "Hacim +7",
-      "Momentum +8",
-      "News +2",
-      "AI +4"
-    ],
-    "chart_formations": [],
-    "market_structure_signals": [
-      "Swing High"
-    ],
-    "indicator_confirmations": [
-      "EMA trend pozitif (0.06% spread)",
-      "MACD pozitif fark 0.0001",
-      "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (98.9)",
-      "ATR/Price kontrollu (1.10%)"
-    ],
-    "fresh_signals": [
-      "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
-      "Yeni trend donusu"
-    ],
-    "hard_filter_reasons": [],
-    "reasons": [
-      "No-trade: mum verisi yetersiz (0/250)",
-      "Formasyon bulunamadi",
-      "Price Action: Swing High",
-      "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
-      "Yeni trend donusu",
-      "EMA trend pozitif (0.06% spread)",
-      "MACD pozitif fark 0.0001",
-      "Trend guclu",
-      "Hacim normal ustu",
-      "Momentum dengeli",
-      "MACD pozitif",
-      "Detected ticker(s): CEOEM, FEEDS, ISFIN, ISGYO, ISMEN, MOST, SAYS, THIS, YAHOO",
-      "Detected ticker(s): FEEDS, HERE, ISFIN, ISGYO, ISMEN, THIS, YAHOO"
-    ],
-    "price_plan_notes": [
-      "Entry current_price - buffer=0.0551",
-      "Pullback cap=36.2934",
-      "Entry finalized at 36.2934",
-      "Stop placed below support and ATR=35.7482",
-      "250 mum alti veri: no-trade"
-    ],
-    "entry_price": 36.2934,
-    "entry_range_low": 0.0,
-    "entry_range_high": 0.0,
-    "stop_loss": 35.7482,
-    "current_target": 0.0,
-    "take_profit_1": 0.0,
-    "take_profit_2": 0.0,
-    "take_profit_3": 0.0,
-    "take_profit_4": 0.0,
-    "take_profit_levels": [],
-    "risk_reward_by_tp": [],
-    "entry_strategy": "Yetersiz Veri",
-    "entry_strategy_reason": "En az 250 mum gerekli",
-    "entry_status": "NO TRADE",
-    "limit_entry_price": 36.2934,
-    "market_entry_allowed": false,
-    "risk_reward_ratio": 0.0,
-    "trend": "Bullish",
-    "trend_strength": 68,
-    "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 36.7,
-    "support": 36.22,
-    "resistance": 36.8818,
-    "atr": 0.403829,
-    "volume": 4539587.0,
-    "average_volume": 4414748.3575,
-    "relative_volume": 1.0283,
-    "rsi14": 50.0,
-    "macd_state": "Bullish",
-    "news_score": 50.0,
-    "news_sentiment": "Neutral",
-    "ai_confidence": null,
-    "ai_summary": null,
-    "ai_reason": null,
-    "ai_risk": null,
-    "hard_filtered": false,
-    "score_label": "Speculative",
-    "status": "ELIGIBLE",
-    "rank": 3,
-    "news_confidence": 79.0,
-    "market_item": {
-      "ticker": "ISMEN",
-      "name": "İŞ YATIRIM MENKUL DEĞERLER A.Ş."
-    },
-    "confidence": null,
-    "overall_score": 46.39,
-    "recommended_amount": 0.0,
-    "rejected": false,
-    "reject_reasons": []
-  },
-  {
-    "ticker": "ZERGY",
-    "company_name": "Zeray Gayrimenkul Yatirim Ortakligi AS",
-    "market": "BIST",
-    "total_score": 44.99,
-    "decision": "NO TRADE",
-    "component_scores": {
-      "graph_structure": 9.96,
-      "trend": 14.98,
-      "volume": 6.94,
-      "momentum": 8.06,
-      "news": 2.55,
-      "ai_confidence": 2.5
-    },
-    "score_lines": [
-      "Grafik +10",
-      "Trend +15",
-      "Hacim +7",
-      "Momentum +8",
-      "News +3",
-      "AI +2"
-    ],
-    "chart_formations": [],
-    "market_structure_signals": [
-      "Swing High"
-    ],
-    "indicator_confirmations": [
-      "EMA trend pozitif (0.15% spread)",
-      "MACD pozitif fark 0.0001",
-      "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (98.6)",
-      "ATR/Price kontrollu (1.24%)"
-    ],
-    "fresh_signals": [
-      "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
-      "Yeni trend donusu"
-    ],
-    "hard_filter_reasons": [],
-    "reasons": [
-      "No-trade: mum verisi yetersiz (0/250)",
-      "Formasyon bulunamadi",
-      "Price Action: Swing High",
-      "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
-      "Yeni trend donusu",
-      "EMA trend pozitif (0.15% spread)",
-      "MACD pozitif fark 0.0001",
-      "Trend guclu",
-      "Hacim normal ustu",
-      "Momentum dengeli",
-      "MACD pozitif"
-    ],
-    "price_plan_notes": [
-      "Entry current_price - buffer=0.0151",
-      "Pullback cap=9.8701",
-      "Entry finalized at 9.8701",
-      "Stop placed below support and ATR=9.7019",
-      "250 mum alti veri: no-trade"
-    ],
-    "entry_price": 9.8701,
-    "entry_range_low": 0.0,
-    "entry_range_high": 0.0,
-    "stop_loss": 9.7019,
-    "current_target": 0.0,
-    "take_profit_1": 0.0,
-    "take_profit_2": 0.0,
-    "take_profit_3": 0.0,
-    "take_profit_4": 0.0,
-    "take_profit_levels": [],
-    "risk_reward_by_tp": [],
-    "entry_strategy": "Yetersiz Veri",
-    "entry_strategy_reason": "En az 250 mum gerekli",
-    "entry_status": "NO TRADE",
-    "limit_entry_price": 9.8701,
-    "market_entry_allowed": false,
-    "risk_reward_ratio": 0.0,
-    "trend": "Bullish",
-    "trend_strength": 68,
-    "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 10.06,
-    "support": 9.85,
-    "resistance": 10.1091,
-    "atr": 0.124606,
-    "volume": 7211396.0,
-    "average_volume": 7013082.61,
+    "current_price": 5.76,
+    "support": 5.7,
+    "resistance": 5.94,
+    "atr": 0.077586,
+    "volume": 5651982.0,
+    "average_volume": 5496552.495,
     "relative_volume": 1.0283,
     "rsi14": 50.0,
     "macd_state": "Bullish",
     "news_score": 51.09,
     "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
     "ai_confidence": null,
     "ai_summary": null,
     "ai_reason": null,
     "ai_risk": null,
     "hard_filtered": false,
-    "score_label": "Speculative",
+    "score_label": "Strong",
+    "status": "ELIGIBLE",
+    "rank": 2,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "ICUGS",
+      "name": "ICU Girisim Sermayesi Yatirim Ortakligi A.S."
+    },
+    "expected_gain_pct": 10.08,
+    "today_potential_pct": 9.15,
+    "confidence": null,
+    "overall_score": 77.91,
+    "recommended_amount": 0.0,
+    "rejected": false,
+    "reject_reasons": [],
+    "user_confidence": 71,
+    "execution_plan": {
+      "actionable": true,
+      "instruction": "ICUGS: ALIS LIMIT_BUY 5.7158 | STOP 5.6068 | SATIS 5.9400 ve TP merdiveni",
+      "entry_order": {
+        "type": "LIMIT_BUY",
+        "price": 5.7158,
+        "range_low": 5.687,
+        "range_high": 5.7446,
+        "trigger_price": null,
+        "time_in_force": "DAY"
+      },
+      "stop_order": {
+        "type": "STOP_MARKET_SELL",
+        "price": 5.6068,
+        "trail_after_tp1": true,
+        "trail_rule": "TP1 hit sonra stop entry fiyata cek"
+      },
+      "sell_orders": [
+        {
+          "label": "TP1",
+          "price": 5.94,
+          "size_percent": 35,
+          "order_type": "LIMIT_SELL",
+          "reason": "Ilk guclu direnc"
+        },
+        {
+          "label": "TP2",
+          "price": 6.0883,
+          "size_percent": 30,
+          "order_type": "LIMIT_SELL",
+          "reason": "Fibonacci 161.8 extension"
+        },
+        {
+          "label": "TP3",
+          "price": 6.18,
+          "size_percent": 20,
+          "order_type": "LIMIT_SELL",
+          "reason": "Cup and Handle teknik hedefi"
+        },
+        {
+          "label": "TP4",
+          "price": 6.2873,
+          "size_percent": 15,
+          "order_type": "LIMIT_SELL",
+          "reason": "Trend devami projeksiyonu"
+        }
+      ],
+      "invalidation": "Fiyat stop seviyesinin altinda 15dk kapanirsa plan iptal",
+      "risk_reward": 4.47
+    },
+    "trade_instruction": "ICUGS: ALIS LIMIT_BUY 5.7158 | STOP 5.6068 | SATIS 5.9400 ve TP merdiveni"
+  },
+  {
+    "ticker": "EFOR",
+    "company_name": "Efor Yatirim Sanayi Ticaret A.S.",
+    "market": "BIST",
+    "total_score": 74.91,
+    "decision": "ENTRY MISSED",
+    "component_scores": {
+      "graph_structure": 42.82,
+      "trend": 17.2,
+      "volume": 5.55,
+      "momentum": 9.33,
+      "news": 0.0,
+      "ai_confidence": 0.0
+    },
+    "score_lines": [
+      "Grafik +43",
+      "Trend +17",
+      "Hacim +6",
+      "Momentum +9",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
+    ],
+    "chart_formations": [
+      {
+        "name": "Ascending Triangle",
+        "confidence": 63.3,
+        "reason": "Yukselen diplerle sikisan fiyat"
+      }
+    ],
+    "market_structure_signals": [
+      "Lower Low",
+      "Lower High",
+      "Retest",
+      "Premium",
+      "Equal High",
+      "Swing High",
+      "Range",
+      "Consolidation"
+    ],
+    "indicator_confirmations": [
+      "EMA trend pozitif (0.21% spread)",
+      "MACD pozitif fark 0.0000",
+      "RSI denge bolgesi (50.0)",
+      "ADX trend gucu (98.4)",
+      "ATR/Price kontrollu (2.04%)"
+    ],
+    "fresh_signals": [
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bullish)"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "Formasyon: Ascending Triangle (63%)",
+      "Yukselen diplerle sikisan fiyat",
+      "Price Action: Lower Low",
+      "Price Action: Lower High",
+      "Price Action: Retest",
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "EMA trend pozitif (0.21% spread)",
+      "MACD pozitif fark 0.0000",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "MACD pozitif",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.0277",
+      "Pullback cap=17.9451",
+      "Entry finalized at 17.9451",
+      "Stop placed below support and ATR=17.4374",
+      "Entry strategy: Retest",
+      "Entry status: ENTRY MISSED",
+      "TP ladder: [18.5296, 18.9187, 19.1592, 19.7567]"
+    ],
+    "entry_price": 17.9451,
+    "entry_range_low": 17.8408,
+    "entry_range_high": 18.104,
+    "stop_loss": 17.4374,
+    "current_target": 19.7567,
+    "take_profit_1": 18.5296,
+    "take_profit_2": 18.9187,
+    "take_profit_3": 19.1592,
+    "take_profit_4": 19.7567,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 18.5296,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 18.9187,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 19.1592,
+        "reason": "Ascending Triangle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 19.7567,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 18.5296,
+        "rr": 1.15,
+        "probability": 76.3,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 18.9187,
+        "rr": 1.92,
+        "probability": 59.3,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 19.1592,
+        "rr": 2.39,
+        "probability": 42.7,
+        "reason": "Ascending Triangle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 19.7567,
+        "rr": 3.57,
+        "probability": 25.2,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "Retest",
+    "entry_strategy_reason": "Kirilan seviyenin geri testi goruluyor",
+    "entry_status": "ENTRY MISSED",
+    "limit_entry_price": 17.9724,
+    "market_entry_allowed": false,
+    "risk_reward_ratio": 2.39,
+    "trend": "Bullish",
+    "trend_strength": 68,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 18.44,
+    "support": 17.9,
+    "resistance": 18.5296,
+    "atr": 0.37612,
+    "volume": 22438303.0,
+    "average_volume": 21821249.6675,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Strong",
+    "status": "ELIGIBLE",
+    "rank": 3,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "EFOR",
+      "name": "Efor Yatirim Sanayi Ticaret A.S."
+    },
+    "expected_gain_pct": 10.1,
+    "today_potential_pct": 7.14,
+    "confidence": null,
+    "overall_score": 74.91,
+    "recommended_amount": 0.0,
+    "rejected": false,
+    "reject_reasons": [],
+    "user_confidence": 69,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "EFOR: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 2.39
+    },
+    "trade_instruction": "EFOR: NO TRADE"
+  },
+  {
+    "ticker": "QUAGR",
+    "company_name": "QUA GRANITE HAYAL YAPI VE ÜRÜNLERİ SANAYİ TİCARET A.Ş.",
+    "market": "BIST",
+    "total_score": 76.66,
+    "decision": "ENTRY MISSED",
+    "component_scores": {
+      "graph_structure": 44.88,
+      "trend": 17.13,
+      "volume": 5.55,
+      "momentum": 9.09,
+      "news": 0.0,
+      "ai_confidence": 0.0
+    },
+    "score_lines": [
+      "Grafik +45",
+      "Trend +17",
+      "Hacim +6",
+      "Momentum +9",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
+    ],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 72.3,
+        "reason": "Destekten toparlanma ve trend devami"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 67.3,
+        "reason": "Destekte cift dipten donus"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 64.3,
+        "reason": "Boyun cizgisi ustunde kuvvet"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 63.0,
+        "reason": "Yukselen diplerle sikisan fiyat"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Lower Low",
+      "Liquidity Sweep",
+      "False Breakout",
+      "Retest",
+      "Discount",
+      "Range",
+      "Consolidation"
+    ],
+    "indicator_confirmations": [
+      "EMA trend pozitif (0.10% spread)",
+      "MACD pozitif fark 0.0000",
+      "RSI denge bolgesi (50.0)",
+      "ADX trend gucu (100.0)",
+      "ATR/Price kontrollu (1.61%)"
+    ],
+    "fresh_signals": [
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bullish)"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "Formasyon: Cup and Handle (72%)",
+      "Destekten toparlanma ve trend devami",
+      "Price Action: Higher High",
+      "Price Action: Lower Low",
+      "Price Action: Liquidity Sweep",
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "EMA trend pozitif (0.10% spread)",
+      "MACD pozitif fark 0.0000",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "MACD pozitif",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.0100",
+      "Pullback cap=3.3969",
+      "Entry finalized at 3.3969",
+      "Stop placed below support and ATR=3.3222",
+      "Entry strategy: Retest",
+      "Entry status: ENTRY MISSED",
+      "TP ladder: [3.52, 3.6003, 3.65, 3.7327]"
+    ],
+    "entry_price": 3.3969,
+    "entry_range_low": 3.3813,
+    "entry_range_high": 3.42,
+    "stop_loss": 3.3222,
+    "current_target": 3.7327,
+    "take_profit_1": 3.52,
+    "take_profit_2": 3.6003,
+    "take_profit_3": 3.65,
+    "take_profit_4": 3.7327,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 3.52,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 3.6003,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 3.65,
+        "reason": "Cup and Handle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 3.7327,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 3.52,
+        "rr": 1.65,
+        "probability": 76.7,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 3.6003,
+        "rr": 2.72,
+        "probability": 59.6,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 3.65,
+        "rr": 3.39,
+        "probability": 43.0,
+        "reason": "Cup and Handle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 3.7327,
+        "rr": 4.5,
+        "probability": 25.9,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "Retest",
+    "entry_strategy_reason": "Kirilan seviyenin geri testi goruluyor",
+    "entry_status": "ENTRY MISSED",
+    "limit_entry_price": 3.4006,
+    "market_entry_allowed": false,
+    "risk_reward_ratio": 3.39,
+    "trend": "Bullish",
+    "trend_strength": 66,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 3.44,
+    "support": 3.39,
+    "resistance": 3.52,
+    "atr": 0.055312,
+    "volume": 16849276.0,
+    "average_volume": 16385920.91,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Strong",
     "status": "ELIGIBLE",
     "rank": 4,
     "news_confidence": 50.0,
     "market_item": {
-      "ticker": "ZERGY",
-      "name": "Zeray Gayrimenkul Yatirim Ortakligi AS"
+      "ticker": "QUAGR",
+      "name": "QUA GRANITE HAYAL YAPI VE ÜRÜNLERİ SANAYİ TİCARET A.Ş."
     },
+    "expected_gain_pct": 9.89,
+    "today_potential_pct": 8.51,
     "confidence": null,
-    "overall_score": 44.99,
+    "overall_score": 76.66,
     "recommended_amount": 0.0,
     "rejected": false,
-    "reject_reasons": []
+    "reject_reasons": [],
+    "user_confidence": 70,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "QUAGR: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 3.39
+    },
+    "trade_instruction": "QUAGR: NO TRADE"
   },
   {
-    "ticker": "YYLGD",
-    "company_name": "YAYLA AGRO GIDA SANAYİ VE TİCARET A.Ş.",
+    "ticker": "FZLGY",
+    "company_name": "FUZUL GAYRIMENKUL YATIRIM ORTAKLIGI A.S.",
     "market": "BIST",
-    "total_score": 44.99,
-    "decision": "NO TRADE",
+    "total_score": 74.91,
+    "decision": "ENTRY MISSED",
     "component_scores": {
-      "graph_structure": 9.96,
-      "trend": 14.98,
-      "volume": 6.94,
-      "momentum": 8.06,
-      "news": 2.55,
-      "ai_confidence": 2.5
+      "graph_structure": 42.82,
+      "trend": 17.2,
+      "volume": 5.55,
+      "momentum": 9.33,
+      "news": 0.0,
+      "ai_confidence": 0.0
     },
     "score_lines": [
-      "Grafik +10",
-      "Trend +15",
-      "Hacim +7",
-      "Momentum +8",
-      "News +3",
-      "AI +2"
+      "Grafik +43",
+      "Trend +17",
+      "Hacim +6",
+      "Momentum +9",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
     ],
-    "chart_formations": [],
+    "chart_formations": [
+      {
+        "name": "Ascending Triangle",
+        "confidence": 63.3,
+        "reason": "Yukselen diplerle sikisan fiyat"
+      }
+    ],
     "market_structure_signals": [
-      "Swing High"
+      "Higher High",
+      "Lower Low",
+      "Retest",
+      "Premium",
+      "Equal High",
+      "Swing High",
+      "Range",
+      "Consolidation"
     ],
     "indicator_confirmations": [
-      "EMA trend pozitif (0.34% spread)",
-      "MACD pozitif fark 0.0002",
+      "EMA trend pozitif (0.21% spread)",
+      "MACD pozitif fark 0.0000",
       "RSI denge bolgesi (50.0)",
-      "ADX trend gucu (96.6)",
-      "ATR/Price kontrollu (1.53%)"
+      "ADX trend gucu (98.4)",
+      "ATR/Price kontrollu (2.03%)"
     ],
     "fresh_signals": [
       "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
-      "Yeni trend donusu"
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bullish)"
     ],
     "hard_filter_reasons": [],
     "reasons": [
-      "No-trade: mum verisi yetersiz (0/250)",
-      "Formasyon bulunamadi",
-      "Price Action: Swing High",
+      "Formasyon: Ascending Triangle (63%)",
+      "Yukselen diplerle sikisan fiyat",
+      "Price Action: Higher High",
+      "Price Action: Lower Low",
+      "Price Action: Retest",
       "Yeni EMA kesisimi",
-      "Yeni MACD kesisimi",
       "Yeni trend donusu",
-      "EMA trend pozitif (0.34% spread)",
-      "MACD pozitif fark 0.0002",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "EMA trend pozitif (0.21% spread)",
+      "MACD pozitif fark 0.0000",
       "Trend guclu",
       "Hacim normal ustu",
       "Momentum dengeli",
-      "MACD pozitif"
+      "MACD pozitif",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
     ],
     "price_plan_notes": [
-      "Entry current_price - buffer=0.0162",
-      "Pullback cap=10.6046",
-      "Entry finalized at 10.6046",
-      "Stop placed below support and ATR=10.3817",
-      "250 mum alti veri: no-trade"
+      "Entry current_price - buffer=0.0213",
+      "Pullback cap=13.8347",
+      "Entry finalized at 13.8347",
+      "Stop placed below support and ATR=13.4447",
+      "Entry strategy: Retest",
+      "Entry status: ENTRY MISSED",
+      "TP ladder: [14.29, 14.5928, 14.78, 15.2375]"
     ],
-    "entry_price": 10.6046,
-    "entry_range_low": 0.0,
-    "entry_range_high": 0.0,
-    "stop_loss": 10.3817,
-    "current_target": 0.0,
-    "take_profit_1": 0.0,
-    "take_profit_2": 0.0,
-    "take_profit_3": 0.0,
-    "take_profit_4": 0.0,
-    "take_profit_levels": [],
-    "risk_reward_by_tp": [],
-    "entry_strategy": "Yetersiz Veri",
-    "entry_strategy_reason": "En az 250 mum gerekli",
-    "entry_status": "NO TRADE",
-    "limit_entry_price": 10.6046,
+    "entry_price": 13.8347,
+    "entry_range_low": 13.7545,
+    "entry_range_high": 13.9567,
+    "stop_loss": 13.4447,
+    "current_target": 15.2375,
+    "take_profit_1": 14.29,
+    "take_profit_2": 14.5928,
+    "take_profit_3": 14.78,
+    "take_profit_4": 15.2375,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 14.29,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 14.5928,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 14.78,
+        "reason": "Ascending Triangle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 15.2375,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 14.29,
+        "rr": 1.17,
+        "probability": 76.3,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 14.5928,
+        "rr": 1.94,
+        "probability": 59.3,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 14.78,
+        "rr": 2.42,
+        "probability": 42.7,
+        "reason": "Ascending Triangle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 15.2375,
+        "rr": 3.6,
+        "probability": 25.2,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "Retest",
+    "entry_strategy_reason": "Kirilan seviyenin geri testi goruluyor",
+    "entry_status": "ENTRY MISSED",
+    "limit_entry_price": 13.8556,
     "market_entry_allowed": false,
-    "risk_reward_ratio": 0.0,
+    "risk_reward_ratio": 2.42,
     "trend": "Bullish",
     "trend_strength": 68,
     "estimated_trend_duration": "2-5 islem gunu",
-    "current_price": 10.82,
-    "support": 10.583,
-    "resistance": 10.95,
-    "atr": 0.165104,
-    "volume": 3727392.0,
-    "average_volume": 3624888.72,
+    "current_price": 14.21,
+    "support": 13.8,
+    "resistance": 14.29,
+    "atr": 0.28889,
+    "volume": 8033904.0,
+    "average_volume": 7812971.64,
     "relative_volume": 1.0283,
     "rsi14": 50.0,
     "macd_state": "Bullish",
     "news_score": 51.09,
     "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Strong",
+    "status": "ELIGIBLE",
+    "rank": 5,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "FZLGY",
+      "name": "FUZUL GAYRIMENKUL YATIRIM ORTAKLIGI A.S."
+    },
+    "expected_gain_pct": 10.14,
+    "today_potential_pct": 7.23,
+    "confidence": null,
+    "overall_score": 74.91,
+    "recommended_amount": 0.0,
+    "rejected": false,
+    "reject_reasons": [],
+    "user_confidence": 69,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "FZLGY: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 2.42
+    },
+    "trade_instruction": "FZLGY: NO TRADE"
+  },
+  {
+    "ticker": "BOSSA",
+    "company_name": "BOSSA TİCARET VE SANAYİ İŞLETMELERİ T.A.Ş.",
+    "market": "BIST",
+    "total_score": 51.21,
+    "decision": "SELL",
+    "component_scores": {
+      "graph_structure": 40.31,
+      "trend": 3.12,
+      "volume": 5.55,
+      "momentum": 2.23,
+      "news": 0.0,
+      "ai_confidence": 0.0
+    },
+    "score_lines": [
+      "Grafik +40",
+      "Trend +3",
+      "Hacim +6",
+      "Momentum +2",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
+    ],
+    "chart_formations": [
+      {
+        "name": "Descending Triangle",
+        "confidence": 56.7,
+        "reason": "Dusen tepelerle sikisan fiyat"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Lower Low",
+      "Liquidity Sweep",
+      "False Breakout",
+      "Discount",
+      "Range",
+      "Consolidation"
+    ],
+    "indicator_confirmations": [
+      "EMA trend negatif (0.04% spread)",
+      "MACD negatif fark 0.0000",
+      "ADX trend gucu (99.8)",
+      "ATR/Price kontrollu (1.42%)",
+      "Bollinger sikisma (0.06%)"
+    ],
+    "fresh_signals": [
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bearish)"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "Formasyon: Descending Triangle (57%)",
+      "Dusen tepelerle sikisan fiyat",
+      "Price Action: Higher High",
+      "Price Action: Lower Low",
+      "Price Action: Liquidity Sweep",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "EMA trend negatif (0.04% spread)",
+      "MACD negatif fark 0.0000",
+      "Trend zayif",
+      "Hacim normal ustu",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.0107",
+      "Pullback cap=7.0743",
+      "Entry finalized at 7.0743",
+      "Stop placed below support and ATR=6.9374",
+      "Entry strategy: EMA Pullback",
+      "Entry status: BUY",
+      "TP ladder: [7.39, 7.5939, 7.621, 7.7713]"
+    ],
+    "entry_price": 7.0743,
+    "entry_range_low": 7.0422,
+    "entry_range_high": 7.1214,
+    "stop_loss": 6.9374,
+    "current_target": 7.7713,
+    "take_profit_1": 7.39,
+    "take_profit_2": 7.5939,
+    "take_profit_3": 7.621,
+    "take_profit_4": 7.7713,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 7.39,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 7.5939,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 7.621,
+        "reason": "Descending Triangle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 7.7713,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 7.39,
+        "rr": 2.31,
+        "probability": 60.2,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 7.5939,
+        "rr": 3.8,
+        "probability": 42.9,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 7.621,
+        "rr": 3.99,
+        "probability": 26.7,
+        "reason": "Descending Triangle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 7.7713,
+        "rr": 5.09,
+        "probability": 10.0,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "EMA Pullback",
+    "entry_strategy_reason": "EMA20 seviyesine geri cekilme",
+    "entry_status": "BUY",
+    "limit_entry_price": 7.0818,
+    "market_entry_allowed": false,
+    "risk_reward_ratio": 3.99,
+    "trend": "Bearish",
+    "trend_strength": 28,
+    "estimated_trend_duration": "1-2 islem gunu",
+    "current_price": 7.13,
+    "support": 7.06,
+    "resistance": 7.39,
+    "atr": 0.101377,
+    "volume": 4053944.0,
+    "average_volume": 3942460.54,
+    "relative_volume": 1.0283,
+    "rsi14": 0.0,
+    "macd_state": "Bearish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Watch",
+    "status": "ELIGIBLE",
+    "rank": 6,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "BOSSA",
+      "name": "BOSSA TİCARET VE SANAYİ İŞLETMELERİ T.A.Ş."
+    },
+    "expected_gain_pct": 9.85,
+    "today_potential_pct": 8.99,
+    "confidence": null,
+    "overall_score": 51.21,
+    "recommended_amount": 0.0,
+    "rejected": false,
+    "reject_reasons": [],
+    "user_confidence": 41,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "BOSSA: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 3.99
+    },
+    "trade_instruction": "BOSSA: NO TRADE"
+  },
+  {
+    "ticker": "AKFIS",
+    "company_name": "Akfen insaat Turizm ve Ticaret AS",
+    "market": "BIST",
+    "total_score": 34.2,
+    "decision": "SELL",
+    "component_scores": {
+      "graph_structure": 24.02,
+      "trend": 3.12,
+      "volume": 5.55,
+      "momentum": 1.51,
+      "news": 0.0,
+      "ai_confidence": 0.0
+    },
+    "score_lines": [
+      "Grafik +24",
+      "Trend +3",
+      "Hacim +6",
+      "Momentum +2",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
+    ],
+    "chart_formations": [],
+    "market_structure_signals": [
+      "Higher High",
+      "Higher Low",
+      "Discount",
+      "Equal Low",
+      "Range",
+      "Consolidation"
+    ],
+    "indicator_confirmations": [
+      "EMA trend negatif (0.20% spread)",
+      "MACD negatif fark 0.0000",
+      "ADX trend gucu (99.2)",
+      "ATR/Price kontrollu (2.01%)",
+      "Bollinger sikisma (0.30%)"
+    ],
+    "fresh_signals": [
+      "Yeni trend donusu",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bearish)"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "Formasyon bulunamadi",
+      "Price Action: Higher High",
+      "Price Action: Higher Low",
+      "Price Action: Discount",
+      "Yeni trend donusu",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "EMA trend negatif (0.20% spread)",
+      "MACD negatif fark 0.0000",
+      "Trend zayif",
+      "Hacim normal ustu",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.1308",
+      "Pullback cap=86.9384",
+      "Entry finalized at 86.9384",
+      "Stop placed below support and ATR=84.5687",
+      "Entry strategy: EMA Pullback",
+      "Entry status: BUY",
+      "TP ladder: [90.95, 93.53, 97.7047, 95.7741]"
+    ],
+    "entry_price": 86.9384,
+    "entry_range_low": 86.4988,
+    "entry_range_high": 87.7276,
+    "stop_loss": 84.5687,
+    "current_target": 95.7741,
+    "take_profit_1": 90.95,
+    "take_profit_2": 93.53,
+    "take_profit_3": 97.7047,
+    "take_profit_4": 95.7741,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 90.95,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 93.53,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 97.7047,
+        "reason": "Fibonacci 261.8 extension",
+        "type": "fib_2618"
+      },
+      {
+        "label": "TP4",
+        "price": 95.7741,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 90.95,
+        "rr": 1.69,
+        "probability": 50.1,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 93.53,
+        "rr": 2.78,
+        "probability": 32.8,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 97.7047,
+        "rr": 4.54,
+        "probability": 14.6,
+        "reason": "Fibonacci 261.8 extension"
+      },
+      {
+        "label": "TP4",
+        "price": 95.7741,
+        "rr": 3.73,
+        "probability": 10.0,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "EMA Pullback",
+    "entry_strategy_reason": "EMA20 seviyesine geri cekilme",
+    "entry_status": "BUY",
+    "limit_entry_price": 87.1132,
+    "market_entry_allowed": true,
+    "risk_reward_ratio": 4.54,
+    "trend": "Bearish",
+    "trend_strength": 28,
+    "estimated_trend_duration": "1-2 islem gunu",
+    "current_price": 87.2,
+    "support": 86.7753,
+    "resistance": 90.95,
+    "atr": 1.755359,
+    "volume": 704465.0,
+    "average_volume": 685092.2125,
+    "relative_volume": 1.0283,
+    "rsi14": 0.0,
+    "macd_state": "Bearish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
     "ai_confidence": null,
     "ai_summary": null,
     "ai_reason": null,
@@ -543,16 +1462,698 @@
     "hard_filtered": false,
     "score_label": "Speculative",
     "status": "ELIGIBLE",
-    "rank": 5,
+    "rank": 7,
     "news_confidence": 50.0,
     "market_item": {
-      "ticker": "YYLGD",
-      "name": "YAYLA AGRO GIDA SANAYİ VE TİCARET A.Ş."
+      "ticker": "AKFIS",
+      "name": "Akfen insaat Turizm ve Ticaret AS"
     },
+    "expected_gain_pct": 10.16,
+    "today_potential_pct": 9.83,
     "confidence": null,
-    "overall_score": 44.99,
+    "overall_score": 34.2,
     "recommended_amount": 0.0,
     "rejected": false,
-    "reject_reasons": []
+    "reject_reasons": [],
+    "user_confidence": 29,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "AKFIS: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 4.54
+    },
+    "trade_instruction": "AKFIS: NO TRADE"
+  },
+  {
+    "ticker": "KUVVA",
+    "company_name": "KUVVA GIDA TİCARET VE SANAYİ YATIRIMLARI A.Ş.",
+    "market": "BIST",
+    "total_score": 50.51,
+    "decision": "SELL",
+    "component_scores": {
+      "graph_structure": 39.61,
+      "trend": 3.12,
+      "volume": 5.55,
+      "momentum": 2.23,
+      "news": 0.0,
+      "ai_confidence": 0.0
+    },
+    "score_lines": [
+      "Grafik +40",
+      "Trend +3",
+      "Hacim +6",
+      "Momentum +2",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
+    ],
+    "chart_formations": [
+      {
+        "name": "Descending Triangle",
+        "confidence": 56.7,
+        "reason": "Dusen tepelerle sikisan fiyat"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Lower Low",
+      "Discount",
+      "Equal Low",
+      "Range",
+      "Consolidation"
+    ],
+    "indicator_confirmations": [
+      "EMA trend negatif (0.02% spread)",
+      "MACD negatif fark 0.0000",
+      "ADX trend gucu (99.9)",
+      "ATR/Price kontrollu (1.34%)",
+      "Bollinger sikisma (0.03%)"
+    ],
+    "fresh_signals": [
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bearish)"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "Formasyon: Descending Triangle (57%)",
+      "Dusen tepelerle sikisan fiyat",
+      "Price Action: Higher High",
+      "Price Action: Lower Low",
+      "Price Action: Discount",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "EMA trend negatif (0.02% spread)",
+      "MACD negatif fark 0.0000",
+      "Trend zayif",
+      "Hacim normal ustu",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.1943",
+      "Pullback cap=128.6590",
+      "Entry finalized at 128.6590",
+      "Stop placed below support and ATR=126.3120",
+      "Entry strategy: EMA Pullback",
+      "Entry status: BUY",
+      "TP ladder: [134.6, 138.4316, 138.94, 141.7644]"
+    ],
+    "entry_price": 128.659,
+    "entry_range_low": 128.0652,
+    "entry_range_high": 129.5532,
+    "stop_loss": 126.312,
+    "current_target": 141.7644,
+    "take_profit_1": 134.6,
+    "take_profit_2": 138.4316,
+    "take_profit_3": 138.94,
+    "take_profit_4": 141.7644,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 134.6,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 138.4316,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 138.94,
+        "reason": "Descending Triangle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 141.7644,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 134.6,
+        "rr": 2.53,
+        "probability": 59.9,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 138.4316,
+        "rr": 4.16,
+        "probability": 42.6,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 138.94,
+        "rr": 4.38,
+        "probability": 26.4,
+        "reason": "Descending Triangle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 141.7644,
+        "rr": 5.58,
+        "probability": 10.0,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "EMA Pullback",
+    "entry_strategy_reason": "EMA20 seviyesine geri cekilme",
+    "entry_status": "BUY",
+    "limit_entry_price": 128.8092,
+    "market_entry_allowed": true,
+    "risk_reward_ratio": 4.38,
+    "trend": "Bearish",
+    "trend_strength": 28,
+    "estimated_trend_duration": "1-2 islem gunu",
+    "current_price": 129.5,
+    "support": 128.4,
+    "resistance": 134.6,
+    "atr": 1.738499,
+    "volume": 24397.0,
+    "average_volume": 23726.0825,
+    "relative_volume": 1.0283,
+    "rsi14": 0.0,
+    "macd_state": "Bearish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Watch",
+    "status": "ELIGIBLE",
+    "rank": 8,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "KUVVA",
+      "name": "KUVVA GIDA TİCARET VE SANAYİ YATIRIMLARI A.Ş."
+    },
+    "expected_gain_pct": 10.19,
+    "today_potential_pct": 9.47,
+    "confidence": null,
+    "overall_score": 50.51,
+    "recommended_amount": 0.0,
+    "rejected": false,
+    "reject_reasons": [],
+    "user_confidence": 40,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "KUVVA: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 4.38
+    },
+    "trade_instruction": "KUVVA: NO TRADE"
+  },
+  {
+    "ticker": "COSMO",
+    "company_name": "COSMOS YATIRIM HOLDİNG A.Ş.",
+    "market": "BIST",
+    "total_score": 75.96,
+    "decision": "LIMIT BUY",
+    "component_scores": {
+      "graph_structure": 44.18,
+      "trend": 17.13,
+      "volume": 5.55,
+      "momentum": 9.09,
+      "news": 0.0,
+      "ai_confidence": 0.0
+    },
+    "score_lines": [
+      "Grafik +44",
+      "Trend +17",
+      "Hacim +6",
+      "Momentum +9",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
+    ],
+    "chart_formations": [
+      {
+        "name": "Cup and Handle",
+        "confidence": 72.3,
+        "reason": "Destekten toparlanma ve trend devami"
+      },
+      {
+        "name": "Double Bottom (W)",
+        "confidence": 67.3,
+        "reason": "Destekte cift dipten donus"
+      },
+      {
+        "name": "Inverse Head and Shoulders",
+        "confidence": 64.3,
+        "reason": "Boyun cizgisi ustunde kuvvet"
+      },
+      {
+        "name": "Ascending Triangle",
+        "confidence": 63.0,
+        "reason": "Yukselen diplerle sikisan fiyat"
+      }
+    ],
+    "market_structure_signals": [
+      "Higher High",
+      "Lower Low",
+      "Retest",
+      "Discount",
+      "Equal Low",
+      "Range",
+      "Consolidation"
+    ],
+    "indicator_confirmations": [
+      "EMA trend pozitif (0.04% spread)",
+      "MACD pozitif fark 0.0000",
+      "RSI denge bolgesi (50.0)",
+      "ADX trend gucu (100.0)",
+      "ATR/Price kontrollu (1.39%)"
+    ],
+    "fresh_signals": [
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bullish)"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "Formasyon: Cup and Handle (72%)",
+      "Destekten toparlanma ve trend devami",
+      "Price Action: Higher High",
+      "Price Action: Lower Low",
+      "Price Action: Retest",
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "EMA trend pozitif (0.04% spread)",
+      "MACD pozitif fark 0.0000",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "MACD pozitif",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.1974",
+      "Pullback cap=130.7632",
+      "Entry finalized at 130.7632",
+      "Stop placed below support and ATR=128.3009",
+      "Entry strategy: Retest",
+      "Entry status: BUY",
+      "TP ladder: [136.0, 139.399, 141.5, 144.0975]"
+    ],
+    "entry_price": 130.7632,
+    "entry_range_low": 130.203,
+    "entry_range_high": 131.523,
+    "stop_loss": 128.3009,
+    "current_target": 144.0975,
+    "take_profit_1": 136.0,
+    "take_profit_2": 139.399,
+    "take_profit_3": 141.5,
+    "take_profit_4": 144.0975,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 136.0,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 139.399,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 141.5,
+        "reason": "Cup and Handle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 144.0975,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 136.0,
+        "rr": 2.13,
+        "probability": 76.3,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 139.399,
+        "rr": 3.51,
+        "probability": 59.1,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 141.5,
+        "rr": 4.36,
+        "probability": 42.4,
+        "reason": "Cup and Handle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 144.0975,
+        "rr": 5.42,
+        "probability": 25.5,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "Retest",
+    "entry_strategy_reason": "Kirilan seviyenin geri testi goruluyor",
+    "entry_status": "BUY",
+    "limit_entry_price": 130.863,
+    "market_entry_allowed": false,
+    "risk_reward_ratio": 4.36,
+    "trend": "Bullish",
+    "trend_strength": 66,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 131.6,
+    "support": 130.5,
+    "resistance": 136.0,
+    "atr": 1.823908,
+    "volume": 9102.0,
+    "average_volume": 8851.695,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Strong",
+    "status": "ELIGIBLE",
+    "rank": 9,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "COSMO",
+      "name": "COSMOS YATIRIM HOLDİNG A.Ş."
+    },
+    "expected_gain_pct": 10.2,
+    "today_potential_pct": 9.5,
+    "confidence": null,
+    "overall_score": 75.96,
+    "recommended_amount": 0.0,
+    "rejected": false,
+    "reject_reasons": [],
+    "user_confidence": 69,
+    "execution_plan": {
+      "actionable": true,
+      "instruction": "COSMO: ALIS LIMIT_BUY 130.8630 | STOP 128.3009 | SATIS 136.0000 ve TP merdiveni",
+      "entry_order": {
+        "type": "LIMIT_BUY",
+        "price": 130.863,
+        "range_low": 130.203,
+        "range_high": 131.523,
+        "trigger_price": null,
+        "time_in_force": "DAY"
+      },
+      "stop_order": {
+        "type": "STOP_MARKET_SELL",
+        "price": 128.3009,
+        "trail_after_tp1": true,
+        "trail_rule": "TP1 hit sonra stop entry fiyata cek"
+      },
+      "sell_orders": [
+        {
+          "label": "TP1",
+          "price": 136.0,
+          "size_percent": 35,
+          "order_type": "LIMIT_SELL",
+          "reason": "Ilk guclu direnc"
+        },
+        {
+          "label": "TP2",
+          "price": 139.399,
+          "size_percent": 30,
+          "order_type": "LIMIT_SELL",
+          "reason": "Fibonacci 161.8 extension"
+        },
+        {
+          "label": "TP3",
+          "price": 141.5,
+          "size_percent": 20,
+          "order_type": "LIMIT_SELL",
+          "reason": "Cup and Handle teknik hedefi"
+        },
+        {
+          "label": "TP4",
+          "price": 144.0975,
+          "size_percent": 15,
+          "order_type": "LIMIT_SELL",
+          "reason": "Trend devami projeksiyonu"
+        }
+      ],
+      "invalidation": "Fiyat stop seviyesinin altinda 15dk kapanirsa plan iptal",
+      "risk_reward": 4.36
+    },
+    "trade_instruction": "COSMO: ALIS LIMIT_BUY 130.8630 | STOP 128.3009 | SATIS 136.0000 ve TP merdiveni"
+  },
+  {
+    "ticker": "BRSAN",
+    "company_name": "BORUSAN MANNESMANN BORU SANAYİ VE TİCARET A.Ş.",
+    "market": "BIST",
+    "total_score": 74.21,
+    "decision": "ENTRY MISSED",
+    "component_scores": {
+      "graph_structure": 42.12,
+      "trend": 17.2,
+      "volume": 5.55,
+      "momentum": 9.33,
+      "news": 0.0,
+      "ai_confidence": 0.0
+    },
+    "score_lines": [
+      "Grafik +42",
+      "Trend +17",
+      "Hacim +6",
+      "Momentum +9",
+      "News +0",
+      "AI +0",
+      "Makro x1.00"
+    ],
+    "chart_formations": [
+      {
+        "name": "Ascending Triangle",
+        "confidence": 63.3,
+        "reason": "Yukselen diplerle sikisan fiyat"
+      }
+    ],
+    "market_structure_signals": [
+      "Lower Low",
+      "Lower High",
+      "Retest",
+      "Premium",
+      "Swing High",
+      "Range",
+      "Consolidation"
+    ],
+    "indicator_confirmations": [
+      "EMA trend pozitif (0.22% spread)",
+      "MACD pozitif fark 0.0000",
+      "RSI denge bolgesi (50.0)",
+      "ADX trend gucu (98.1)",
+      "ATR/Price kontrollu (2.05%)"
+    ],
+    "fresh_signals": [
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "Kategori-3 Market Structure HH/HL-LH/LL",
+      "Kategori-4 Candle+Price Action: momentum teyidi",
+      "Kategori-6 Destek/Direnc katmanlari olustu",
+      "Kategori-7 MA trend hiyerarsisi mevcut",
+      "Kategori-9 Fibonacci retracement/extension uyumu",
+      "Kategori-11 ADX-ATR-BB-Keltner-SuperTrend kosullari izlendi",
+      "MTF uyumlu trend (Bullish)"
+    ],
+    "hard_filter_reasons": [],
+    "reasons": [
+      "Formasyon: Ascending Triangle (63%)",
+      "Yukselen diplerle sikisan fiyat",
+      "Price Action: Lower Low",
+      "Price Action: Lower High",
+      "Price Action: Retest",
+      "Yeni EMA kesisimi",
+      "Yeni trend donusu",
+      "Kategori-1 Formasyonlar: aktif",
+      "Kategori-2 Kirilim/Retest/Fake: teyitli",
+      "EMA trend pozitif (0.22% spread)",
+      "MACD pozitif fark 0.0000",
+      "Trend guclu",
+      "Hacim normal ustu",
+      "Momentum dengeli",
+      "MACD pozitif",
+      "Haber/GAP sinyali zayif: grafik agirlikli degerlendirildi"
+    ],
+    "price_plan_notes": [
+      "Entry current_price - buffer=0.8580",
+      "Pullback cap=557.4074",
+      "Entry finalized at 557.4074",
+      "Stop placed below support and ATR=541.5744",
+      "Entry strategy: Retest",
+      "Entry status: ENTRY MISSED",
+      "TP ladder: [574.7746, 586.3773, 593.5492, 611.8277]"
+    ],
+    "entry_price": 557.4074,
+    "entry_range_low": 554.1528,
+    "entry_range_high": 562.3625,
+    "stop_loss": 541.5744,
+    "current_target": 611.8277,
+    "take_profit_1": 574.7746,
+    "take_profit_2": 586.3773,
+    "take_profit_3": 593.5492,
+    "take_profit_4": 611.8277,
+    "take_profit_levels": [
+      {
+        "label": "TP1",
+        "price": 574.7746,
+        "reason": "Ilk guclu direnc",
+        "type": "resistance_1"
+      },
+      {
+        "label": "TP2",
+        "price": 586.3773,
+        "reason": "Fibonacci 161.8 extension",
+        "type": "fib_1618"
+      },
+      {
+        "label": "TP3",
+        "price": 593.5492,
+        "reason": "Ascending Triangle teknik hedefi",
+        "type": "formation_target"
+      },
+      {
+        "label": "TP4",
+        "price": 611.8277,
+        "reason": "Trend devami projeksiyonu",
+        "type": "trend_projection"
+      }
+    ],
+    "risk_reward_by_tp": [
+      {
+        "label": "TP1",
+        "price": 574.7746,
+        "rr": 1.1,
+        "probability": 76.1,
+        "reason": "Ilk guclu direnc"
+      },
+      {
+        "label": "TP2",
+        "price": 586.3773,
+        "rr": 1.83,
+        "probability": 59.2,
+        "reason": "Fibonacci 161.8 extension"
+      },
+      {
+        "label": "TP3",
+        "price": 593.5492,
+        "rr": 2.28,
+        "probability": 42.6,
+        "reason": "Ascending Triangle teknik hedefi"
+      },
+      {
+        "label": "TP4",
+        "price": 611.8277,
+        "rr": 3.44,
+        "probability": 25.2,
+        "reason": "Trend devami projeksiyonu"
+      }
+    ],
+    "entry_strategy": "Retest",
+    "entry_strategy_reason": "Kirilan seviyenin geri testi goruluyor",
+    "entry_status": "ENTRY MISSED",
+    "limit_entry_price": 558.2577,
+    "market_entry_allowed": false,
+    "risk_reward_ratio": 2.28,
+    "trend": "Bullish",
+    "trend_strength": 68,
+    "estimated_trend_duration": "2-5 islem gunu",
+    "current_price": 572.0,
+    "support": 556.0,
+    "resistance": 574.7746,
+    "atr": 11.728142,
+    "volume": 552961.0,
+    "average_volume": 537754.5725,
+    "relative_volume": 1.0283,
+    "rsi14": 50.0,
+    "macd_state": "Bullish",
+    "news_score": 51.09,
+    "news_sentiment": "Neutral",
+    "macro_multiplier": 1.0,
+    "macro_notes": [],
+    "ai_confidence": null,
+    "ai_summary": null,
+    "ai_reason": null,
+    "ai_risk": null,
+    "hard_filtered": false,
+    "score_label": "Strong",
+    "status": "ELIGIBLE",
+    "rank": 10,
+    "news_confidence": 50.0,
+    "market_item": {
+      "ticker": "BRSAN",
+      "name": "BORUSAN MANNESMANN BORU SANAYİ VE TİCARET A.Ş."
+    },
+    "expected_gain_pct": 9.76,
+    "today_potential_pct": 6.96,
+    "confidence": null,
+    "overall_score": 74.21,
+    "recommended_amount": 0.0,
+    "rejected": false,
+    "reject_reasons": [],
+    "user_confidence": 68,
+    "execution_plan": {
+      "actionable": false,
+      "instruction": "BRSAN: NO TRADE",
+      "entry_order": null,
+      "stop_order": null,
+      "sell_orders": [],
+      "invalidation": "Yapisal risk yuksek veya giris kosulu uygun degil",
+      "risk_reward": 2.28
+    },
+    "trade_instruction": "BRSAN: NO TRADE"
   }
 ]

@@ -35,45 +35,430 @@
     "score": 75.61
   },
   {
-    "signature": "PRKAB:STRENGTHENED:48.5:3.09:33.5531:36.8015",
-    "ticker": "PRKAB",
-    "state": "STRENGTHENED",
-    "notified_at": "2026-07-20T14:50:20.995320+00:00",
-    "score": 48.5
-  },
-  {
-    "signature": "TBORG:STRENGTHENED:48.5:2.33:124.3793:131.2908",
-    "ticker": "TBORG",
-    "state": "STRENGTHENED",
-    "notified_at": "2026-07-20T14:50:20.995320+00:00",
-    "score": 48.5
-  },
-  {
-    "signature": "ISFIN:NEW:47.6:2.1:19.3087:20.2839",
-    "ticker": "ISFIN",
+    "signature": "PCILT:NEW:74.9:3.04:32.8313:36.99",
+    "ticker": "PCILT",
     "state": "NEW",
-    "notified_at": "2026-07-20T14:50:20.995320+00:00",
-    "score": 47.65
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 74.91
   },
   {
-    "signature": "GLYHO:STRENGTHENED:47.5:2.53:16.9165:17.9127",
-    "ticker": "GLYHO",
-    "state": "STRENGTHENED",
-    "notified_at": "2026-07-20T14:50:20.995320+00:00",
-    "score": 47.5
+    "signature": "BMSCH:NEW:34.2:6.72:13.3307:14.9487",
+    "ticker": "BMSCH",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 34.2
   },
   {
-    "signature": "TTKOM:STRENGTHENED:46.8:3.12:56.5285:64.3581",
-    "ticker": "TTKOM",
-    "state": "STRENGTHENED",
-    "notified_at": "2026-07-20T14:50:20.995320+00:00",
-    "score": 46.81
+    "signature": "KONKA:NEW:33.5:6.95:13.3824:14.9675",
+    "ticker": "KONKA",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 33.5
+  },
+  {
+    "signature": "QUAGR:NEW:76.7:3.39:3.3222:3.7327",
+    "ticker": "QUAGR",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 76.66
+  },
+  {
+    "signature": "ISKPL:NEW:49.8:3.24:7.9184:8.9407",
+    "ticker": "ISKPL",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "BOSSA:NEW:51.2:3.99:6.9374:7.7713",
+    "ticker": "BOSSA",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 51.21
+  },
+  {
+    "signature": "COSMO:NEW:76.0:4.36:128.3009:144.0975",
+    "ticker": "COSMO",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 75.96
+  },
+  {
+    "signature": "DOGUB:NEW:51.2:2.95:86.0064:97.4689",
+    "ticker": "DOGUB",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 51.21
+  },
+  {
+    "signature": "GUNDG:NEW:34.2:5.64:2062.8318:2326.386",
+    "ticker": "GUNDG",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "ATATP:NEW:74.2:3.71:238.1617:266.6469",
+    "ticker": "ATATP",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 74.21
+  },
+  {
+    "signature": "TBORG:EXIT:77.6:1.68:124.5916:130.1036",
+    "ticker": "TBORG",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 77.61
+  },
+  {
+    "signature": "PRKAB:EXIT:77.6:1.68:33.7121:35.3041",
+    "ticker": "PRKAB",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 77.61
   },
   {
     "signature": "TRALT:EXIT:77.1:1.66:49.485:51.5755",
     "ticker": "TRALT",
     "state": "EXIT",
-    "notified_at": "2026-07-20T14:50:20.995320+00:00",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
     "score": 77.11
+  },
+  {
+    "signature": "TTKOM:EXIT:75.6:1.68:56.8876:60.1327",
+    "ticker": "TTKOM",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 75.61
+  },
+  {
+    "signature": "GLYHO:EXIT:75.6:1.68:16.9633:17.6689",
+    "ticker": "GLYHO",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:02:42.975565+00:00",
+    "score": 75.61
+  },
+  {
+    "signature": "ISKPL:WEAKENED:49.8:3.06:7.9079:8.9407",
+    "ticker": "ISKPL",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "EKDMR:NEW:34.2:5.18:51.5164:57.943",
+    "ticker": "EKDMR",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "ATATP:WEAKENED:74.2:3.68:238.1288:266.7052",
+    "ticker": "ATATP",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 74.21
+  },
+  {
+    "signature": "VERUS:NEW:49.8:3.49:453.3527:508.3056",
+    "ticker": "VERUS",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "KRDMB:NEW:74.9:2.8:128.1601:144.0544",
+    "ticker": "KRDMB",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 74.91
+  },
+  {
+    "signature": "ORZAX:NEW:49.8:3.18:95.1262:107.7467",
+    "ticker": "ORZAX",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "CELHA:NEW:34.2:5.64:23.9009:26.9867",
+    "ticker": "CELHA",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "PCILT:EXIT:74.9:3.04:32.8313:36.99",
+    "ticker": "PCILT",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 74.91
+  },
+  {
+    "signature": "BMSCH:WEAKENED:34.2:6.72:13.3307:14.9487",
+    "ticker": "BMSCH",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "KONKA:WEAKENED:33.5:6.95:13.3824:14.9675",
+    "ticker": "KONKA",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 33.5
+  },
+  {
+    "signature": "COSMO:EXIT:76.0:4.36:128.3009:144.0975",
+    "ticker": "COSMO",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 75.96
+  },
+  {
+    "signature": "GUNDG:WEAKENED:34.2:5.64:2062.8318:2326.386",
+    "ticker": "GUNDG",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:05:39.777278+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "QUAGR:WEAKENED:76.7:3.39:3.3222:3.7327",
+    "ticker": "QUAGR",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 76.66
+  },
+  {
+    "signature": "KRDMB:WEAKENED:74.9:2.82:128.1204:144.3849",
+    "ticker": "KRDMB",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 74.91
+  },
+  {
+    "signature": "ISKPL:WEAKENED:50.5:2.97:7.9027:8.9407",
+    "ticker": "ISKPL",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 50.51
+  },
+  {
+    "signature": "ICUGS:NEW:78.5:4.77:5.6133:6.2745",
+    "ticker": "ICUGS",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 78.51
+  },
+  {
+    "signature": "FZLGY:NEW:74.9:2.4:13.4415:15.2426",
+    "ticker": "FZLGY",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 74.91
+  },
+  {
+    "signature": "VERUS:STRENGTHENED:51.2:3.92:454.4707:508.3056",
+    "ticker": "VERUS",
+    "state": "STRENGTHENED",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 51.21
+  },
+  {
+    "signature": "EKDMR:EXIT:34.2:5.13:51.5808:57.8857",
+    "ticker": "EKDMR",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "ORZAX:WEAKENED:49.8:3.14:95.1001:107.7467",
+    "ticker": "ORZAX",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "ATATP:EXIT:74.2:3.68:238.1288:266.7052",
+    "ticker": "ATATP",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 74.21
+  },
+  {
+    "signature": "CELHA:WEAKENED:34.2:5.64:23.9009:26.9867",
+    "ticker": "CELHA",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:08:40.117241+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "AKFIS:NEW:34.2:4.5:84.7015:95.6596",
+    "ticker": "AKFIS",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "KUVVA:NEW:34.2:6.44:126.1162:141.8124",
+    "ticker": "KUVVA",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "DOGUB:STRENGTHENED:49.8:3.41:86.2945:97.4689",
+    "ticker": "DOGUB",
+    "state": "STRENGTHENED",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "VERUS:WEAKENED:51.2:3.77:454.096:508.3056",
+    "ticker": "VERUS",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 51.21
+  },
+  {
+    "signature": "ARDYZ:NEW:74.2:2.6:66.3082:75.2189",
+    "ticker": "ARDYZ",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 74.21
+  },
+  {
+    "signature": "EKDMR:WEAKENED:34.2:5.13:51.5808:57.8857",
+    "ticker": "EKDMR",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "KRDMB:EXIT:74.9:2.82:128.1204:144.3849",
+    "ticker": "KRDMB",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 74.91
+  },
+  {
+    "signature": "ORZAX:EXIT:49.8:3.14:95.1001:107.7467",
+    "ticker": "ORZAX",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:11:40.683829+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "ICUGS:WEAKENED:77.9:4.47:5.6068:6.2873",
+    "ticker": "ICUGS",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 77.91
+  },
+  {
+    "signature": "FZLGY:WEAKENED:74.9:2.4:13.4415:15.2426",
+    "ticker": "FZLGY",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 74.91
+  },
+  {
+    "signature": "KUVVA:EXIT:34.2:6.44:126.1162:141.8124",
+    "ticker": "KUVVA",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "EFOR:NEW:74.9:2.41:17.4342:19.7913",
+    "ticker": "EFOR",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 74.91
+  },
+  {
+    "signature": "VERUS:WEAKENED:51.2:3.68:453.8721:508.3056",
+    "ticker": "VERUS",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 51.21
+  },
+  {
+    "signature": "OZGYO:NEW:74.2:2.73:2.1277:2.4116",
+    "ticker": "OZGYO",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 74.21
+  },
+  {
+    "signature": "ISKPL:EXIT:49.8:3.06:7.9079:8.9407",
+    "ticker": "ISKPL",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "AKFIS:WEAKENED:34.2:4.5:84.7015:95.6596",
+    "ticker": "AKFIS",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:14:40.613370+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "ARMGD:NEW:33.5:5.28:192.877:217.0173",
+    "ticker": "ARMGD",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 33.5
+  },
+  {
+    "signature": "AKFIS:WEAKENED:34.2:4.54:84.5687:95.7741",
+    "ticker": "AKFIS",
+    "state": "WEAKENED",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 34.2
+  },
+  {
+    "signature": "KUVVA:STRENGTHENED:50.5:4.38:126.312:141.7644",
+    "ticker": "KUVVA",
+    "state": "STRENGTHENED",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 50.51
+  },
+  {
+    "signature": "BRSAN:NEW:74.2:2.28:541.5744:611.8277",
+    "ticker": "BRSAN",
+    "state": "NEW",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 74.21
+  },
+  {
+    "signature": "DOGUB:EXIT:49.8:3.43:86.3078:97.4689",
+    "ticker": "DOGUB",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 49.81
+  },
+  {
+    "signature": "VERUS:EXIT:51.2:3.68:453.8721:508.3056",
+    "ticker": "VERUS",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 51.21
+  },
+  {
+    "signature": "ARDYZ:EXIT:74.2:2.76:66.402:75.0574",
+    "ticker": "ARDYZ",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 74.21
+  },
+  {
+    "signature": "OZGYO:EXIT:74.2:2.73:2.1277:2.4116",
+    "ticker": "OZGYO",
+    "state": "EXIT",
+    "notified_at": "2026-07-21T08:17:40.242785+00:00",
+    "score": 74.21
   }
 ]

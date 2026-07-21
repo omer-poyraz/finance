@@ -43,6 +43,10 @@ def create_app() -> FastAPI:
             gemini["enabled"],
             gemini["healthy"],
         )
+        if settings.gemini_required and not (gemini["enabled"] and gemini["healthy"]):
+            raise RuntimeError(
+                "Gemini is required but not healthy. Verify SDK installation and GEMINI_API_KEY configuration."
+            )
         if settings.scheduler_bist_enabled:
             register_weekday_job(
                 scheduler,

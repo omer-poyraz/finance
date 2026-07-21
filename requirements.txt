@@ -9,3 +9,4 @@ numpy
 apscheduler
 pytest
 google-generativeai
+google-genai

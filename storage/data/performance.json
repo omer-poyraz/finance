@@ -2,12 +2,13 @@
   "total_signals": 40,
   "winning_signals": 39,
   "losing_signals": 1,
+  "pending_signals": 0,
   "success_rate": 97.5,
   "average_profit": 2.16,
   "average_loss": -0.2233,
   "best_trade": 5.9829,
   "worst_trade": -0.2233,
-  "last_updated": "2026-07-20T19:11:56.357049+00:00",
+  "last_updated": "2026-07-21T08:37:09.791329+00:00",
   "total_recommendations": 40,
   "successful_recommendations": 39,
   "failed_recommendations": 1,
@@ -19,5 +20,32 @@
   "tp3_hits": 0,
   "stop_hits": 0,
   "current_open_positions": 0,
-  "updated_at": "2026-07-20T19:11:56.357049+00:00"
+  "reached_tp": 35,
+  "stopped": 0,
+  "profit_factor": 377.2418,
+  "expectancy": 2.1004,
+  "sharpe": 8.2261,
+  "average_risk_reward": 2.1315,
+  "strategy_success": {
+    "Unknown": {
+      "total": 40,
+      "closed": 40,
+      "wins": 39,
+      "losses": 1,
+      "pending": 0,
+      "win_rate": 97.5
+    }
+  },
+  "daily_report": {
+    "2026-07-18": {
+      "signals": 40,
+      "closed": 40,
+      "wins": 39,
+      "losses": 1,
+      "pending": 0,
+      "total_profit_pct": 84.0148,
+      "win_rate": 97.5
+    }
+  },
+  "updated_at": "2026-07-21T08:37:09.791390+00:00"
 }

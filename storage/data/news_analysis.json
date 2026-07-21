@@ -1926,5 +1926,59 @@
     "source": "news",
     "url": "https://www.bloomberght.com/masak-tan-kara-para-aklamaya-ve-terorun-finansmanina-karsi-yeni-yol-haritasi-3783158",
     "publish_date": "Sat, 18 Jul 2026 08:31:24 +0000"
+  },
+  {
+    "id": "712b9e19688ac7b04bfb876fac41d062ba516db97db3e1f4fb9ddf8ce3621ec9",
+    "ticker": [
+      "YGGYO"
+    ],
+    "detected_tickers": [
+      "YGGYO"
+    ],
+    "ticker_candidates": [
+      "RAPOR",
+      "YENI"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 64,
+    "importance": "Medium",
+    "importance_score": 49,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): RAPOR, YENI, YGGYO"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/e-rapor-sistemi-ile-yeni-donem-basladi-3783163",
+    "publish_date": "Sat, 18 Jul 2026 14:43:03 +0000"
+  },
+  {
+    "id": "5eb681218d55df1b9b579f159ebe839dbc07f507b3fccac5038c4ff4ca89898c",
+    "ticker": [
+      "YGGYO"
+    ],
+    "detected_tickers": [
+      "YGGYO"
+    ],
+    "ticker_candidates": [
+      "KARA",
+      "MASAK",
+      "PARA",
+      "YENI"
+    ],
+    "sentiment": "Neutral",
+    "score": 50,
+    "confidence": 70,
+    "importance": "Medium",
+    "importance_score": 65,
+    "keywords": [],
+    "matched_keywords": [],
+    "reasons": [
+      "Detected ticker(s): KARA, MASAK, PARA, YENI, YGGYO"
+    ],
+    "source": "news",
+    "url": "https://www.bloomberght.com/masak-tan-kara-para-aklamaya-ve-terorun-finansmanina-karsi-yeni-yol-haritasi-3783158",
+    "publish_date": "Sat, 18 Jul 2026 08:31:24 +0000"
   }
 ]

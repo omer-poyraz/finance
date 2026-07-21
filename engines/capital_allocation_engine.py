@@ -17,7 +17,12 @@ class CapitalAllocationEngine:
         if total_capital <= 0:
             return {"allocations": [], "cash": 0.0}
 
-        buy_items = [item for item in opportunities if str(item.get("decision") or "") == "BUY"]
+        buy_decisions = {"BUY", "BUY NOW", "LIMIT BUY"}
+        buy_items = [
+            item
+            for item in opportunities
+            if str(item.get("decision") or "").strip().upper() in buy_decisions
+        ]
         if not buy_items:
             return {"allocations": [], "cash": round(total_capital, 2)}
 

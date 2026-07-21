@@ -1933,10 +1933,10 @@
   {
     "id": "7046217b43de9b982971e850203a5a05afbbc53741ac7162250fae56b12807b3",
     "ticker": "YGGYO",
-    "news_count": 2,
+    "news_count": 4,
     "positive_count": 0,
     "negative_count": 0,
-    "neutral_count": 2,
+    "neutral_count": 4,
     "average_news_score": 50.0,
     "highest_news_score": 50.0,
     "latest_news_date": "Sat, 18 Jul 2026 14:43:03 +0000",
@@ -1950,7 +1950,9 @@
     "keyword_counts": {},
     "processed_news_ids": [
       "96e52334d6b0b976c862a96d7a672a51bbc074f18df538e3073994da1af70499",
-      "20f1e055ca8558e02295fed65a7a959bf7f28b5b7b28c370a3926d123b430a56"
+      "20f1e055ca8558e02295fed65a7a959bf7f28b5b7b28c370a3926d123b430a56",
+      "712b9e19688ac7b04bfb876fac41d062ba516db97db3e1f4fb9ddf8ce3621ec9",
+      "5eb681218d55df1b9b579f159ebe839dbc07f507b3fccac5038c4ff4ca89898c"
     ]
   },
   {

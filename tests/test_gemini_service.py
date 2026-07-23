@@ -15,6 +15,11 @@ class _SuccessModel:
         return SimpleNamespace(text="ok")
 
 
+class _AuthFailingModel:
+    def generate_content(self, *args, **kwargs):
+        raise RuntimeError("401 invalid authentication credentials")
+
+
 def test_gemini_service_rotates_keys_on_failure(monkeypatch) -> None:
     monkeypatch.setenv("GEMINI_API_KEY", "")
     monkeypatch.setenv("GEMINI_API_KEY_1", "key-one")
@@ -42,3 +47,16 @@ def test_gemini_service_health_false_without_keys(monkeypatch) -> None:
 
     assert service.enabled is False
     assert service.health_check(force=True) is False
+
+
+def test_gemini_service_disables_invalid_auth_keys(monkeypatch) -> None:
+    service = GeminiService(api_key="bad-key", model_name="gemini-2.5-flash", max_retries=0)
+    monkeypatch.setattr(service, "_model_for_key", lambda _api_key: _AuthFailingModel())
+
+    result = service._request_text(prompt="hello", cache_key="auth-fail-test")
+
+    assert result is None
+    assert service.enabled is False
+    diagnostics = service.diagnostics_snapshot()
+    assert diagnostics["disabled_key_count"] == 1
+    assert "auth_failed" in str(diagnostics["disabled_reason"])

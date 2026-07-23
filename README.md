@@ -45,6 +45,7 @@ Opsiyonel ama tavsiye edilir:
 - `GEMINI_API_KEY`
 - `GEMINI_API_KEY_1`, `GEMINI_API_KEY_2`, ...
 - `GEMINI_MODEL` (varsayilan `gemini-2.5-flash`)
+- `GEMINI_REQUIRED` (varsayilan `false`, AI hata verirse cekirdek sistemi durdurmaz)
 - `MARKETS` (varsayilan `BIST,US`)
 - `US_MARKET_TICKERS` (varsayilan `GOOGL,AMZN,TSLA,META,NFLX`)
 - `TOTAL_CAPITAL` (varsayilan `10000`)
@@ -52,6 +53,11 @@ Opsiyonel ama tavsiye edilir:
 - `SCHEDULER_BIST_ENABLED`, `SCHEDULER_BIST_HOUR`, `SCHEDULER_BIST_MINUTE`
 - `SCHEDULER_US_ENABLED`, `SCHEDULER_US_HOUR`, `SCHEDULER_US_MINUTE`
 - `SCHEDULER_PORTFOLIO_ENABLED`, `SCHEDULER_PORTFOLIO_HOUR`, `SCHEDULER_PORTFOLIO_MINUTE`
+- `BIST100_PREFERENCE_ENABLED` (BIST100'de yeterli kalite varsa oncelik verir)
+- `BIST100_GOOD_MIN_TOTAL_SCORE`, `BIST100_GOOD_MIN_CONFIDENCE`
+- `BIST_REGIME_GUARD_ENABLED` (piyasa rejimi filtresi)
+- `BIST_BEARISH_ONLY_BIST100` (BIST zayifken evreni BIST100 ile sinirlar)
+- `BIST_BEARISH_CHANGE_THRESHOLD`, `BIST_BEARISH_BREADTH_THRESHOLD`
 
 ## Mimari (Engine Bazli)
 
@@ -76,6 +82,20 @@ Opsiyonel ama tavsiye edilir:
 7. Portfoy yeniden analiz edilir.
 8. Gemini son asamada niteliksel yorum ekler.
 9. Telegram ozeti gonderilir.
+
+Gemini notu:
+- Sistem once `google.genai` modern SDK'yi dener, sonra gerekirse legacy fallback kullanir.
+- Gecersiz Gemini anahtarlari otomatik devre disi birakilir; tekrar tekrar ayni 401 hatasi ile sistemi yavaslatmaz.
+- Gemini artik tavsiye motorunu bloklayan degil, danisman/yorumlayici katmandir.
+
+## BIST Rejim Kurali
+
+- Varsayilan modda tum BIST hisseleri taranir.
+- BIST100 icinde kalite esigini gecen aday varsa BIST100 onceligi uygulanir.
+- BIST genel rejimi zayif (dusen rejim) tespit edilirse, evren otomatik olarak yalniz BIST100 ile sinirlanir.
+- Rejim tespiti iki sinyale dayanir:
+  - BIST cap-weighted ortalama gunluk degisim
+  - Bearish breadth (bearish trend oranı)
 
 ## Scheduler (Turkiye Saati)
 
@@ -135,3 +155,22 @@ Tum schedulerlar config ile acilip kapanabilir.
 ```
 
 veya VS Code task: `Start Project`
+
+## Snapshot Geriye Donuk Dogrulama
+
+Snapshot tabanli performans ve tahmin dogrulama raporu uretmek icin:
+
+```powershell
+python scripts/snapshot_backtest_report.py
+```
+
+Rapor dosyasi:
+
+- `storage/data/snapshot_backtest_report.json`
+
+Bu rapor sunlari verir:
+
+- Top 1/3/5/10 Win Rate, Average Return, Precision, False Positive
+- Tahmin edilen getirinin (expected gain) gercekte gorulme orani
+- Halal filtre ihlal kontrolu (engelli ticker onerilmis mi)
+- Eski/Yeni snapshot siralama A/B karsilastirmasi

@@ -861,7 +861,7 @@ class FinancePipelineService:
         recommendations = [
             item
             for item in recommendations
-            if float(item.get("expected_gain_pct") or 0.0) >= MIN_EXPECTED_GAIN_PCT
+            if float(item.get("expected_gain_pct") or 0.0) >= self._min_expected_gain_threshold(item)
         ]
 
         recommendations.sort(
@@ -1038,23 +1038,108 @@ class FinancePipelineService:
         eligible_items = [
             item
             for item in eligible_items
-            if float(item.get("expected_gain_pct") or 0.0) >= MIN_EXPECTED_GAIN_PCT
+            if float(item.get("expected_gain_pct") or 0.0) >= self._min_expected_gain_threshold(item)
         ]
-        eligible_items.sort(key=self._expected_gain_sort_key)
+        rank_source = list(eligible_items)
+        if not rank_source:
+            rank_source = [item for item in scored_items if not bool(item.get("hard_filtered"))]
 
-        if eligible_items:
-            ranked_pool = eligible_items[:top_n]
+        bist100_priority_set = self._load_bist100_priority_set()
+        regime_snapshot = self._bist_market_regime_snapshot(
+            market_payload=market_payload,
+            market_analysis=market_analysis,
+        )
+        scan_scope = "ALL_BIST"
+        if (
+            bool(regime_snapshot.get("is_bearish"))
+            and settings.bist_bearish_only_bist100
+            and bist100_priority_set
+        ):
+            restricted = [
+                item
+                for item in rank_source
+                if str(item.get("ticker") or "").strip().upper() in bist100_priority_set
+            ]
+            if restricted:
+                rank_source = restricted
+                scan_scope = "BIST100_ONLY"
+            else:
+                scan_scope = "ALL_BIST_FALLBACK"
+
+        ai_review_pool = self._enrich_recommendations_with_ai(rank_source)
+        prefer_bist100 = bool(regime_snapshot.get("is_bearish"))
+        if (
+            not prefer_bist100
+            and bist100_priority_set
+            and settings.bist100_preference_enabled
+        ):
+            prefer_bist100 = self._has_good_bist100_candidate(ai_review_pool, bist100_priority_set)
+
+        if prefer_bist100 and bist100_priority_set:
+            ai_review_pool.sort(
+                key=lambda item: self._rank_with_bist100_priority(item, bist100_priority_set)
+            )
         else:
-            ranked_pool = scored_items[:top_n]
+            ai_review_pool.sort(key=self._expected_gain_sort_key)
 
+        ranked_pool = ai_review_pool[:top_n]
         for index, item in enumerate(ranked_pool, start=1):
             item["rank"] = index
 
-        ai_review_pool = self._enrich_recommendations_with_ai(ranked_pool)
-        top_10 = ai_review_pool[:10]
-        top_final = ai_review_pool[:final_n]
+        top_10 = ranked_pool[:10]
+        top_final_candidates = ranked_pool[:final_n]
 
-        final_recommendations = [self._finalize_bist_recommendation(item, rank=index + 1) for index, item in enumerate(top_final)]
+        final_recommendations = [
+            self._finalize_bist_recommendation(item, rank=index + 1)
+            for index, item in enumerate(top_final_candidates)
+        ]
+        gated_final: list[dict[str, Any]] = []
+        for item in final_recommendations:
+            gate_reasons = self._confidence_gate_reasons(item)
+            if gate_reasons:
+                item["rejected"] = True
+                item["reject_reasons"] = gate_reasons
+                continue
+            gated_final.append(item)
+
+        final_recommendations = list(gated_final)
+        if prefer_bist100 and bist100_priority_set:
+            final_recommendations.sort(
+                key=lambda item: self._rank_with_bist100_priority(item, bist100_priority_set)
+            )
+        else:
+            final_recommendations.sort(key=self._expected_gain_sort_key)
+        final_recommendations = [
+            self._finalize_bist_recommendation(item, rank=index + 1)
+            for index, item in enumerate(final_recommendations[:final_n])
+        ]
+
+        if not final_recommendations:
+            final_recommendations = [
+                {
+                    "ticker": "CASH",
+                    "company_name": "Cash Position",
+                    "market": "BIST",
+                    "decision": "WAIT IN CASH",
+                    "entry_price": 0.0,
+                    "entry_range_low": 0.0,
+                    "entry_range_high": 0.0,
+                    "stop_loss": 0.0,
+                    "current_target": 0.0,
+                    "risk_reward_ratio": 0.0,
+                    "news_score": 50.0,
+                    "trend_strength": 0,
+                    "confidence": 35.0,
+                    "user_confidence": 35,
+                    "overall_score": 40.0,
+                    "expected_gain_pct": 0.0,
+                    "today_potential_pct": 0.0,
+                    "reasons": ["Celiski ve dusuk guven filtreleri nedeniyle bugun net firsat bulunamadi."],
+                    "rejected": False,
+                    "reject_reasons": [],
+                }
+            ]
+
         for item in final_recommendations:
             item["recommended_amount"] = 0.0
 
@@ -1076,6 +1161,9 @@ class FinancePipelineService:
             top_20=ranked_pool,
             top_10=top_10,
             top_5=final_recommendations,
+            regime_snapshot=regime_snapshot,
+            scan_scope=scan_scope,
+            bist100_priority_enabled=bool(prefer_bist100 and bist100_priority_set),
         )
 
         analysis_payload = dict(self._load_cached("analysis.json", default={}))
@@ -1284,19 +1372,197 @@ class FinancePipelineService:
             return 0.0
         return ((target_price - base_price) / base_price) * 100.0
 
-    def _expected_gain_sort_key(self, item: dict[str, Any]) -> tuple[float, float, float, float, str]:
+    def _min_expected_gain_threshold(self, item: dict[str, Any]) -> float:
+        current_price = float(item.get("current_price") or item.get("entry_price") or 0.0)
+        atr_value = float(item.get("atr") or 0.0)
+        trend_strength = float(item.get("trend_strength") or 0.0)
+        atr_ratio = (atr_value / max(current_price, 1e-9)) if current_price > 0 else 0.0
+        volatility_floor = max(1.6, min(3.0, atr_ratio * 180.0))
+        trend_discount = 0.0
+        if trend_strength >= 75:
+            trend_discount = 0.3
+        elif trend_strength >= 65:
+            trend_discount = 0.15
+        threshold = max(1.5, min(3.0, volatility_floor - trend_discount))
+        return threshold
+
+    def _expected_gain_sort_key(self, item: dict[str, Any]) -> tuple[float, float, float, float, float, str]:
         expected_gain = float(item.get("expected_gain_pct") or 0.0)
-        confidence = float(item.get("confidence") or item.get("overall_score") or 0.0)
-        technical_score = float(item.get("technical_score") or 0.0)
+        confidence = float(item.get("confidence") or item.get("overall_score") or item.get("total_score") or 0.0)
+        trend_strength = float(item.get("trend_strength") or 0.0)
+        risk_reward = float(item.get("risk_reward_ratio") or 0.0)
         total_score = float(item.get("total_score") or item.get("overall_score") or 0.0)
+        quality_rank = (
+            (total_score * 0.52)
+            + (confidence * 0.22)
+            + (min(100.0, expected_gain * 8.0) * 0.16)
+            + (min(100.0, risk_reward * 25.0) * 0.10)
+        )
         return (
-            abs(TARGET_EXPECTED_GAIN_PCT - expected_gain),
+            -quality_rank,
             -expected_gain,
             -confidence,
-            -technical_score,
+            -trend_strength,
             -total_score,
             str(item.get("ticker") or ""),
         )
+
+    def _rank_with_bist100_priority(
+        self,
+        item: dict[str, Any],
+        bist100_set: set[str],
+    ) -> tuple[Any, ...]:
+        ticker = str(item.get("ticker") or "").strip().upper()
+        priority_flag = 0 if ticker and ticker in bist100_set else 1
+        return (priority_flag, *self._expected_gain_sort_key(item))
+
+    def _has_good_bist100_candidate(
+        self,
+        items: list[dict[str, Any]],
+        bist100_set: set[str],
+    ) -> bool:
+        buy_like_decisions = {"BUY", "BUY NOW", "LIMIT BUY"}
+        for item in items:
+            ticker = str(item.get("ticker") or "").strip().upper()
+            if ticker not in bist100_set:
+                continue
+
+            decision = str(item.get("decision") or "").strip().upper()
+            if decision not in buy_like_decisions:
+                continue
+
+            total_score = float(item.get("total_score") or item.get("overall_score") or 0.0)
+            if total_score < settings.bist100_good_min_total_score:
+                continue
+
+            confidence = float(item.get("confidence") or self._bist_confidence_score(item) or 0.0)
+            if confidence < settings.bist100_good_min_confidence:
+                continue
+
+            expected_gain = float(item.get("expected_gain_pct") or 0.0)
+            if expected_gain < self._min_expected_gain_threshold(item):
+                continue
+
+            risk_reward = float(item.get("risk_reward_ratio") or 0.0)
+            if risk_reward < max(1.2, settings.min_risk_reward_ratio):
+                continue
+
+            return True
+        return False
+
+    def _bist_market_regime_snapshot(
+        self,
+        *,
+        market_payload: list[dict[str, Any]],
+        market_analysis: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        bist_rows = [
+            row
+            for row in market_payload
+            if self._normalize_market_name((row.get("metadata") or {}).get("market") or row.get("source")) == "BIST"
+        ]
+
+        weighted_sum = 0.0
+        total_weight = 0.0
+        equal_changes: list[float] = []
+        for row in bist_rows:
+            try:
+                change = float(row.get("daily_change_percent") or row.get("change_percent") or 0.0)
+            except (TypeError, ValueError):
+                continue
+            equal_changes.append(change)
+
+            try:
+                market_cap = float(row.get("market_cap") or 0.0)
+            except (TypeError, ValueError):
+                market_cap = 0.0
+            if market_cap > 0:
+                weighted_sum += change * market_cap
+                total_weight += market_cap
+
+        weighted_change = (weighted_sum / total_weight) if total_weight > 0 else 0.0
+        equal_change = (sum(equal_changes) / len(equal_changes)) if equal_changes else 0.0
+
+        bearish_flags = 0
+        trend_samples = 0
+        for row in market_analysis:
+            trend = str(row.get("trend") or "").strip().lower()
+            if trend in {"bullish", "bearish", "neutral"}:
+                trend_samples += 1
+                if trend == "bearish":
+                    bearish_flags += 1
+        bearish_breadth = (bearish_flags / trend_samples) if trend_samples else 0.0
+
+        change_reference = weighted_change if total_weight > 0 else equal_change
+        down_by_change = change_reference <= settings.bist_bearish_change_threshold
+        down_by_breadth = bearish_breadth >= settings.bist_bearish_breadth_threshold
+        is_bearish = bool(settings.bist_regime_guard_enabled and (down_by_change or down_by_breadth))
+
+        return {
+            "is_bearish": is_bearish,
+            "weighted_change_pct": round(weighted_change, 4),
+            "equal_weight_change_pct": round(equal_change, 4),
+            "bearish_breadth_ratio": round(bearish_breadth, 4),
+            "sample_size": len(bist_rows),
+            "trend_sample_size": trend_samples,
+            "down_by_change": bool(down_by_change),
+            "down_by_breadth": bool(down_by_breadth),
+            "change_threshold": float(settings.bist_bearish_change_threshold),
+            "breadth_threshold": float(settings.bist_bearish_breadth_threshold),
+        }
+
+    def _load_bist100_priority_set(self) -> set[str]:
+        configured = self._load_bist100_benchmark_set()
+        if configured:
+            return configured
+
+        market_rows = self._load_cached("market.json", default=[])
+        if not isinstance(market_rows, list):
+            return set()
+
+        by_cap: list[tuple[str, float]] = []
+        for row in market_rows:
+            if not isinstance(row, dict):
+                continue
+
+            market_name = self._normalize_market_name(row.get("market") or "")
+            if market_name and market_name != "BIST":
+                continue
+
+            ticker = str(row.get("symbol") or row.get("ticker") or "").strip().upper()
+            if not ticker:
+                continue
+
+            try:
+                market_cap = float(row.get("market_cap") or 0.0)
+            except (TypeError, ValueError):
+                market_cap = 0.0
+            if market_cap <= 0:
+                continue
+
+            by_cap.append((ticker, market_cap))
+
+        by_cap.sort(key=lambda item: item[1], reverse=True)
+        return {ticker for ticker, _ in by_cap[:100]}
+
+    def _load_bist100_benchmark_set(self) -> set[str]:
+        filename = "index_benchmarks.json"
+        if not self.config_storage.exists(filename):
+            return set()
+
+        raw = self.config_storage.load(filename, default={})
+        if not isinstance(raw, dict):
+            return set()
+
+        values = raw.get("bist100", [])
+        if not isinstance(values, list):
+            return set()
+
+        return {
+            str(value).strip().upper()
+            for value in values
+            if str(value).strip()
+        }
 
     def _user_confidence_score(self, item: dict[str, Any]) -> int:
         component_scores = dict(item.get("component_scores") or {})
@@ -1381,6 +1647,37 @@ class FinancePipelineService:
         )
         return round(max(0.0, min(100.0, confidence)), 2)
 
+    def _confidence_gate_reasons(self, item: dict[str, Any]) -> list[str]:
+        reasons: list[str] = []
+        decision = str(item.get("decision") or "WAIT").upper()
+        confidence = float(item.get("confidence") or 0.0)
+        rr = float(item.get("risk_reward_ratio") or 0.0)
+        trend = str(item.get("trend") or "Neutral").lower()
+        news_sentiment = str(item.get("news_sentiment") or "Neutral").lower()
+        macd_state = str(item.get("macd_state") or "Neutral").lower()
+
+        if decision in {"WAIT", "SELL", "NO TRADE", "ENTRY MISSED", "EXIT"}:
+            reasons.append("Karar tipi aksiyon icin uygun degil")
+        if confidence < 62.0:
+            reasons.append("Guven puani dusuk")
+        if rr < max(1.2, settings.min_risk_reward_ratio):
+            reasons.append("Risk-odul yetersiz")
+        if trend == "bearish" and decision in {"BUY", "BUY NOW", "LIMIT BUY"}:
+            reasons.append("Dusen trend ile alis karari celisiyor")
+        if news_sentiment == "negative" and decision in {"BUY", "BUY NOW", "LIMIT BUY"}:
+            reasons.append("Negatif haber tonu ile alis karari celisiyor")
+        if macd_state == "bearish" and trend == "bullish" and decision in {"BUY", "BUY NOW", "LIMIT BUY"}:
+            reasons.append("Trend/MACD uyumsuzlugu")
+
+        indicator_text = " ".join(str(value) for value in item.get("indicator_confirmations") or []).lower()
+        if ("rsi yuksek" in indicator_text or "overbought" in indicator_text) and decision in {"BUY", "BUY NOW", "LIMIT BUY"}:
+            reasons.append("Asiri alim bolgesinde agresif giris")
+
+        return reasons
+
+    def _passes_confidence_gate(self, item: dict[str, Any]) -> bool:
+        return len(self._confidence_gate_reasons(item)) == 0
+
     def _apply_ai_enrichment_to_scores(
         self,
         item: dict[str, Any],
@@ -1398,16 +1695,67 @@ class FinancePipelineService:
             return payload
 
         sentiment_map = {"POSITIVE": 1.0, "NEUTRAL": 0.0, "NEGATIVE": -1.0}
+
+        def _default_factor(data: dict[str, Any], factor_name: str) -> float:
+            sentiment = str(data.get("sentiment") or "NEUTRAL").upper()
+            defaults_by_sentiment = {
+                "POSITIVE": {
+                    "positive_score": 72.0,
+                    "negative_score": 28.0,
+                    "uncertain_score": 30.0,
+                    "risk_score": 34.0,
+                    "opportunity_score": 72.0,
+                },
+                "NEGATIVE": {
+                    "positive_score": 28.0,
+                    "negative_score": 72.0,
+                    "uncertain_score": 40.0,
+                    "risk_score": 74.0,
+                    "opportunity_score": 26.0,
+                },
+                "NEUTRAL": {
+                    "positive_score": 50.0,
+                    "negative_score": 50.0,
+                    "uncertain_score": 50.0,
+                    "risk_score": 50.0,
+                    "opportunity_score": 50.0,
+                },
+            }
+            return float(defaults_by_sentiment.get(sentiment, defaults_by_sentiment["NEUTRAL"]).get(factor_name, 50.0))
+
+        def _factor(data: dict[str, Any], factor_name: str) -> float:
+            raw = data.get(factor_name)
+            if raw is None:
+                return _default_factor(data, factor_name)
+            try:
+                return max(0.0, min(100.0, float(raw)))
+            except (TypeError, ValueError):
+                return _default_factor(data, factor_name)
+
         sentiments = [sentiment_map.get(str(data.get("sentiment") or "NEUTRAL").upper(), 0.0) for data in signals]
         confidences = [max(0.0, min(100.0, float(data.get("confidence") or 50.0))) for data in signals]
+        positive_scores = [_factor(data, "positive_score") for data in signals]
+        negative_scores = [_factor(data, "negative_score") for data in signals]
+        uncertain_scores = [_factor(data, "uncertain_score") for data in signals]
+        risk_scores = [_factor(data, "risk_score") for data in signals]
+        opportunity_scores = [_factor(data, "opportunity_score") for data in signals]
 
         sentiment_bias = sum(sentiments) / max(1, len(sentiments))
         avg_confidence = sum(confidences) / max(1, len(confidences))
+        avg_positive = sum(positive_scores) / max(1, len(positive_scores))
+        avg_negative = sum(negative_scores) / max(1, len(negative_scores))
+        avg_uncertain = sum(uncertain_scores) / max(1, len(uncertain_scores))
+        avg_risk = sum(risk_scores) / max(1, len(risk_scores))
+        avg_opportunity = sum(opportunity_scores) / max(1, len(opportunity_scores))
 
-        base_ai_component = (avg_confidence / 100.0) * 2.0
-        ai_component = max(0.0, min(2.0, base_ai_component + (sentiment_bias * 0.35)))
+        conviction = max(0.0, min(100.0, avg_opportunity + avg_positive - avg_negative - (avg_uncertain * 0.6) - (avg_risk * 0.6)))
+        base_ai_component = ((avg_confidence * 0.65) + (conviction * 0.35)) / 100.0 * 2.0
+        ai_component = max(0.0, min(2.0, base_ai_component + (sentiment_bias * 0.22)))
         news_component = float(component_scores.get("news") or 0.0)
-        news_component = max(0.0, min(4.0, news_component + (sentiment_bias * 0.8)))
+        news_adjustment = ((avg_positive - avg_negative) / 100.0) * 0.6
+        news_adjustment -= (avg_uncertain / 100.0) * 0.25
+        news_adjustment -= (avg_risk / 100.0) * 0.25
+        news_component = max(0.0, min(4.0, news_component + news_adjustment))
 
         component_scores["ai_confidence"] = round(ai_component, 2)
         component_scores["news"] = round(news_component, 2)
@@ -1529,6 +1877,9 @@ class FinancePipelineService:
         top_20: list[dict[str, Any]],
         top_10: list[dict[str, Any]],
         top_5: list[dict[str, Any]],
+        regime_snapshot: dict[str, Any],
+        scan_scope: str,
+        bist100_priority_enabled: bool,
     ) -> dict[str, Any]:
         def _pick_best(items: list[dict[str, Any]], key_fn) -> dict[str, Any] | None:
             if not items:
@@ -1566,6 +1917,9 @@ class FinancePipelineService:
             ],
             "top_10": [str(item.get("ticker") or "") for item in top_10],
             "top_5": [str(item.get("ticker") or "") for item in top_5],
+            "scan_scope": str(scan_scope),
+            "bist100_priority_enabled": bool(bist100_priority_enabled),
+            "market_regime": dict(regime_snapshot),
             "best_opportunity": best_opportunity,
             "riskiest_opportunity": riskiest_opportunity,
             "strongest_news": strongest_news,
@@ -2244,12 +2598,16 @@ class FinancePipelineService:
         self._save_if_changed("performance.json", performance)
         return performance
 
-    def gemini_health(self) -> dict[str, bool]:
+    def gemini_health(self) -> dict[str, Any]:
         """Return Gemini feature health without interrupting the pipeline."""
 
+        enabled = self.gemini_service.enabled
+        healthy = self.gemini_service.health() if enabled else False
+        diagnostics = self.gemini_service.diagnostics_snapshot()
         return {
             "enabled": self.gemini_service.enabled,
-            "healthy": self.gemini_service.health() if self.gemini_service.enabled else False,
+            "healthy": healthy,
+            "diagnostics": diagnostics,
         }
 
     def _market_frame(self, market_payload: list[dict[str, Any]]) -> pd.DataFrame:
@@ -2714,7 +3072,21 @@ class FinancePipelineService:
                 for item in recommendations
                 if str(item.get("ticker") or "").upper() != "CASH"
             ]
-            ranked_recommendations.sort(key=self._expected_gain_sort_key)
+            is_bist_report = any(
+                self._normalize_market_name(item.get("market") or "") == "BIST"
+                for item in ranked_recommendations
+            )
+            if is_bist_report:
+                bist100_priority_set = self._load_bist100_priority_set()
+            else:
+                bist100_priority_set = set()
+
+            if bist100_priority_set:
+                ranked_recommendations.sort(
+                    key=lambda item: self._rank_with_bist100_priority(item, bist100_priority_set)
+                )
+            else:
+                ranked_recommendations.sort(key=self._expected_gain_sort_key)
 
             top_item = ranked_recommendations[0] if ranked_recommendations else {}
             if top_item:

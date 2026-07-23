@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import time
 from urllib.parse import urlparse
 from urllib.parse import urljoin
 from typing import Any
@@ -30,12 +31,30 @@ class NewsCollector(BaseCollector[NewsItem]):
 		"/borsa-terimleri/",
 	)
 	_noise_title_pattern = re.compile(r"^(app store|google play|destek|giris|kayit)", re.IGNORECASE)
+	_rss_discovery_candidates = (
+		"https://www.bloomberght.com/rss",
+		"https://www.ekonomim.com/rss",
+		"https://www.ntv.com.tr/ekonomi.rss",
+		"https://www.borsavegundem.com/rss",
+		"https://www.dunya.com/rss",
+		"https://www.haberturk.com/rss/ekonomi.xml",
+		"https://www.aa.com.tr/tr/rss/default?cat=ekonomi",
+		"https://www.trthaber.com/sondakika.rss",
+		"https://www.cnbce.com/rss",
+		"https://www.investing.com/rss/news_25.rss",
+	)
+
+	def __init__(self) -> None:
+		super().__init__()
+		self._rss_cache_until = 0.0
+		self._rss_cache: list[str] = []
 
 	def collect(self) -> CollectorResult[NewsItem]:
 		items: list[NewsItem] = []
 		failed_sources = 0
+		active_sources = self._validated_rss_sources()
 
-		for source_url in settings.news_source_list:
+		for source_url in active_sources:
 			try:
 				response = self._request(source_url)
 			except DataCollectionError:
@@ -69,8 +88,67 @@ class NewsCollector(BaseCollector[NewsItem]):
 		self._record_success()
 		return self._build_result(
 			items=unique,
-			metadata={"sources": settings.news_source_list, "failed_sources": failed_sources, "count": len(unique)},
+			metadata={"sources": active_sources, "failed_sources": failed_sources, "count": len(unique)},
 		)
+
+	def _validated_rss_sources(self) -> list[str]:
+		now = time.time()
+		if self._rss_cache and now < self._rss_cache_until:
+			return list(self._rss_cache)
+
+		configured = [item.strip() for item in settings.news_source_list if str(item).strip()]
+		merged = [*configured, *list(self._rss_discovery_candidates)]
+		seen: set[str] = set()
+		candidates: list[str] = []
+		for url in merged:
+			normalized = str(url).strip()
+			if not normalized or normalized in seen:
+				continue
+			seen.add(normalized)
+			candidates.append(normalized)
+
+		valid_sources: list[str] = []
+		for url in candidates:
+			try:
+				response = self._session.get(
+					url,
+					timeout=self._timeout_seconds,
+					allow_redirects=True,
+					headers={"User-Agent": "Mozilla/5.0"},
+				)
+				if response.status_code != 200:
+					continue
+				if response.url.rstrip("/") != url.rstrip("/"):
+					continue
+				if not self._is_valid_rss_response(response.text, str(response.headers.get("Content-Type") or "")):
+					continue
+				valid_sources.append(url)
+			except Exception:
+				continue
+
+		if not valid_sources:
+			# Fail-safe: keep configured list if network validation temporarily fails.
+			valid_sources = configured
+
+		self._rss_cache = list(valid_sources)
+		self._rss_cache_until = now + 3600
+		return valid_sources
+
+	def _is_valid_rss_response(self, body: str, content_type: str) -> bool:
+		content_type_lower = str(content_type or "").lower()
+		text = str(body or "").strip()
+		is_xml_hint = (
+			"xml" in content_type_lower
+			or "rss" in content_type_lower
+			or text.startswith("<?xml")
+			or "<rss" in text.lower()
+			or "<feed" in text.lower()
+		)
+		if not is_xml_hint:
+			return False
+
+		soup = BeautifulSoup(text[:120000], "xml")
+		return bool(soup.find("rss") or soup.find("feed"))
 
 	def _parse_items(
 		self,

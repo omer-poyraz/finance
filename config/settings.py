@@ -32,7 +32,7 @@ class Settings:
     )
     news_sources: str = os.getenv(
         "NEWS_SOURCES",
-        "https://www.getmidas.com/|https://www.getmidas.com/borsa-haberleri/|https://www.getmidas.com/borsa-haberleri/feed/|https://www.kap.org.tr/tr/rss|https://www.borsaistanbul.com/tr/rss|https://www.bloomberght.com/rss|https://www.ekonomim.com/rss|https://www.paraanaliz.com/feed/|https://www.ntv.com.tr/ekonomi.rss|https://www.borsagundem.com/rss",
+        "https://www.bloomberght.com/rss|https://www.ekonomim.com/rss|https://www.ntv.com.tr/ekonomi.rss|https://www.borsavegundem.com/rss|https://www.dunya.com/rss|https://www.haberturk.com/rss/ekonomi.xml|https://www.aa.com.tr/tr/rss/default?cat=ekonomi|https://www.trthaber.com/sondakika.rss|https://www.cnbce.com/rss|https://www.investing.com/rss/news_25.rss",
     )
     kap_source_url: str = os.getenv(
         "KAP_SOURCE_URL",
@@ -67,6 +67,13 @@ class Settings:
     min_news_score: float = float(os.getenv("MIN_NEWS_SCORE", "45"))
     min_technical_score: float = float(os.getenv("MIN_TECHNICAL_SCORE", "50"))
     recommendation_decisions: str = os.getenv("RECOMMENDATION_DECISIONS", "BUY,HOLD")
+    bist100_preference_enabled: bool = _env_bool("BIST100_PREFERENCE_ENABLED", True)
+    bist100_good_min_total_score: float = float(os.getenv("BIST100_GOOD_MIN_TOTAL_SCORE", "70"))
+    bist100_good_min_confidence: float = float(os.getenv("BIST100_GOOD_MIN_CONFIDENCE", "62"))
+    bist_regime_guard_enabled: bool = _env_bool("BIST_REGIME_GUARD_ENABLED", True)
+    bist_bearish_only_bist100: bool = _env_bool("BIST_BEARISH_ONLY_BIST100", True)
+    bist_bearish_change_threshold: float = float(os.getenv("BIST_BEARISH_CHANGE_THRESHOLD", "-0.35"))
+    bist_bearish_breadth_threshold: float = float(os.getenv("BIST_BEARISH_BREADTH_THRESHOLD", "0.55"))
     scheduler_bist_enabled: bool = _env_bool("SCHEDULER_BIST_ENABLED", True)
     scheduler_bist_live_enabled: bool = _env_bool("SCHEDULER_BIST_LIVE_ENABLED", True)
     scheduler_us_enabled: bool = _env_bool("SCHEDULER_US_ENABLED", True)

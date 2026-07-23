@@ -45,12 +45,16 @@ class GeminiService:
         self._request_count = 0
         self._health_cache: bool | None = None
         self._cache: dict[str, Any] = {}
+        self._disabled_keys: set[str] = set()
+        self._disabled_reason: str | None = None
 
     @property
     def enabled(self) -> bool:
         if not self._api_keys:
             return False
         if not self._model_name or self._model_name.upper() == "XXXX":
+            return False
+        if len(self._disabled_keys) >= len(self._api_keys):
             return False
         return True
 
@@ -106,10 +110,11 @@ class GeminiService:
         prompt = (
             "Analyze this BIST news item for qualitative context only. "
             "Do not calculate entry, stop, take profit, indicators, risk model, trend, signals, or confidence score of the trading engine. "
-            "Return only JSON with keys: sentiment, impact, confidence, explanation. "
+            "Return only JSON with keys: sentiment, impact, confidence, explanation, positive_score, negative_score, uncertain_score, risk_score, opportunity_score. "
             "sentiment must be one of Positive, Neutral, Negative. "
             "impact must be one of Low, Medium, High. "
             "confidence must be an integer between 0 and 100. "
+            "positive_score, negative_score, uncertain_score, risk_score, opportunity_score must be integers between 0 and 100. "
             "explanation must be short, professional, and in Turkish.\n"
             f"Input: {json.dumps(compact, ensure_ascii=False)}"
         )
@@ -128,6 +133,11 @@ class GeminiService:
             impact = "Medium"
 
         confidence = self._safe_int(payload.get("confidence"), default=55, minimum=0, maximum=100)
+        positive_score = self._safe_int(payload.get("positive_score"), default=50, minimum=0, maximum=100)
+        negative_score = self._safe_int(payload.get("negative_score"), default=50, minimum=0, maximum=100)
+        uncertain_score = self._safe_int(payload.get("uncertain_score"), default=50, minimum=0, maximum=100)
+        risk_score = self._safe_int(payload.get("risk_score"), default=50, minimum=0, maximum=100)
+        opportunity_score = self._safe_int(payload.get("opportunity_score"), default=50, minimum=0, maximum=100)
         explanation = str(payload.get("explanation") or "").strip()
         if not explanation:
             return None
@@ -137,6 +147,11 @@ class GeminiService:
             "impact": impact,
             "confidence": confidence,
             "explanation": explanation,
+            "positive_score": positive_score,
+            "negative_score": negative_score,
+            "uncertain_score": uncertain_score,
+            "risk_score": risk_score,
+            "opportunity_score": opportunity_score,
         }
 
     def summarize_market(self, recommendations: list[dict[str, Any]]) -> str | None:
@@ -215,9 +230,10 @@ class GeminiService:
         prompt = (
             "Analyze this KAP disclosure for qualitative market tone only. "
             "Do not calculate any trading levels, technical indicators, trend signals, risk model, or decision confidence. "
-            "Return only JSON with keys: sentiment, confidence, explanation. "
+            "Return only JSON with keys: sentiment, confidence, explanation, positive_score, negative_score, uncertain_score, risk_score, opportunity_score. "
             "sentiment must be one of Positive, Neutral, Negative. "
             "confidence must be an integer between 0 and 100. "
+            "positive_score, negative_score, uncertain_score, risk_score, opportunity_score must be integers between 0 and 100. "
             "explanation must be short, professional, and in Turkish.\n"
             f"Input: {json.dumps(compact, ensure_ascii=False)}"
         )
@@ -232,6 +248,11 @@ class GeminiService:
             sentiment = "Neutral"
 
         confidence = self._safe_int(payload.get("confidence"), default=55, minimum=0, maximum=100)
+        positive_score = self._safe_int(payload.get("positive_score"), default=50, minimum=0, maximum=100)
+        negative_score = self._safe_int(payload.get("negative_score"), default=50, minimum=0, maximum=100)
+        uncertain_score = self._safe_int(payload.get("uncertain_score"), default=50, minimum=0, maximum=100)
+        risk_score = self._safe_int(payload.get("risk_score"), default=50, minimum=0, maximum=100)
+        opportunity_score = self._safe_int(payload.get("opportunity_score"), default=50, minimum=0, maximum=100)
         explanation = str(payload.get("explanation") or "").strip()
         if not explanation:
             return None
@@ -240,6 +261,11 @@ class GeminiService:
             "sentiment": sentiment,
             "confidence": confidence,
             "explanation": explanation,
+            "positive_score": positive_score,
+            "negative_score": negative_score,
+            "uncertain_score": uncertain_score,
+            "risk_score": risk_score,
+            "opportunity_score": opportunity_score,
         }
 
     def generate_daily_summary(self, recommendations: list[dict[str, Any]]) -> str | None:
@@ -280,8 +306,8 @@ class GeminiService:
             return True
 
         for module_name, variant in [
-            ("google.generativeai", "legacy"),
             ("google.genai", "modern"),
+            ("google.generativeai", "legacy"),
         ]:
             try:
                 self._sdk = importlib.import_module(module_name)
@@ -404,13 +430,17 @@ class GeminiService:
 
         max_retry = self._max_retries if retries is None else max(0, int(retries))
         attempts_per_key = max_retry + 1
-        key_count = len(self._api_keys)
+        available_keys = [key for key in self._api_keys if key not in self._disabled_keys]
+        key_count = len(available_keys)
+        if key_count == 0:
+            self._health_cache = False
+            return None
         total_attempts = max(1, key_count * attempts_per_key)
 
         for global_attempt in range(total_attempts):
             key_offset = global_attempt % key_count
             key_index = (self._active_key_index + key_offset) % key_count
-            api_key = self._api_keys[key_index]
+            api_key = available_keys[key_index]
             model = self._model_for_key(api_key)
             if model is None:
                 continue
@@ -428,6 +458,7 @@ class GeminiService:
                 return text
             except Exception as exc:  # pragma: no cover - external SDK errors vary by runtime
                 retryable = self._is_retryable_error(exc)
+                auth_error = self._is_auth_error(exc)
                 logger.warning(
                     "Gemini request failed with key index %s (attempt %s/%s, retryable=%s): %s",
                     self._safe_key_index(api_key),
@@ -436,6 +467,14 @@ class GeminiService:
                     retryable,
                     exc,
                 )
+                if auth_error:
+                    self._mark_key_auth_failed(api_key, exc)
+                    available_keys = [key for key in self._api_keys if key not in self._disabled_keys]
+                    key_count = len(available_keys)
+                    if key_count == 0:
+                        self._health_cache = False
+                        return None
+                    continue
                 if not retryable:
                     continue
                 time.sleep(min(1.5, 0.35 * ((global_attempt % attempts_per_key) + 1)))
@@ -462,6 +501,8 @@ class GeminiService:
             "total_requests": int(self._request_count),
             "last_key_label": key_label,
             "sdk_variant": str(self._sdk_variant or "unknown"),
+            "disabled_reason": str(self._disabled_reason or ""),
+            "disabled_key_count": len(self._disabled_keys),
         }
 
     def _cache_key(self, prefix: str, payload: Any) -> str:
@@ -505,6 +546,28 @@ class GeminiService:
             return True
 
         return False
+
+    def _is_auth_error(self, exc: Exception) -> bool:
+        text = str(exc).lower()
+        auth_tokens = [
+            "401",
+            "invalid authentication credentials",
+            "access_token_type_unsupported",
+            "api key not valid",
+            "permissiondenied",
+            "invalid api key",
+            "unauthenticated",
+            "authentication",
+        ]
+        return any(token in text for token in auth_tokens)
+
+    def _mark_key_auth_failed(self, api_key: str, exc: Exception) -> None:
+        self._disabled_keys.add(api_key)
+        self._models_by_key.pop(api_key, None)
+        if len(self._disabled_keys) >= len(self._api_keys):
+            self._disabled_reason = f"all_keys_auth_failed:{type(exc).__name__}"
+        elif self._disabled_reason is None:
+            self._disabled_reason = "partial_auth_failure"
 
     def _safe_int(self, value: Any, *, default: int, minimum: int, maximum: int) -> int:
         try:

@@ -99,6 +99,7 @@ def create_app() -> FastAPI:
             "status": "healthy",
             "gemini_enabled": bool(gemini["enabled"]),
             "gemini_healthy": bool(gemini["healthy"]),
+            "gemini_diagnostics": dict(gemini.get("diagnostics") or {}),
         }
 
     @app.get("/collect/news", tags=["collectors"])

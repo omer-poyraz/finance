@@ -1,0 +1,215 @@
+{
+  "inputs": {
+    "history_path": "storage/data/history.json",
+    "scoring_log_path": "storage/data/bist_scoring_log.json",
+    "halal_filter_path": "storage/config/halal_filter.json",
+    "benchmark_path": "storage/config/index_benchmarks.json"
+  },
+  "history_entries": 40,
+  "topk_metrics": {
+    "1": {
+      "top_k": 1,
+      "samples": 4,
+      "win_rate_pct": 100.0,
+      "average_return_pct": 4.9506,
+      "precision_pct": 100.0,
+      "false_positives": 0
+    },
+    "3": {
+      "top_k": 3,
+      "samples": 12,
+      "win_rate_pct": 100.0,
+      "average_return_pct": 2.7668749999999998,
+      "precision_pct": 100.0,
+      "false_positives": 0
+    },
+    "5": {
+      "top_k": 5,
+      "samples": 20,
+      "win_rate_pct": 100.0,
+      "average_return_pct": 2.54014,
+      "precision_pct": 100.0,
+      "false_positives": 0
+    },
+    "10": {
+      "top_k": 10,
+      "samples": 40,
+      "win_rate_pct": 97.5,
+      "average_return_pct": 2.10037,
+      "precision_pct": 97.5,
+      "false_positives": 1
+    }
+  },
+  "expected_gain_validation": {
+    "samples": 10,
+    "peak_hit_rate_pct": 50.0,
+    "close_hit_rate_pct": 50.0,
+    "average_expected_gain_pct": 2.8558,
+    "average_realized_peak_pct": 2.8245,
+    "average_realized_close_pct": 2.7602
+  },
+  "halal_audit": {
+    "blocked_ticker_count": 16,
+    "recommended_blocked_tickers": [],
+    "violations": 0,
+    "passed": true
+  },
+  "ab_snapshot_compare": {
+    "snapshot_scored_total": 595,
+    "old_eligible_total": 459,
+    "new_eligible_total": 595,
+    "old_top_tickers": [
+      "ARMGD",
+      "ICUGS",
+      "EFOR",
+      "QUAGR",
+      "FZLGY",
+      "BOSSA",
+      "AKFIS",
+      "KUVVA",
+      "COSMO",
+      "BRSAN",
+      "BAHKM",
+      "DOGUB",
+      "VERUS",
+      "CELHA",
+      "ISKPL",
+      "ORZAX",
+      "EKDMR",
+      "BMSCH",
+      "ATATP",
+      "FLAP"
+    ],
+    "new_top_tickers": [
+      "GARFA",
+      "ULUSE",
+      "ICUGS",
+      "TCKRC",
+      "PKART",
+      "TURSG",
+      "INFO",
+      "GESAN",
+      "MARKA",
+      "COSMO",
+      "SVGYO",
+      "TMPOL",
+      "KARTN",
+      "ORGE",
+      "CVKMD",
+      "OZYSR",
+      "ACSEL",
+      "BINBN",
+      "OZGYO",
+      "LIDER"
+    ],
+    "new_top_tickers_after_gate": [
+      "GARFA",
+      "ULUSE",
+      "ICUGS",
+      "COSMO"
+    ],
+    "old_top_bist30": [],
+    "new_top_bist30": [],
+    "new_top_bist30_after_gate": [],
+    "old_top_bist100": [
+      "ARMGD",
+      "EFOR",
+      "AKFIS",
+      "BRSAN"
+    ],
+    "new_top_bist100": [
+      "TURSG",
+      "GESAN",
+      "CVKMD",
+      "LIDER"
+    ],
+    "new_top_bist100_after_gate": [],
+    "bist100_source": "config_exact_list",
+    "new_gate_pass_count": 4,
+    "new_gate_fail_reason_counts": {
+      "decision": 16
+    }
+  },
+  "ticker_expected_gain_summary_top20": [
+    {
+      "ticker": "ARENA",
+      "samples": 1,
+      "avg_expected_gain_pct": 4.63,
+      "avg_realized_peak_pct": 4.63,
+      "avg_realized_close_pct": 4.63,
+      "peak_hit_rate_pct": 100.0
+    },
+    {
+      "ticker": "AKENR",
+      "samples": 1,
+      "avg_expected_gain_pct": 4.4188,
+      "avg_realized_peak_pct": 4.4188,
+      "avg_realized_close_pct": 4.4188,
+      "peak_hit_rate_pct": 100.0
+    },
+    {
+      "ticker": "BRLSM",
+      "samples": 1,
+      "avg_expected_gain_pct": 4.3855,
+      "avg_realized_peak_pct": 4.3855,
+      "avg_realized_close_pct": 4.3855,
+      "peak_hit_rate_pct": 100.0
+    },
+    {
+      "ticker": "KMPUR",
+      "samples": 1,
+      "avg_expected_gain_pct": 1.653,
+      "avg_realized_peak_pct": 1.653,
+      "avg_realized_close_pct": 1.653,
+      "peak_hit_rate_pct": 100.0
+    },
+    {
+      "ticker": "DZGYO",
+      "samples": 1,
+      "avg_expected_gain_pct": 0.8114,
+      "avg_realized_peak_pct": 0.8114,
+      "avg_realized_close_pct": 0.8114,
+      "peak_hit_rate_pct": 100.0
+    },
+    {
+      "ticker": "GARFA",
+      "samples": 1,
+      "avg_expected_gain_pct": 5.9829,
+      "avg_realized_peak_pct": 5.9829,
+      "avg_realized_close_pct": 5.9829,
+      "peak_hit_rate_pct": 0.0
+    },
+    {
+      "ticker": "VERUS",
+      "samples": 1,
+      "avg_expected_gain_pct": 2.3849,
+      "avg_realized_peak_pct": 2.3849,
+      "avg_realized_close_pct": 2.3849,
+      "peak_hit_rate_pct": 0.0
+    },
+    {
+      "ticker": "KRSTL",
+      "samples": 1,
+      "avg_expected_gain_pct": 1.9823,
+      "avg_realized_peak_pct": 1.9823,
+      "avg_realized_close_pct": 1.9823,
+      "peak_hit_rate_pct": 0.0
+    },
+    {
+      "ticker": "MGROS",
+      "samples": 1,
+      "avg_expected_gain_pct": 1.5764,
+      "avg_realized_peak_pct": 1.5764,
+      "avg_realized_close_pct": 1.5764,
+      "peak_hit_rate_pct": 0.0
+    },
+    {
+      "ticker": "MSGYO",
+      "samples": 1,
+      "avg_expected_gain_pct": 0.7327,
+      "avg_realized_peak_pct": 0.4194,
+      "avg_realized_close_pct": -0.2233,
+      "peak_hit_rate_pct": 0.0
+    }
+  ]
+}

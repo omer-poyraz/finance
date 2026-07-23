@@ -253,8 +253,11 @@ class NewsAnalyzer(BaseAnalyzer):
 	def _detect_tickers(self, text: str) -> list[str]:
 		detected: set[str] = set()
 		upper_text = text.upper()
+		known_tickers = set(self._ticker_aliases.keys())
 		for token in TICKER_PATTERN.findall(upper_text):
 			normalized = self._normalize_ascii(token)
+			if normalized not in known_tickers:
+				continue
 			if normalized in {"KVKK", "BIST", "KAP", "SPK", "MKK", "VIOP"}:
 				continue
 			detected.add(normalized)

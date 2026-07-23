@@ -201,3 +201,64 @@ def test_capital_allocation_accepts_buy_variants() -> None:
     allocations = list(result.get("allocations") or [])
     assert len(allocations) == 2
     assert sum(float(item.get("recommended_amount") or 0.0) for item in allocations) > 0
+
+
+def test_bist_market_regime_snapshot_marks_bearish_on_change_and_breadth() -> None:
+    service = FinancePipelineService()
+
+    snapshot = service._bist_market_regime_snapshot(
+        market_payload=[
+            {
+                "symbol": "AAA",
+                "daily_change_percent": -1.8,
+                "market_cap": 100.0,
+                "metadata": {"market": "BIST"},
+            },
+            {
+                "symbol": "BBB",
+                "daily_change_percent": -0.9,
+                "market_cap": 80.0,
+                "metadata": {"market": "BIST"},
+            },
+        ],
+        market_analysis=[
+            {"ticker": "AAA", "trend": "Bearish"},
+            {"ticker": "BBB", "trend": "Bearish"},
+            {"ticker": "CCC", "trend": "Neutral"},
+        ],
+    )
+
+    assert snapshot["is_bearish"] is True
+    assert float(snapshot["weighted_change_pct"]) < 0
+    assert float(snapshot["bearish_breadth_ratio"]) > 0.5
+
+
+def test_has_good_bist100_candidate_requires_quality_thresholds() -> None:
+    service = FinancePipelineService()
+    candidates = [
+        {
+            "ticker": "AAA",
+            "decision": "LIMIT BUY",
+            "total_score": 74.0,
+            "confidence": 69.0,
+            "expected_gain_pct": 3.2,
+            "current_price": 10.0,
+            "entry_price": 10.0,
+            "current_target": 10.35,
+            "atr": 0.08,
+            "trend_strength": 72,
+            "risk_reward_ratio": 1.9,
+        },
+        {
+            "ticker": "ZZZ",
+            "decision": "LIMIT BUY",
+            "total_score": 90.0,
+            "confidence": 90.0,
+            "expected_gain_pct": 8.0,
+            "risk_reward_ratio": 3.0,
+        },
+    ]
+
+    assert service._has_good_bist100_candidate(candidates, {"AAA"}) is True
+    assert service._has_good_bist100_candidate(candidates, {"ZZZ"}) is True
+    assert service._has_good_bist100_candidate(candidates, {"QQQ"}) is False

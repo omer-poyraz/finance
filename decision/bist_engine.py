@@ -1960,6 +1960,11 @@ class BistOpportunityEngine:
         if prev[3] > prev[0] and curr[3] < curr[0] and curr[3] <= (prev[0] + prev[3]) / 2.0:
             patterns.append("Dark Cloud Cover")
 
+        if curr[1] <= prev[1] and curr[2] >= prev[2]:
+            patterns.append("Inside Bar")
+        if curr[1] >= prev[1] and curr[2] <= prev[2]:
+            patterns.append("Outside Bar")
+
         if curr[3] > curr[0] and prev[3] < prev[0] and curr[3] < prev[0] and curr[0] > prev[3]:
             patterns.append("Harami")
 
